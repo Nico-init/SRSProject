@@ -1,15 +1,19 @@
+
 from dotenv import dotenv_values
 from multiprocessing import Process, Value
+from symbol_validation import is_that_a_stock
+import sys
 import time
 import praw
-import sys
 import reticker as rt
 
-TIMEOUT = 120 # 2 minutes (TEMPORARY)
+sys.path.insert( 0, './src' )   # TRICK TO BE ABLE TO IMPORT sentiment_analysis FROM ANOTHER FOLDER
+from ML.sentiment_analysis import sentiment_analysis
+
+TIMEOUT = 600 # 10 minutes (TEMPORARY)
 TARGET_SUBREDDIT = "stocks"
 
-def check_for_symbol(c):
-    # FOR SEMPLICITY WE DONT CHECK IF THE SYMBOL EXISTS
+def check_for_symbols(c):
     return rt.TickerExtractor().extract(c)
     
 
@@ -25,14 +29,19 @@ def comment_check(reddit, id, num_active_sub_proc):
             # FOR SEMPLICITY WE ONLY CONSIDER ONE NEW COMMENT AT MOST
             new_comment = comment_forest[num_processed_comments]
             print("New comment found for this post: {}".format(id))
-            #print("{}\n\n".format(new_comment.body))
+            print("{}\n\n".format(new_comment.body))
             num_processed_comments += 1
 
-            stock_symbols = check_for_symbol(new_comment.body) # CHECK FOR STOCK SYMBOLS IN COMMENT
-            if stock_symbols:
-                # SEND TO ML FOR INTENT EVALUATION
-                # SEND TO SCRAPER
-                print("Sent comment with these symbols: {}".format(stock_symbols)) # NEEDS CROSS-VALIDATION WITH OFFICIAL SYMBOLS LIST
+            stock_symbols = check_for_symbols(new_comment.body)     # CHECK FOR STOCK SYMBOLS IN COMMENT
+            for symbol in stock_symbols:
+                if is_that_a_stock(symbol):
+                    body = new_comment.body.replace('$', '')   # REMOVE ALL STOCK PRE-FIXES FOR TARGET COHERENCE
+                    analysis_results = sentiment_analysis(body, target=symbol)
+
+                    # CHECK RESULTS
+                    # DECIDE WETHER TO SEND THE ENTRY TO THE SCRAPER OR NOT
+
+                    print("Sent an entry for this symbol: {} | with these analysis results: {}".format(stock_symbols, analysis_results)) # TEMPORARY
 
         time.sleep(1)
 
@@ -43,7 +52,8 @@ def comment_check(reddit, id, num_active_sub_proc):
 
 
 def main():
-    config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+    config = dotenv_values(r".\src\Reddit\.env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+    
     num_active_sub_proc = Value('i', 0)
 
     # USING THE PRAW WRAPPER, CREATE A (read-only) REDDIT INSTANCE
@@ -61,12 +71,10 @@ def main():
         # create multiprocess for comment selection
         # sacrifice a goat to our lord and savior satan
         print("Got a new post...")
-
-        #if submission.link_flair_text != 'Advice' and submission.link_flair_text != 'Advice Request':
-        #    print("Not an advice post...")
-        #    continue
-        
-        # CHECK FOR STOCK SYMBOLS IN COMMENT AND SEND RESULTS (MAYBE FOR LATER IMPLEMENTATION ?)
+ 
+        if submission.link_flair_text != 'Advice' and submission.link_flair_text != 'Advice Request':
+            print("Not an advice post...")
+            continue
 
         print("New advice submission found: {} | {}".format(submission.title, submission.id))
         print("Starting new process for: {}".format(submission.id))
