@@ -58,8 +58,7 @@ def sentiment_analysis(documents, target=None):
 
 
 if __name__ == "__main__":
-    doc = "The food and service were unacceptable, but the concierge were nice. " \
-          "Also, it was difficult to talk as it was too much noise."
+    doc = "Apple's stock are going really well"
     pos, neu, neg = sentiment_analysis(doc, "food")
     print(pos)
     print(neu)
