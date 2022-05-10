@@ -36,17 +36,18 @@ def sentiment_analysis(documents, target=None):
         target_positive = []
         target_neutral = []
         target_negative = []
-        for sentence in document.sentences:
-            for mined_opinion in sentence.mined_opinions:
-                opinion_target = mined_opinion.target
-                if opinion_target.text.upper() == target.upper():
-                    target_positive.append(opinion_target.confidence_scores.positive)
-                    target_neutral.append(opinion_target.confidence_scores.neutral)
-                    target_negative.append(opinion_target.confidence_scores.negative)
-        if target_positive:
-            positive = statistics.mean(target_positive)
-            neutral = statistics.mean(target_neutral)
-            negative = statistics.mean(target_negative)
+        if target is not None:
+            for sentence in document.sentences:
+                for mined_opinion in sentence.mined_opinions:
+                    opinion_target = mined_opinion.target
+                    if opinion_target.text.upper() == target.upper():
+                        target_positive.append(opinion_target.confidence_scores.positive)
+                        target_neutral.append(opinion_target.confidence_scores.neutral)
+                        target_negative.append(opinion_target.confidence_scores.negative)
+            if target_positive:
+                positive = statistics.mean(target_positive)
+                neutral = statistics.mean(target_neutral)
+                negative = statistics.mean(target_negative)
         result_pos.append(positive)
         result_neu.append(neutral)
         result_neg.append(negative)
