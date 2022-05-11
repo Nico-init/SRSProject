@@ -56,9 +56,15 @@ def delete_table(table_name: Union[TableNames, str]):
     exec_query(query)
 
 
-def get_values(table_name: TableNames, request_values: List[str], condition: str):
+def get_values(table_name: TableNames, request_values: List[str], condition: str = None, order_by: List[str] = None, order_by_asc=True, unique=False):
     from decimal import Decimal
-    query = f"SELECT {', '.join(request_values)} FROM {table_name.value} WHERE {condition}"
+    query = "SELECT DISTINCT " if unique else "SELECT "
+    query += f"{', '.join(request_values)} FROM {table_name.value}"
+    if condition is not None:
+        query += f" WHERE {condition}"
+    if order_by is not None:
+        query += " ORDER BY " + ", ".join(order_by)
+        query += " ASC " if order_by_asc else " DESC "
     values = exec_query(query, show_result=True)
     for row in range(len(values)):
         for col in range(len(values[row])):
@@ -68,8 +74,19 @@ def get_values(table_name: TableNames, request_values: List[str], condition: str
 
 
 def update_value(table_name: TableNames, value_name, new_value, condition: str):
-    from decimal import Decimal
     query = f"UPDATE {table_name.value} SET {value_name} = {clean_value_to_str(new_value)} WHERE {condition}"
+    exec_query(query, show_result=False)
+
+
+def update_values(table_name: TableNames, condition: str, *values: Tuple[str, any]):
+    query = f"UPDATE {table_name.value} SET "
+    query += ", ".join([f"{v[0]} = {clean_value_to_str(v[1])}" for v in values])
+    query += f" WHERE {condition}"
+    exec_query(query, show_result=False)
+
+
+def delete(table_name: TableNames, condition: str):
+    query = f"DELETE FROM {table_name.value} WHERE {condition}"
     exec_query(query, show_result=False)
 
 
