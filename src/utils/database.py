@@ -1,8 +1,8 @@
 
-from IDB import *
-from date import today
-from DB_enum import TableNames
-from DB_types import Column
+from utils.IDB import *
+from utils.date import today
+from utils.DB_enum import TableNames
+from utils.DB_types import Column
 
 
 class DB_reddit:
@@ -188,7 +188,8 @@ def reset_db():
     initialize_db()
 
 
-if __name__ == "__main__":
+def test_database():
+    pass
     # reset_db()
     # save_comment(5, True, 0.057, "Windows", 0.57, 125090)
     # print(show_tables())
@@ -199,7 +200,7 @@ if __name__ == "__main__":
     # print(exists_user(1))
     # delete_all_tables()
     # set_user_score(2, 9, 10, 7)
-    # print(get_user_score(2))
+    print(get_user_score(2))
     # reddit_db = DB_reddit(100)
     # reddit_db.save_post(7, 2)
     # print(reddit_db.get_posts(10))

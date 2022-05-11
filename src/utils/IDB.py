@@ -1,7 +1,7 @@
 from typing import List, Union, Tuple
 import numbers
-from DB_enum import TableNames
-from DB_types import Column
+from utils.DB_enum import TableNames
+from utils.DB_types import Column
 
 
 def exec_query(query: str, show_result=False):
