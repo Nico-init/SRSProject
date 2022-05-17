@@ -1,0 +1,4 @@
+docker build -t my-py-test:1.0 .
+
+docker tag my-py-test:1.0 nrregistry.azurecr.io/my-py-test:1.0
+docker push nrregistry.azurecr.io/my-py-test:1.0 

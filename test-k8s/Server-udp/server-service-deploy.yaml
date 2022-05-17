@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deploy
+  labels:
+    app: server-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-test
+  template:
+    metadata:
+      labels:
+        app: server-test
+    spec:
+      containers:
+      - name: server-azure
+        #image: nrregistry.azurecr.io/server:2.1
+        image: nrregistry.azurecr.io/server-k8s
+        #tty: true
+        #stdin: true
+        #se non ci metto un comando tipo questo non crea il container (va tipo in loop)
+        #command: ["/bin/sleep", "3650d"]
+        ports:
+        - containerPort: 8011
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-test-svc
+  labels:
+    run: server-test-svc
+spec:
+  ports:
+  - port: 8011
+    protocol: UDP
+  selector:
+    app: server-test

@@ -1,0 +1,70 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  imageRepoClient: client-k8s
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build client image
+      inputs:
+        containerRegistry: 'connection-to-my-registry'
+        repository: '$(imageRepoClietn)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Client-udp/Dockerfile'
+        tags: |
+          $(tag)
+          latest
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/Client-udp'
+        artifact: 'clientmanifest'
+        publishLocation: 'pipeline'
+
+- stage: Deploy
+  displayName: Deploy Client to Dev
+  dependsOn: Build
+  variables:
+    acrsecret: k8sexamplesacrauth
+  jobs:
+  - job: Deploy
+    displayName: Deploy Client to k8s
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'clientmanifest'
+        targetPath: '$(Pipeline.Workspace)/clientmanifests'
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'createSecret'
+        kubernetesServiceConnection: 'K8S-connection-to-default-NS'
+        namespace: 'default'
+        secretType: 'dockerRegistry'
+        secretName: '$(acrsecret)'
+        dockerRegistryEndpoint: 'connection-to-my-registry'
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'deploy'
+        kubernetesServiceConnection: 'K8S-connection-to-default-NS'
+        namespace: 'default'
+        manifests: |
+          $(Pipeline.Workspace)/clientmanifests/client-service-deploy.yaml
