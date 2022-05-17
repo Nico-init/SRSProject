@@ -80,23 +80,59 @@ def save_comment(user_id, comment_value: bool, reliability, stock_name, stock_va
                         )
 
 
-def get_user_comments(user_id, days_num=None):
+def get_stock_comments(stock_name, days_num=None, since=None):
+    """
+
+    :param stock_name:
+    :param days_num: get all comments more recent that days_num (in number of day)
+    :param since: get all comments since that moment (in timetamp: number of seconds since the beginning)
+    :return: for each user that commented the stock returns comment_value, reliability,
+    """
+    assert days_num is None or since is None
+    if days_num is not None:
+        time_diff = days_num * 24 * 60 * 60
+        now = today()
+        condition = f"{Comments.stock_name} = {stock_name} AND {Comments.date} >= {now} - {time_diff}"
+    elif since is not None:
+        condition = f"{Comments.stock_name} = {stock_name} AND {Comments.date} >= day"
+    else:
+        condition = None
+    requested_values = [Comments.comment_id, Comments.user_id, Comments.comment_value, Comments.reliability,
+                        Comments.stock_name, Comments.stock_value, Comments.date]
+
+    users = {}
+    stock_comments = []
+    for c in get_values(TableNames.comments, requested_values, condition, order_by=["date"], order_by_asc=False):
+        t = tuple(c)
+        user = t[1]
+        if user not in users:
+            users[user] = user
+            stock_comments.append(t)
+
+    return stock_comments
+
+
+def get_user_comments(user_id, days_num=None, since=None):
     """
 
     :param user_id:
-    :param days_num:
+    :param days_num: get all comments more recent that days_num (in number of day)
+    :param since: get all comments since that moment (in timetamp: number of seconds since the beginning)
     :return: a list of tuples (comment_id, user_id, comment_value, reliability, stock_name, stock_value, date)
     """
+    assert days_num is None or since is None
     if days_num is not None:
         time_diff = days_num * 24 * 60 * 60
         now = today()
         condition = f"{Comments.user_id} = {user_id} AND {Comments.date} >= {now} - {time_diff}"
+    elif since is not None:
+        condition = f"{Comments.user_id} = {user_id} AND {Comments.date} >= day"
     else:
         condition = None
 
     requested_values = [Comments.comment_id, Comments.user_id, Comments.comment_value, Comments.reliability, Comments.stock_name, Comments.stock_value, Comments.date]
 
-    user_comments = [tuple(c) for c in get_values(TableNames.comments, requested_values, condition, order_by=["date"])]
+    user_comments = [tuple(c) for c in get_values(TableNames.comments, requested_values, condition, order_by=["date"], order_by_asc=False)]
 
     return user_comments
 
@@ -204,9 +240,9 @@ def test_database():
     # reset_db()
     # save_comment(4, True, 0.057, "Windows", 0.57, 125090)
     # print(show_tables())
-    # print(get_all_values(TableNames.posts))
+    # print(get_all_values(TableNames.comments))
 
-    print(get_user_comments(5))
+    # print(get_user_comments(5))
     # print(get_users())
     # print(exists_user(1))
     # delete_all_tables()
@@ -215,6 +251,7 @@ def test_database():
     # reddit_db = DB_reddit(100)
     # reddit_db.save_post(7, 2)
     # print(reddit_db.get_posts(10))
+    print(get_stock_comments("Windows"))
 
 
 
