@@ -25,5 +25,5 @@ spec:
         env:
           - name: SERVER_NAME
             value: server-test-svc
-      imagePullSecrets:
-        - name: regcred
+      #imagePullSecrets:
+      #  - name: regcred

@@ -24,8 +24,8 @@ spec:
         #command: ["/bin/sleep", "3650d"]
         ports:
         - containerPort: 8011
-      imagePullSecrets:
-        - name: regcred
+      #imagePullSecrets:
+      #  - name: regcred
 ---
 apiVersion: v1
 kind: Service
