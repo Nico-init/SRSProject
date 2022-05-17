@@ -17,7 +17,7 @@ spec:
       containers:
       - name: server-azure
         #image: nrregistry.azurecr.io/server:2.1
-        image: nrregistry.azurecr.io/server-k8s
+        image: nrregistry.azurecr.io/server-k8s-you
         #tty: true
         #stdin: true
         #se non ci metto un comando tipo questo non crea il container (va tipo in loop)
