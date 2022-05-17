@@ -53,7 +53,7 @@ stages:
         inputs:
           buildType: 'current'
           artifactName: 'server-manifest'
-          targetPath: '$(Pipeline.Workspace)/server-manifest.yaml'
+          targetPath: '$(Pipeline.Workspace)/server-manifest/server-service-deploy.yaml'
       - task: KubernetesManifest@0
         inputs:
           action: 'createSecret'
