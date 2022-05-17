@@ -13,7 +13,7 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-- stage: Build
+- stage: BuildServer
   displayName: Build image
   jobs:
   - job: Build
@@ -31,3 +31,49 @@ stages:
         tags: |
           $(tag)
           latest
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/test-k8s/Server-udp/server-service-deploy.yaml'
+        artifact: 'server-manifest'
+        publishLocation: 'pipeline'
+        
+- stage: Deploy
+  displayName: Deploy to Dev
+  dependsOn: BuildServer
+  variables: 
+    acrsecret: k8sexamplesacrauth
+  jobs:
+    - job: Deploy
+      displayName: Deploy to AKS
+      pool:
+        vmImage: ubuntu-latest
+      steps:
+      
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'current'
+          artifactName: 'server-manifest'
+          targetPath: '$(Pipeline.Workspace)/server-manifest.yaml'
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'createSecret'
+          kubernetesServiceConnection: 'niccolo-AKS-connection'
+          namespace: 'default'
+          secretType: 'dockerRegistry'
+          secretName: '$(acrsecret)'
+          dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'deploy'
+          kubernetesServiceConnection: 'niccolo-AKS-connection'
+          namespace: 'default'
+          manifests: |
+            $(Pipeline.Workspace)/server-manifest.yaml
+
+
+#- task: KubernetesManifest@0
+#  inputs:
+#    action: 'deploy'
+#    kubernetesServiceConnection: 'niccolo-AKS-connection'
+#    namespace: 'default'
+#    manifests: '$(Build.SourcesDirectory)/test-k8s/Server-udp/server-service-deploy.yaml'
