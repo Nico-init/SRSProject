@@ -53,7 +53,7 @@ stages:
         inputs:
           buildType: 'current'
           artifactName: 'server-manifest'
-          targetPath: '$(Pipeline.Workspace)/server-manifest/server-service-deploy.yaml'
+          targetPath: '$(Pipeline.Workspace)/server-manifest'
       - task: KubernetesManifest@0
         inputs:
           action: 'createSecret'
@@ -68,7 +68,7 @@ stages:
           kubernetesServiceConnection: 'niccolo-AKS-connection'
           namespace: 'default'
           manifests: |
-            $(Pipeline.Workspace)/server-manifest.yaml
+            $(Pipeline.Workspace)/server-manifest/server-service-deploy.yaml
 
 
 #- task: KubernetesManifest@0
