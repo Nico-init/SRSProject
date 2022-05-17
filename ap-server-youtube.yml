@@ -1,0 +1,33 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- test-k8s
+
+resources:
+- repo: self
+
+variables:
+  imageRepoServer: server-k8s-you
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        containerRegistry: 'niccolo-AzureContainer-connection'
+        repository: '$(imageRepoServer)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/test-k8s/Server-udp/Dockerfile'
+        tags: |
+          $(tag)
+          latest
