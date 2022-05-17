@@ -191,7 +191,7 @@ def initialize_db():
         Column(name=Posts.start_time, type="int"),
         Column(name=Posts.last_update, type="int")
     ]
-    crate_table(TableNames.posts, Posts.post_id, "int", col_list, autogen=False)
+    crate_table(TableNames.posts, Posts.post_id, "nvarchar(50)", col_list, autogen=False)
 
 
 def reset_db():
