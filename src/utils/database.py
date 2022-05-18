@@ -80,7 +80,7 @@ def save_comment(user_id, comment_value: bool, reliability, stock_name, stock_va
                         )
 
 
-def get_stock_comments(stock_name, days_num=None, since=None):
+def get_stock_comments(stock_name, days_num=None, since=None, order_by_asc=True):
     """
 
     :param stock_name:
@@ -102,7 +102,7 @@ def get_stock_comments(stock_name, days_num=None, since=None):
 
     users = {}
     stock_comments = []
-    for c in get_values(TableNames.comments, requested_values, condition, order_by=["date"], order_by_asc=False):
+    for c in get_values(TableNames.comments, requested_values, condition, order_by=["date"], order_by_asc=order_by_asc):
         t = tuple(c)
         user = t[1]
         if user not in users:
@@ -112,7 +112,7 @@ def get_stock_comments(stock_name, days_num=None, since=None):
     return stock_comments
 
 
-def get_user_comments(user_id, days_num=None, since=None):
+def get_user_comments(user_id, days_num=None, since=None, order_by_asc=True):
     """
 
     :param user_id:
@@ -132,7 +132,7 @@ def get_user_comments(user_id, days_num=None, since=None):
 
     requested_values = [Comments.comment_id, Comments.user_id, Comments.comment_value, Comments.reliability, Comments.stock_name, Comments.stock_value, Comments.date]
 
-    user_comments = [tuple(c) for c in get_values(TableNames.comments, requested_values, condition, order_by=["date"], order_by_asc=False)]
+    user_comments = [tuple(c) for c in get_values(TableNames.comments, requested_values, condition, order_by=["date"], order_by_asc=order_by_asc)]
 
     return user_comments
 
