@@ -2,18 +2,49 @@ from typing import List, Union, Tuple
 import numbers
 from utils.DB_enum import TableNames
 from utils.DB_types import Column
+import os
+from azure.identity import ClientSecretCredential
+from azure.keyvault.secrets import SecretClient
+from azure.identity import DefaultAzureCredential
+
+#export AZURE_TENANT_ID={"e99647dc-1b08-454a-bf8c-699181b389ab"}
+#export AZURE_CLIENT_ID={"014eeda6-7ef0-4321-8c10-680f64ffc38a"}
+#export AZURE_CLIENT_SECRET={tPt8wiHYFt9k-ljI-QhLJsPInTPvWYsA8A}
 
 
 def exec_query(query: str, show_result=False):
     import pyodbc
     server = 'slr-server.database.windows.net'
     database = 'ScalRelSys'
-    username = 'slr_best_admin_ever'
-    password = '{vium4tBuK5DBjKv}'
-    driver = '{ODBC Driver 17 for SQL Server}'
+    #username = 'slr_best_admin_ever'
+    #password = '{vium4tBuK5DBjKv}'
+    driver = 'sudo -H pip install pyodbc'
+
+    #Acquisisco i segreti da Azure key vault
+    #è necessario impostare le variabili d'ambiente
+    # AZURE_CLIENT_ID
+    # AZURE_CLIENT_SECRET
+    # AZURE_TENANT_ID
+    # KEY_VAULT_NAME
+    
+    keyVaultName = os.environ["KEY_VAULT_NAME"]
+    KVUri = f"https://{keyVaultName}.vault.azure.net"
+
+    credential = DefaultAzureCredential()
+    client = SecretClient(vault_url=KVUri, credential=credential)
+
+    print(f"Retrieving your secret from {keyVaultName}.")
+    
+    username = "DBUsername"
+    password = "DBPassword"
+
+
+    username = client.get_secret(username)
+    password = client.get_secret(password)
+    print(password.value)
 
     with pyodbc.connect(
-            'DRIVER=' + driver + ';SERVER=tcp:' + server + ';PORT=1433;DATABASE=' + database + ';UID=' + username + ';PWD=' + password, autocommit=True) as conn:
+            'DRIVER=' + driver + ';SERVER=tcp:' + server + ';PORT=1433;DATABASE=' + database + ';UID=' + username.value + ';PWD=' + password.value, autocommit=True) as conn:
         with conn.cursor() as cursor:
             cursor.execute(query)
             if show_result:

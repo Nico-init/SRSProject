@@ -1,0 +1,6 @@
+azure_storage==0.37.0
+pandas==1.4.2
+praw==7.5.0
+pyodbc==4.0.32
+python-dotenv==0.20.0
+reticker==3.1.3
