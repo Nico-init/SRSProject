@@ -31,4 +31,4 @@ while(True):
         print(msg, msgFromServer[1], file=f)
     
 
-    time.sleep(1)
+    time.sleep(0.5)
