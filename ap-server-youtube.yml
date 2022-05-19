@@ -31,7 +31,7 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/test-k8s/Server-udp/Dockerfile'
         tags: |
           $(tag)
-          latest
+          
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Build.SourcesDirectory)/test-k8s/Server-udp/server-service-deploy.yaml'
@@ -56,7 +56,7 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/test-k8s/Client-udp/Dockerfile'
         tags: |
           $(tag)
-          latest
+          
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Build.SourcesDirectory)/test-k8s/Client-udp/client-service-deploy.yaml'
@@ -69,6 +69,7 @@ stages:
   dependsOn: BuildServer
   variables: 
     acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
   jobs:
     - deployment: DeployServer
       displayName: Deploy server to AKS
@@ -99,6 +100,8 @@ stages:
                 namespace: 'default'
                 manifests: |
                   $(Pipeline.Workspace)/server-manifest/server-service-deploy.yaml
+                #in questo modo sovrascrivo il campo container del yaml, con l'ultima versione generate qui- non latest
+                containers: '$(acrdevurl)/$(imageRepoServer):$(tag)'  
 
 #client-part      
      
@@ -107,6 +110,7 @@ stages:
   dependsOn: BuildClient
   variables: 
     acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
   jobs:
     - deployment: DeployClient
       displayName: Deploy client to AKS
@@ -137,6 +141,7 @@ stages:
               namespace: 'default'
               manifests: |
                 $(Pipeline.Workspace)/client-manifest/client-service-deploy.yaml
+              containers: '$(acrdevurl)/$(imageRepoClient):$(tag)'
 
 
 
