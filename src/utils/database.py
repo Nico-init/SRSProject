@@ -36,7 +36,7 @@ class DB_reddit:
         """
 
         :param time_lapse: it considers only posts which have not been updated last time_lapse seconds
-        :return: list of rows which contains a list of values ["post_id", "comment_id", "start_time", "last_update"]
+        :return: list of rows which contains a list of Post
         """
 
         self.eliminate_old_posts(self.delete_time)
