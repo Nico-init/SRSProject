@@ -2,6 +2,8 @@ import socket
 import os
 import time
 
+time.sleep(2)
+
 msgFromClient       = "Hello UDP Server"
 bytesToSend         = str.encode(msgFromClient)
 #serverAddressPort   = ("127.0.0.1", 8011)
@@ -10,6 +12,8 @@ bytesToSend         = str.encode(msgFromClient)
 #serverAddressPort = (socket.gethostbyname("server-test-svc"), 8011)
 serverAddressPort = (socket.gethostbyname(os.environ['SERVER_NAME']), 8011)
 
+with open('clientOUT.txt' ,'a') as f:
+    print("recuperato indirizzo server-service..", file=f)
 
 bufferSize          = 1024
 while(True):
