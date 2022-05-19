@@ -12,7 +12,7 @@ localIP     = "0.0.0.0"
 localPort   = 8011
 bufferSize  = 1024
 
-msgFromServer       = "Hello UDP Client from:{}".format(ip_address)
+msgFromServer       = "Hello UDP Client from: {}".format(ip_address)
 bytesToSend         = str.encode(msgFromServer)
 
 # Create a datagram socket
