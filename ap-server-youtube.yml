@@ -70,32 +70,35 @@ stages:
   variables: 
     acrsecret: k8sexamplesacrauth
   jobs:
-    - job: DeployServer
+    - deployment: DeployServer
       displayName: Deploy server to AKS
+      environment: niccolo-aks-environment.default
       pool:
         vmImage: ubuntu-latest
-      steps:
-      
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          buildType: 'current'
-          artifactName: 'server-manifest'
-          targetPath: '$(Pipeline.Workspace)/server-manifest'
-      - task: KubernetesManifest@0
-        inputs:
-          action: 'createSecret'
-          kubernetesServiceConnection: 'niccolo-AKS-connection'
-          namespace: 'default'
-          secretType: 'dockerRegistry'
-          secretName: '$(acrsecret)'
-          dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
-      - task: KubernetesManifest@0
-        inputs:
-          action: 'deploy'
-          kubernetesServiceConnection: 'niccolo-AKS-connection'
-          namespace: 'default'
-          manifests: |
-            $(Pipeline.Workspace)/server-manifest/server-service-deploy.yaml
+      strategy:
+        runOnce:
+          deploy:         
+            steps:
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                buildType: 'current'
+                artifactName: 'server-manifest'
+                targetPath: '$(Pipeline.Workspace)/server-manifest'
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'createSecret'
+                #kubernetesServiceConnection: 'niccolo-AKS-connection'
+                namespace: 'default'
+                secretType: 'dockerRegistry'
+                secretName: '$(acrsecret)'
+                dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'deploy'
+                #kubernetesServiceConnection: 'niccolo-AKS-connection'
+                namespace: 'default'
+                manifests: |
+                  $(Pipeline.Workspace)/server-manifest/server-service-deploy.yaml
 
 #client-part      
      
@@ -105,32 +108,36 @@ stages:
   variables: 
     acrsecret: k8sexamplesacrauth
   jobs:
-    - job: DeployClient
+    - deployment: DeployClient
       displayName: Deploy client to AKS
+      environment: niccolo-aks-environment.default
       pool:
         vmImage: ubuntu-latest
-      steps:     
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          buildType: 'current'
-          artifactName: 'client-manifest'
-          targetPath: '$(Pipeline.Workspace)/client-manifest'
-      - task: KubernetesManifest@0
-        inputs:
-          action: 'createSecret'
-          kubernetesServiceConnection: 'niccolo-AKS-connection'
-          namespace: 'default'
-          secretType: 'dockerRegistry'
-          secretName: '$(acrsecret)'
-          dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
-      - task: KubernetesManifest@0
-        inputs:
-          action: 'deploy'
-          kubernetesServiceConnection: 'niccolo-AKS-connection'
-          namespace: 'default'
-          manifests: |
-            $(Pipeline.Workspace)/client-manifest/client-service-deploy.yaml
-  
+      strategy:
+       runOnce:
+         deploy:
+          steps:     
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'client-manifest'
+              targetPath: '$(Pipeline.Workspace)/client-manifest'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'createSecret'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
+              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              manifests: |
+                $(Pipeline.Workspace)/client-manifest/client-service-deploy.yaml
+
 
 
 
