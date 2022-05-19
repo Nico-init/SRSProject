@@ -15,10 +15,10 @@ variables:
 
 stages:
 - stage: BuildServer
-  displayName: Build image
+  displayName: Build Server image
   jobs:
-  - job: Build
-    displayName: Build
+  - job: BuildServer
+    displayName: Build server
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -39,10 +39,10 @@ stages:
         publishLocation: 'pipeline'
 
 - stage: BuildClient
-  displayName: Build image
+  displayName: Build Client image
   jobs:
-  - job: Build
-    displayName: Build
+  - job: BuildClient
+    displayName: Build client
     pool:
       vmImage: ubuntu-latest
     steps:
