@@ -40,7 +40,7 @@ stages:
 
 - stage: BuildClient
   displayName: Build Client image
-  dependsOn:[]
+  dependsOn: []
   jobs:
   - job: BuildClient
     displayName: Build client
