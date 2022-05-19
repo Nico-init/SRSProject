@@ -64,14 +64,14 @@ stages:
         publishLocation: 'pipeline'
         
 
-- stage: Deploy
-  displayName: Deploy to Dev
+- stage: Deploy Server
+  displayName: Deploy Server to Dev
   dependsOn: BuildServer
   variables: 
     acrsecret: k8sexamplesacrauth
   jobs:
-    - job: Deploy
-      displayName: Deploy to AKS
+    - job: DeployServer
+      displayName: Deploy server to AKS
       pool:
         vmImage: ubuntu-latest
       steps:
@@ -96,7 +96,20 @@ stages:
           namespace: 'default'
           manifests: |
             $(Pipeline.Workspace)/server-manifest/server-service-deploy.yaml
+
 #client-part      
+     
+- stage: Deploy Clietn
+  displayName: Deploy Client to Dev
+  dependsOn: BuildClient
+  variables: 
+    acrsecret: k8sexamplesacrauth
+  jobs:
+    - job: DeployClient
+      displayName: Deploy client to AKS
+      pool:
+        vmImage: ubuntu-latest
+      steps:     
       - task: DownloadPipelineArtifact@2
         inputs:
           buildType: 'current'
