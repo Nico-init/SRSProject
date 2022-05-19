@@ -64,7 +64,7 @@ stages:
         publishLocation: 'pipeline'
         
 
-- stage: Deploy Server
+- stage: DeployServer
   displayName: Deploy Server to Dev
   dependsOn: BuildServer
   variables: 
@@ -99,7 +99,7 @@ stages:
 
 #client-part      
      
-- stage: Deploy Clietn
+- stage: DeployClietn
   displayName: Deploy Client to Dev
   dependsOn: BuildClient
   variables: 
