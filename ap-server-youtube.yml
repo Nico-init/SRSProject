@@ -99,7 +99,7 @@ stages:
 
 #client-part      
      
-- stage: DeployClietn
+- stage: DeployClient
   displayName: Deploy Client to Dev
   dependsOn: BuildClient
   variables: 
