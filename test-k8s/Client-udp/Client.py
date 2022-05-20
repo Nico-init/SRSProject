@@ -14,7 +14,7 @@ serverAddressPort = (socket.gethostbyname(os.environ['SERVER_NAME']), 8011)
 
 with open('clientOUT.txt' ,'a') as f:
     print("recuperato indirizzo server-service...", file=f)
-    print("Ciao a tutti sono gianni e pinotto!!!!")
+    print("Ciao a tutti sono gianni e pinotto!!!!", file=f)
 
 bufferSize          = 1024
 while(True):
