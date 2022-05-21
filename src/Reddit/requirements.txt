@@ -1,7 +1,6 @@
 #azure_storage==0.37.0
 azure-core==1.24.0
 azure-ai-textanalytics==5.1.0
-#numpy==1.22.3
 pandas==1.4.2
 praw==7.5.0
 pyodbc==4.0.32
