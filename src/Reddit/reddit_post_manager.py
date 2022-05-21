@@ -52,8 +52,9 @@ def comment_check(reddit, id, num_active_sub_proc):
 
 
 def main():
-    config = dotenv_values(r".\src\Reddit\.env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
-    
+    #config = dotenv_values(r".\src\Reddit\.env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+    config = dotenv_values(r".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+
     num_active_sub_proc = Value('i', 0)
 
     # USING THE PRAW WRAPPER, CREATE A (read-only) REDDIT INSTANCE
