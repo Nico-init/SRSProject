@@ -15,7 +15,7 @@ COPY . /home/Reddit
 RUN apt update && \
     apt install -y gcc && \
     apt install -y g++
-RUN apt update && apt install -y unixodbc unixodbc-dev
+RUN apt install -y unixodbc unixodbc-dev
 
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
