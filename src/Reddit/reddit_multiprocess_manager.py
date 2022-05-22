@@ -1,3 +1,8 @@
+########################################
+#                                      #
+#      THIS SCRIPT IS DEPRECATED       #
+#                                      #
+########################################
 
 from dotenv import dotenv_values
 from multiprocessing import Process, Value
@@ -65,7 +70,6 @@ def main():
 
     print("Listening to the subreddit...\n")
     
-    process_list = []
     for submission in reddit.subreddit(TARGET_SUBREDDIT).stream.submissions(skip_existing=True):
         # check if its advice
         # create multiprocess for comment selection
