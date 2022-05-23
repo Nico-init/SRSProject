@@ -29,7 +29,7 @@ function Leaderboard(props: Props) {
             <button style={!isWeekly ? buttonStylePressed : buttonStyleNotPressed} onClick={handleClick} data-id='0'>All-Time</button>
         </div>
 
-        <Profiles isWeekly={isWeekly} DB={sort(props.DB, isWeekly)}></Profiles>
+        <Profiles isWeekly={isWeekly} DB={sort(props.DB, isWeekly)} handleClickPanelChange={props.handleClickPanelChange}></Profiles>
 
         </div>
     )
