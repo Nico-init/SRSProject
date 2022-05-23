@@ -145,8 +145,6 @@ stages:
               containers: '$(acrdevurl)/$(imageRepoClient):$(tag)'
 
 
-
-
 #- stage: Deploy
 #  displayName: Deploy to Dev
 #  dependsOn: BuildClient
