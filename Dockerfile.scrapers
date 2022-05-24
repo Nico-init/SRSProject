@@ -1,0 +1,24 @@
+#FROM python:3.9.13-alpine3.15
+#FROM python:3.10.4-alpine3.15
+#FROM python:3.10.4-bullseye
+#FROM ubuntu:22.04
+FROM python:3.10.4-slim-bullseye
+
+#installations necessary to pandas
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    unixodbc \
+    unixodbc-dev
+
+WORKDIR /home/SRSProject
+COPY requirements-scraper.txt /home/SRSProject
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements-scraper.txt
+
+COPY src/daily_scraper /home/SRSProject/src/daily_scraper
+COPY src/scraper /home/SRSProject/src/scraper
+COPY src/utils /home/SRSProject/src/utils
+
+CMD [ "sleep", "3600d" ]
