@@ -1,0 +1,23 @@
+#FROM python:3.9.13-alpine3.15
+#FROM python:3.10.4-alpine3.15
+#FROM python:3.10.4-bullseye
+#FROM ubuntu:22.04
+FROM python:3.10.4-slim-bullseye
+
+#installations necessary to pandas
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    unixodbc \
+    unixodbc-dev
+
+WORKDIR /home/SRSProject
+COPY requirements-reddit.txt /home/SRSProject
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements-reddit.txt
+
+COPY src/Reddit /home/SRSProject/src/Reddit
+COPY src/utils /home/SRSProject/src/utils
+
+CMD [ "sleep", "3600d" ]
