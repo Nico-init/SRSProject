@@ -67,21 +67,25 @@ class DB_reddit:
         return len(result) > 0      # if exists a user, the list of users with user_id will be non-empty
 
 
-def save_comment(user: Comment):
+def save_comment(comment: Comment):
     # now = today()
-    if not exists_user(user.user_id):
-        initialize_user(user.user_id)
+    if not exists_user(comment.user_id):
+        initialize_user(comment.user_id)
     add_object_to_table(TableNames.comments,
-                        (Comments.user_id, user.user_id),
-                        (Comments.comment_value, int(user.comment_value)),
-                        (Comments.reliability, user.reliability),
-                        (Comments.stock_name, user.stock_name),
-                        (Comments.stock_value, user.stock_value),
-                        (Comments.date, user.date)
+                        (Comments.user_id, comment.user_id),
+                        (Comments.comment_value, int(comment.comment_value)),
+                        (Comments.reliability, comment.reliability),
+                        (Comments.stock_name, comment.stock_name),
+                        (Comments.stock_value, comment.stock_value),
+                        (Comments.date, comment.date)
                         )
 
 
-def get_stock_comments(stock_name, days_num=None, since=None) -> List[Comment]:
+
+# todo:
+# since non serve
+# deve restituire una lista di giorni, dove per ogni giorno metti la lista dei commenti, ordinata per global/week score dell'utente
+def get_stock_comments(stock_name, order_by_global: bool, days_num=None, since=None) -> List[Comment]:
     """
     for each user that commented a stock, return the last comment
     :param stock_name:
@@ -186,6 +190,26 @@ def set_user_score(user: User):
                   )
 
 
+def get_user_history_score_weekly(user_id):
+    return  # lista degli score dell'utente con data
+
+
+def get_user_history_score_global(user_id, days_limit: int):
+    return  # lista degli score dell'utente con data
+
+
+def get_last_user_comments(user_id, num_of_elements: int):
+    return  # lista di stock, sentiment e reliability
+
+
+def get_best_users_weekly(num_of_users: int):
+    return  # list of users that have best weekly score this week
+
+
+def get_best_users_global(num_of_users: int):
+    return  # list of users that have best global score this week
+
+
 def get_user(user_id) -> User:
     requested_values = [Users.total_score, Users.weekly_score, Users.base]
     condition = f"{Users.user_id} = {user_id}"
@@ -207,7 +231,7 @@ def exists_user(user_id):
 
 def initialize_db():
     col_list = [
-        Column(name=Comments.user_id, type="int"),
+        Column(name=Comments.user_id, type="nvarchar(50)"),
         Column(name=Comments.comment_value, type="BIT"),
         Column(name=Comments.reliability, type="numeric"),
         Column(name=Comments.stock_name, type="nvarchar(50)"),
@@ -221,7 +245,7 @@ def initialize_db():
         Column(name=Users.weekly_score, type="numeric"),
         Column(name=Users.base, type="numeric")
     ]
-    crate_table(TableNames.users, Users.user_id, "int", col_list, autogen=False)
+    crate_table(TableNames.users, Users.user_id, "nvarchar(50)", col_list, autogen=False)
 
     col_list = [
         Column(name=Posts.comment_id, type="int"),
