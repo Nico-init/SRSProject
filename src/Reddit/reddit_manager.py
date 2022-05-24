@@ -25,7 +25,7 @@ reddit_db = DB_reddit(DB_POST_TIMEOUT)
 # ------------------------------------------------------------------------------------------ #
 
 
-def check_for_symbols_and_send(c):
+def check_for_symbols_and_send(c, username):
     """
     :param c: body of comment to analyse
 
@@ -89,7 +89,7 @@ def find_and_check_new_comments(reddit):
             if post_instance.comments.__len__() > post.comment_id:   # There are new comments
                 print("Found new comments for {}".format(post_instance.id))
                 for comment in post_instance.comments[post.comment_id:]:
-                    check_for_symbols_and_send(comment.body)
+                    check_for_symbols_and_send(comment.body, comment.author.name)
             
             reddit_db.save_post(base36decode(post_id), post_instance.comments.__len__())
         time.sleep(60)

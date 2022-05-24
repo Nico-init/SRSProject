@@ -7,8 +7,9 @@ from azure.identity import ClientSecretCredential
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 
+#export KEY_VAULT_NAME=redditKeys 
 #export AZURE_TENANT_ID={"e99647dc-1b08-454a-bf8c-699181b389ab"}
-#export AZURE_CLIENT_ID={"014eeda6-7ef0-4321-8c10-680f64ffc38a"}
+#export AZURE_CLIENT_ID={"1e20a665-6170-4f7e-86c2-ed8f8c1429d6"}
 #export AZURE_CLIENT_SECRET={tPt8wiHYFt9k-ljI-QhLJsPInTPvWYsA8A}
 
 
@@ -18,7 +19,7 @@ def exec_query(query: str, show_result=False):
     database = 'ScalRelSys'
     #username = 'slr_best_admin_ever'
     #password = '{vium4tBuK5DBjKv}'
-    driver = 'sudo -H pip install pyodbc'
+    driver = 'ODBC Driver 17 for SQL Server'
 
     #Acquisisco i segreti da Azure key vault
     #è necessario impostare le variabili d'ambiente
