@@ -127,7 +127,7 @@ def main():
         n = 0
         #get user comments
         user_comments.clear()
-        eser_comments.extend(get_user_comments(user.user_id, since=monday, order_by_asc=True))
+        user_comments.extend(get_user_comments(user.user_id, since=monday, order_by_asc=True))
         #checking if there are some buy/sell for the same stock
         for comment in user_comments:
             user.base += check_buysell(comment)
