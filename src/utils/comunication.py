@@ -4,6 +4,7 @@ from kubemq.events.subscriber import Subscriber
 from kubemq.subscription.subscribe_type import SubscribeType
 from kubemq.subscription.events_store_type import EventsStoreType
 from kubemq.subscription.subscribe_request import SubscribeRequest
+from threading import Thread
 
 #----------------------------------------
 channel = 'reddit'
@@ -62,5 +63,11 @@ def send(user_id, comment_value, reliability, stock_name, date):
         print('error:%s' % (
             err
         ))
+    thread = Thread(target=token_deleter, args=(cancel_token, ))
+    thread.start()
+
+
+def token_deleter(args):
     sleep(5)
-    cancel_token.cancel()
+    c_t = args[0]
+    c_t.cancel()
