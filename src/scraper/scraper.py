@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+
+import sys
+sys.path.insert( 0, './src' ) 
 from utils.database import *
 #kubemq-2.2.4
 from kubemq.events import Event
