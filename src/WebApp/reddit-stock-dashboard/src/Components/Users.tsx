@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './comp-styles/Users-style.css'
 import './comp-styles/bulma-input.scss'
 import { useState } from 'react'
 
 type Props = {
     DB: any
+    user: string
 }
 
 function Users(props: Props) {
 
     const [text, setText] = useState("");
+
+    const userCheck = () => {
+        if(props.user) {
+            setText(props.user);
+        }
+    }
+
+    useEffect(userCheck, );
 
     const handleSearch = (e: any) => {
         if(e.key === "Enter") {
