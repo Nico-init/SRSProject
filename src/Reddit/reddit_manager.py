@@ -10,6 +10,7 @@ from reddit_utils import is_that_a_stock, base36decode, base36encode
 sys.path.insert( 0, './src' ) 
 from ML.sentiment_analysis import sentiment_analysis
 from utils.database import DB_reddit
+from utils.comunication import send
 # ------------------------------------------------------------------------------------------ #
 
 
@@ -25,7 +26,7 @@ reddit_db = DB_reddit(DB_POST_TIMEOUT)
 # ------------------------------------------------------------------------------------------ #
 
 
-def check_for_symbols_and_send(c, username):
+def check_for_symbols_and_send(c, username, date):
     """
     :param c: body of comment to analyse
 
@@ -40,8 +41,16 @@ def check_for_symbols_and_send(c, username):
         if is_that_a_stock(symbol):
             c = c.replace('$', '')   # REMOVE ALL STOCK PRE-FIXES FOR TARGET COHERENCE
             analysis_results = sentiment_analysis(c, target=symbol)
-            print("Sending {} with [{}] to scraper...\n".format(symbol, analysis_results))
-            # (ToDo) SEND COMMENT ENTRY TO SCRAPER...
+            if (analysis_results[0] > 50):
+                comment_value = "positive"
+                reliability = analysis_results[0] - 50
+                send(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
+                print("sending a positive comment by {} for this stock: {}. Reliability: [{}]".format(username, symbol, reliability))
+            elif (analysis_results[2] > 50):
+                comment_value = "negative"
+                reliability = analysis_results[2] - 50
+                send(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
+                print("sending a negative comment by {} for this stock: {}. Reliability: [{}]".format(username, symbol, reliability))
     
     return
 
@@ -89,7 +98,7 @@ def find_and_check_new_comments(reddit):
             if post_instance.comments.__len__() > post.comment_id:   # There are new comments
                 print("Found new comments for {}".format(post_instance.id))
                 for comment in post_instance.comments[post.comment_id:]:
-                    check_for_symbols_and_send(comment.body, comment.author.name)
+                    check_for_symbols_and_send(comment.body, comment.author.name, comment.created_utc)
             
             reddit_db.save_post(base36decode(post_id), post_instance.comments.__len__())
         time.sleep(60)
