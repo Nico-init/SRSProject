@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import sys
+sys.path.insert( 0, './src' ) 
 from utils.database import *
 from utils.comunication import *
 
