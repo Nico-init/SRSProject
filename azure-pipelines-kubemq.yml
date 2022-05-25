@@ -1,0 +1,146 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- dev
+
+resources:
+- repo: self
+
+variables:
+  imageRepoReddit: reddit-test
+  imageRepoScrapers: scrapers-test
+  tag: '$(Build.BuildId)'
+
+############Reddit
+stages:
+- stage: BuildReddit
+  displayName: Build Reddit image
+  jobs:
+  - job: BuildReddit
+    displayName: Build reddit
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build reddit
+      inputs:
+        containerRegistry: 'niccolo-AzureContainer-connection'
+        repository: '$(imageRepoReddit)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.reddit'
+        tags: |
+          $(tag)
+          
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/reddit-service-deploy.yaml'
+        artifact: 'reddit-manifest'
+        publishLocation: 'pipeline'
+
+############Scrapers
+- stage: BuildScraper
+  displayName: Build Scraper image
+  dependsOn: []
+  jobs:
+  - job: BuildScraper
+    displayName: Build scraper
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build scraper
+      inputs:
+        containerRegistry: 'niccolo-AzureContainer-connection'
+        repository: '$(imageRepoScrapers)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.scrapers'
+        tags: |
+          $(tag)
+          
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/scrapers-service-deploy.yaml'
+        artifact: 'scrapers-manifest'
+        publishLocation: 'pipeline'
+        
+############reddit
+- stage: DeployReddit
+  displayName: Deploy Reddit to Dev
+  dependsOn: BuildReddit
+  variables: 
+    acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
+  jobs:
+    - deployment: DeployReddit
+      displayName: Deploy reddit to AKS
+      environment: niccolo-aks-environment.kubemq
+      pool:
+        vmImage: ubuntu-latest
+      strategy:
+        runOnce:
+          deploy:         
+            steps:
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                buildType: 'current'
+                artifactName: 'reddit-manifest'
+                targetPath: '$(Pipeline.Workspace)/reddit-manifest'
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'createSecret'
+                #kubernetesServiceConnection: 'niccolo-AKS-connection'
+                namespace: 'kubemq'
+                secretType: 'dockerRegistry'
+                secretName: '$(acrsecret)'
+                dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'deploy'
+                #kubernetesServiceConnection: 'niccolo-AKS-connection'
+                namespace: 'kubemq'
+                manifests: |
+                  $(Pipeline.Workspace)/reddit-manifest/reddit-service-deploy.yaml
+                #in questo modo sovrascrivo il campo container del yaml, con l'ultima versione generate qui- non latest
+                containers: '$(acrdevurl)/$(imageRepoReddit):$(tag)'  
+
+############Scrapers
+- stage: DeployScraper
+  displayName: Deploy Scraper to Dev
+  dependsOn: BuildScraper
+  variables: 
+    acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
+  jobs:
+    - deployment: DeployScraper
+      displayName: Deploy scraper to AKS
+      environment: niccolo-aks-environment.kubemq
+      pool:
+        vmImage: ubuntu-latest
+      strategy:
+       runOnce:
+         deploy:
+          steps:     
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'scrapers-manifest'
+              targetPath: '$(Pipeline.Workspace)/scrapers-manifest'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'createSecret'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'kubemq'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
+              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'kubemq'
+              manifests: |
+                $(Pipeline.Workspace)/scrapers-manifest/scrapers-service-deploy.yaml
+              containers: '$(acrdevurl)/$(imageRepoScrapers):$(tag)'
+

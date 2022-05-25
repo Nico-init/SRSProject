@@ -107,7 +107,8 @@ def find_and_check_new_comments(reddit):
 
 
 def main():
-    config = dotenv_values(r".\src\Reddit\.env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+    #config = dotenv_values(r".\src\Reddit\.env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+    config = dotenv_values("./src/Reddit/.env")  #for linux
 
     # USING THE PRAW WRAPPER, CREATE A (read-only) REDDIT INSTANCE
     reddit = praw.Reddit(
