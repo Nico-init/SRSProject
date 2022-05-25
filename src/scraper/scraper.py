@@ -1,17 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-
-import sys
-sys.path.insert( 0, './src' ) 
 from utils.database import *
-#kubemq-2.2.4
-from kubemq.events import Event
-from kubemq.tools.listener_cancellation_token import ListenerCancellationToken
-from kubemq.events.subscriber import Subscriber
-from kubemq.subscription.subscribe_type import SubscribeType
-from kubemq.subscription.events_store_type import EventsStoreType
-from kubemq.subscription.subscribe_request import SubscribeRequest
+from utils.comunication import *
 
 def create_subscribe_request(
         subscribe_type=SubscribeType.Events, client_id="",
@@ -69,21 +60,8 @@ def handle_incoming_error(error_msg):
     ))
 
 def main():
-    #read from the queue
-    channel = 'reddit'
-    cancel_token = ListenerCancellationToken()
-    try:
-        subscriber = Subscriber("localhost:50000")
-        subscribe_request = create_subscribe_request(SubscribeType.Events,
-                                                     'python-sdk-cookbook-pubsub-events-single-receiver',
-                                                     EventsStoreType.Undefined, 0, channel)
-        #for each event (reddit info) scrape the value of the stock and save it in the database
-        subscriber.subscribe_to_events(subscribe_request, scrape_reddit, handle_incoming_error,
-                                       cancel_token)
-    except Exception as err:
-        print('error, error:%s' % (
-            err
-        ))
+    #read from the queue and scrape the value
+    read(scrape_reddit, handle_incoming_error)
 
 if __name__ == "__main__":
     main()
