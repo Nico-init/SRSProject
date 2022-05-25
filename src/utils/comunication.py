@@ -5,6 +5,7 @@ from kubemq.subscription.subscribe_type import SubscribeType
 from kubemq.subscription.events_store_type import EventsStoreType
 from kubemq.subscription.subscribe_request import SubscribeRequest
 from threading import Thread
+import socket
 
 #----------------------------------------
 channel = 'reddit'
@@ -29,8 +30,11 @@ def create_subscribe_request(
 def read(handle_event_function, handle_error_function):
     global channel, cancel_token
     #read from the queue
+    ip_server = socket.gethostbyname("kubemq")
+    string_connection = ip_server+":"+"50000"
     try:
-        subscriber = Subscriber("localhost:50000")
+        #subscriber = Subscriber("localhost:50000")
+        subscriber = Subscriber(string_connection)
         subscribe_request = create_subscribe_request(SubscribeType.Events,
                                                      'python-sdk-cookbook-pubsub-events-single-receiver',
                                                      EventsStoreType.Undefined, 0, channel)
@@ -45,6 +49,11 @@ def read(handle_event_function, handle_error_function):
 def send(user_id, comment_value, reliability, stock_name, date):
     global channel, cancel_token
     sender = Sender("localhost:50000")
+
+    ip_server = socket.gethostbyname("kubemq")
+    string_connection = ip_server+":"+"50000"
+    sender = sender(string_connection)
+
     #build the event
     event = Event(
         metadata="reddit-to-scraper",
