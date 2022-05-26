@@ -11,7 +11,7 @@ resources:
 variables:
   imageRepoReddit: reddit-test
   imageRepoScrapers: scrapers-test
-  imageRepoDailyScrapers: daily-scraper
+  imageRepoDailyScraper: daily-scraper
   tag: '$(Build.BuildId)'
 
 ############Reddit
@@ -80,11 +80,17 @@ stages:
       displayName: Build Daily scraper
       inputs:
         containerRegistry: 'niccolo-AzureContainer-connection'
-        repository: '$(imageRepoDailyScrapers)'
+        repository: '$(imageRepoDailyScraper)'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.dailyscraper'
         tags: |
           $(tag)
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/daily-scraper-cronjob.yaml'
+        artifact: 'daily-scraper-manifest'
+        publishLocation: 'pipeline'
 
 ############reddit
 - stage: DeployReddit
@@ -165,3 +171,42 @@ stages:
                 $(Pipeline.Workspace)/scrapers-manifest/scrapers-service-deploy.yaml
               containers: '$(acrdevurl)/$(imageRepoScrapers):$(tag)'
 
+
+############DailyScrapers
+- stage: DeployDailyScrapersScraper
+  displayName: Deploy DailyScrapers Scraper to Dev
+  dependsOn: BuildDailyScraper
+  variables: 
+    acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
+  jobs:
+    - deployment: DeployDailyScraper
+      displayName: Deploy daily_scraper to AKS
+      environment: niccolo-aks-environment.default
+      pool:
+        vmImage: ubuntu-latest
+      strategy:
+       runOnce:
+         deploy:
+          steps:     
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'daily-scraper-manifest'
+              targetPath: '$(Pipeline.Workspace)/daily-scraper-manifest'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'createSecret'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
+              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              manifests: |
+                $(Pipeline.Workspace)/daily-scraper-manifest/daily-scraper-cronjob.yaml
+              containers: '$(acrdevurl)/$(imageRepoDailyScraper):$(tag)'
