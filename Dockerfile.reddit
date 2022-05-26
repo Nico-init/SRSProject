@@ -28,4 +28,5 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY src/Reddit /home/SRSProject/src/Reddit
 COPY src/utils /home/SRSProject/src/utils
 
-CMD [ "sleep", "3600d" ]
+CMD ["python3", "src/Reddit/reddit_manager.py"]
+#CMD [ "sleep", "3600d" ]
