@@ -128,6 +128,7 @@ def main():
         #get user comments
         user_comments.clear()
         user_comments.extend(get_user_comments(user.user_id, since=monday, order_by_asc=True))
+        print_comments(user_comments)
         #checking if there are some buy/sell for the same stock
         for comment in user_comments:
             user.base += check_buysell(comment)
@@ -141,7 +142,7 @@ def main():
         #save user score on db
         set_user_score(user)
         #debug
-        #print_user(user)
+        print_user(user)
 
 if __name__ == "__main__":
     main()
