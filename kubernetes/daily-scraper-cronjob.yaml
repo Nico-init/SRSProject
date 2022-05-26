@@ -12,6 +12,6 @@ spec:
           - name: daily-scraper-azure
             image: nrregistry.azurecr.io/daily-scraper
             imagePullPolicy: IfNotPresent
-          restartPolicy: OnFailure
-          concurrencyPolicy: Forbid
-          successfulJobsHistoryLimit: 100
+  restartPolicy: OnFailure
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 100
