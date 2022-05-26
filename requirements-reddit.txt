@@ -10,3 +10,4 @@ beautifulsoup4==4.11.1
 azure-identity==1.10.0
 azure-keyvault==4.2.0
 kubemq==2.2.4
+protobuf~=3.19.0
