@@ -70,21 +70,23 @@ def check_for_symbols_and_send(c, username, date):
         if is_that_a_stock(symbol):
             c = c.replace('$', '')   # REMOVE ALL STOCK PRE-FIXES FOR TARGET COHERENCE
             analysis_results = sentiment_analysis(c, target=symbol)
-            if (analysis_results[0] > 50):
+            print(analysis_results)
+            if (analysis_results[0] > 0.50):
                 comment_value = "positive"
-                reliability = analysis_results[0] - 50
+                reliability = analysis_results[0] - 0.50
                 #send(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
                 send_local(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
 
                 print("sending a positive comment by {} for this stock: {}. Reliability: [{}]".format(username, symbol, reliability))
-            elif (analysis_results[2] > 50):
+            elif (analysis_results[2] > 0.50):
                 comment_value = "negative"
-                reliability = analysis_results[2] - 50
+                reliability = analysis_results[2] - 0.50
                 #send(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
                 send_local(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
                 
                 print("sending a negative comment by {} for this stock: {}. Reliability: [{}]".format(username, symbol, reliability))
-    
+            else:
+                print("non sono entrato nei cicli")
     return
 
 
