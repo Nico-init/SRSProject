@@ -33,28 +33,29 @@ def exec_query(query: str, show_result=False):
 
     credential = DefaultAzureCredential()
     client = SecretClient(vault_url=KVUri, credential=credential)
-
-    print(f"Retrieving your secret from {keyVaultName}.")
-    
     username = "DBUsername"
     password = "DBPassword"
 
 
     username = client.get_secret(username)
     password = client.get_secret(password)
-    print(password.value)
 
     with pyodbc.connect(
             'DRIVER=' + driver + ';SERVER=tcp:' + server + ';PORT=1433;DATABASE=' + database + ';UID=' + username.value + ';PWD=' + password.value, autocommit=True) as conn:
         with conn.cursor() as cursor:
             cursor.execute(query)
             if show_result:
+                from decimal import Decimal
                 result = []
                 row = cursor.fetchone()
                 while row:
                     result.append(list(row))
                     # print(str(row[0]) + " " + str(row[1]))
                     row = cursor.fetchone()
+                for row in range(len(result)):
+                    for col in range(len(result[row])):
+                        if isinstance(result[row][col], Decimal):
+                            result[row][col] = float(result[row][col])
                 return result
             else:
                 return None
@@ -89,7 +90,6 @@ def delete_table(table_name: Union[TableNames, str]):
 
 
 def get_values(table_name: TableNames, request_values: List[str], condition: str = None, order_by: List[str] = None, order_by_asc=True, unique=False):
-    from decimal import Decimal
     query = "SELECT DISTINCT " if unique else "SELECT "
     query += f"{', '.join(request_values)} FROM {table_name.value}"
     if condition is not None:
@@ -98,10 +98,6 @@ def get_values(table_name: TableNames, request_values: List[str], condition: str
         query += " ORDER BY " + ", ".join(order_by)
         query += " ASC " if order_by_asc else " DESC "
     values = exec_query(query, show_result=True)
-    for row in range(len(values)):
-        for col in range(len(values[row])):
-            if isinstance(values[row][col], Decimal):
-                values[row][col] = float(values[row][col])
     return values
 
 
