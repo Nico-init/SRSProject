@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Profiles from './Profiles';
 import CSS from 'csstype'
 
@@ -10,6 +10,18 @@ type Props = {
 function Leaderboard(props: Props) {
 
     const [isWeekly, setWeekly] = useState(true)
+    const [users, setUsers] = useState([{}]) // DATA FROM THE BACKEND
+
+    useEffect(() => {
+        fetch("/all_users").then(
+            res => res.json()
+        ).then(
+            users => {
+                setUsers(users["users"])
+                console.log(users["users"])
+            }
+        )
+    }, [])
 
     const handleClick = (e: any) => {
         if (e.target.dataset.id === "7") {
@@ -29,7 +41,7 @@ function Leaderboard(props: Props) {
             <button style={!isWeekly ? buttonStylePressed : buttonStyleNotPressed} onClick={handleClick} data-id='0'>All-Time</button>
         </div>
 
-        <Profiles isWeekly={isWeekly} DB={sort(props.DB, isWeekly)} handleClickPanelChange={props.handleClickPanelChange}></Profiles>
+        <Profiles isWeekly={isWeekly} DB={sort(users, isWeekly)} handleClickPanelChange={props.handleClickPanelChange}></Profiles>
 
         </div>
     )
