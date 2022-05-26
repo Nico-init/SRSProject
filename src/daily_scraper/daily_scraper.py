@@ -4,7 +4,7 @@ sys.path.insert( 0, './src' )
 import requests
 from bs4 import BeautifulSoup
 from utils.database import *
-from utils.types import Comment, User
+from utils.SRS_types import Comment, User
 from datetime import datetime, time, timedelta
 
 
