@@ -43,8 +43,8 @@ def scrape_reddit(event):
         
         #es. event_body = user_id:comment_value:reliability:stock_name:date
         reddit_info = str(event.body.decode("UTF-8")).split(':')
-        print(reddit_info[0])
-        print(isinstance(reddit_info[0], str))
+        #print(reddit_info[0])
+        #print(isinstance(reddit_info[0], str))
         #scrape stock value
         stock_value = scrape_value_yahoo(check_stock_name(reddit_info[3]))
         #save comment on database
