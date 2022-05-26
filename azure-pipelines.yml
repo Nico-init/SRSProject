@@ -11,6 +11,7 @@ resources:
 variables:
   imageRepoReddit: reddit-test
   imageRepoScrapers: scrapers-test
+  imageRepoDailyScrapers: daily-scraper
   tag: '$(Build.BuildId)'
 
 ############Reddit
@@ -39,7 +40,7 @@ stages:
         artifact: 'reddit-manifest'
         publishLocation: 'pipeline'
 
-############Scrapers
+############Scraper
 - stage: BuildScraper
   displayName: Build Scraper image
   dependsOn: []
@@ -64,7 +65,27 @@ stages:
         targetPath: '$(Build.SourcesDirectory)/kubernetes/scrapers-service-deploy.yaml'
         artifact: 'scrapers-manifest'
         publishLocation: 'pipeline'
-        
+
+############Daily scraper
+- stage: BuildDailyScraper
+  displayName: Build DailyScraper image
+  dependsOn: []
+  jobs:
+  - job: BuildDailyScraper
+    displayName: Build Daily scraper
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build Daily scraper
+      inputs:
+        containerRegistry: 'niccolo-AzureContainer-connection'
+        repository: '$(imageRepoDailyScrapers)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.dailyscraper'
+        tags: |
+          $(tag)
+
 ############reddit
 - stage: DeployReddit
   displayName: Deploy Reddit to Dev
