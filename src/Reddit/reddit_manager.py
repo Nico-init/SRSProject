@@ -10,13 +10,20 @@ from reddit_utils import is_that_a_stock, base36decode, base36encode
 sys.path.insert( 0, './src' ) 
 from ML.sentiment_analysis import sentiment_analysis
 from utils.database import DB_reddit
+from utils.comunication import send
 # ------------------------------------------------------------------------------------------ #
 
+from kubemq.events.lowlevel.event import Event
+from kubemq.events.lowlevel.sender import Sender
+import datetime
+import socket
 
 # ------------------------------------  Static Params  ------------------------------------- #
-DB_CHECK_TIMEOUT = 600 # 10 minutes
+#DB_CHECK_TIMEOUT = 600 # 10 minutes
+DB_CHECK_TIMEOUT = 60 # 1 minutes
 DB_POST_TIMEOUT = 100000000000 # temporarily infinite
-TARGET_SUBREDDIT = "stocks"
+#TARGET_SUBREDDIT = "stocks"
+TARGET_SUBREDDIT = "SRSProject1"
 # ------------------------------------------------------------------------------------------ #
 
 
@@ -25,7 +32,30 @@ reddit_db = DB_reddit(DB_POST_TIMEOUT)
 # ------------------------------------------------------------------------------------------ #
 
 
-def check_for_symbols_and_send(c, username):
+def send_local(user_id, comment_value, reliability, stock_name, date):
+    publisher  = Sender("10.0.86.232:50000")
+    event = Event(
+        metadata="EventMetaData",
+        #body =("hello kubemq - sending single event").encode('UTF-8'),
+        body=(":".join([str(c) for c in  [user_id, comment_value, reliability, stock_name, date]])).encode('UTF-8'),
+        store=False,
+        channel="testing_event_channel",
+        client_id="hello-world-subscriber"
+    )
+    try:
+        print("Sto provando ad inviare...")
+        res = publisher.send_event(event)
+        print(res)
+        print()
+    except Exception as err:
+      print(
+            "'error sending:'%s'" % (
+                err
+                        )
+        )
+
+
+def check_for_symbols_and_send(c, username, date):
     """
     :param c: body of comment to analyse
 
@@ -40,8 +70,20 @@ def check_for_symbols_and_send(c, username):
         if is_that_a_stock(symbol):
             c = c.replace('$', '')   # REMOVE ALL STOCK PRE-FIXES FOR TARGET COHERENCE
             analysis_results = sentiment_analysis(c, target=symbol)
-            print("Sending {} with [{}] to scraper...\n".format(symbol, analysis_results))
-            # (ToDo) SEND COMMENT ENTRY TO SCRAPER...
+            if (analysis_results[0] > 50):
+                comment_value = "positive"
+                reliability = analysis_results[0] - 50
+                #send(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
+                send_local(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
+
+                print("sending a positive comment by {} for this stock: {}. Reliability: [{}]".format(username, symbol, reliability))
+            elif (analysis_results[2] > 50):
+                comment_value = "negative"
+                reliability = analysis_results[2] - 50
+                #send(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
+                send_local(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
+                
+                print("sending a negative comment by {} for this stock: {}. Reliability: [{}]".format(username, symbol, reliability))
     
     return
 
@@ -89,7 +131,7 @@ def find_and_check_new_comments(reddit):
             if post_instance.comments.__len__() > post.comment_id:   # There are new comments
                 print("Found new comments for {}".format(post_instance.id))
                 for comment in post_instance.comments[post.comment_id:]:
-                    check_for_symbols_and_send(comment.body, comment.author.name)
+                    check_for_symbols_and_send(comment.body, comment.author.name, comment.created_utc)
             
             reddit_db.save_post(base36decode(post_id), post_instance.comments.__len__())
         time.sleep(60)
@@ -98,7 +140,8 @@ def find_and_check_new_comments(reddit):
 
 
 def main():
-    config = dotenv_values(r".\src\Reddit\.env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+    #config = dotenv_values(r".\src\Reddit\.env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+    config = dotenv_values("./src/Reddit/.env")  #for linux
 
     # USING THE PRAW WRAPPER, CREATE A (read-only) REDDIT INSTANCE
     reddit = praw.Reddit(
