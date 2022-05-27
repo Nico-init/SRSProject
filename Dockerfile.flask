@@ -1,0 +1,32 @@
+#FROM python:3.9.13-alpine3.15
+#FROM python:3.10.4-alpine3.15
+#FROM python:3.10.4-bullseye
+#FROM ubuntu:22.04
+FROM python:3.10.4-slim-bullseye
+
+#installations necessary to pandas
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    unixodbc \
+    unixodbc-dev \
+    curl \
+    gnupg \
+    nano
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
+
+WORKDIR /home/SRSProject
+COPY requirements-flask.txt /home/SRSProject
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements-flask.txt
+
+COPY src/WebApp /home/SRSProject/src/WebApp
+COPY src/utils /home/SRSProject/src/utils
+
+#CMD ["python3","-u", "src/scraper/scraper.py"]
+CMD [ "sleep", "3600d" ]

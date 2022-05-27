@@ -12,3 +12,4 @@ azure-keyvault==4.2.0
 kubemq==2.2.4
 protobuf~=3.19.0
 pytz==2022.1
+Flask==2.1.2
