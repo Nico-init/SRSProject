@@ -1,0 +1,12 @@
+FROM node:16.15.0-bullseye-slim
+
+
+COPY src/WebApp /home/SRSProject/src/WebApp
+COPY src/utils /home/SRSProject/src/utils
+
+WORKDIR /home/SRSProject/src/WebApp/reddit-stock-dashboard
+RUN npm install
+
+EXPOSE 3000
+#CMD ["npm ","start"];
+CMD [ "sleep", "3600d" ]
