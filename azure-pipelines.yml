@@ -3,146 +3,58 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- dev
+- webapp
 
 resources:
 - repo: self
 
 variables:
-  imageRepoReddit: reddit-test
-  imageRepoScrapers: scrapers-test
-  imageRepoDailyScraper: daily-scraper
+  imageBackend: flask-back-end-test
   tag: '$(Build.BuildId)'
 
 ############Reddit
 stages:
-- stage: BuildReddit
-  displayName: Build Reddit image
-  jobs:
-  - job: BuildReddit
-    displayName: Build reddit
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build reddit
-      inputs:
-        containerRegistry: 'niccolo-AzureContainer-connection'
-        repository: '$(imageRepoReddit)'
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.reddit'
-        tags: |
-          $(tag)
-          
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: '$(Build.SourcesDirectory)/kubernetes/reddit-service-deploy.yaml'
-        artifact: 'reddit-manifest'
-        publishLocation: 'pipeline'
 
-############Scraper
-- stage: BuildScraper
-  displayName: Build Scraper image
+############Backend
+- stage: BuildBackend
+  displayName: Build Backend image
   dependsOn: []
   jobs:
-  - job: BuildScraper
-    displayName: Build scraper
+  - job: BuildBackend
+    displayName: Build Backend
     pool:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Build scraper
+      displayName: Build Backend
       inputs:
         containerRegistry: 'niccolo-AzureContainer-connection'
-        repository: '$(imageRepoScrapers)'
+        repository: '$(imageBackend)'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.scrapers'
-        tags: |
-          $(tag)
-          
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: '$(Build.SourcesDirectory)/kubernetes/scrapers-service-deploy.yaml'
-        artifact: 'scrapers-manifest'
-        publishLocation: 'pipeline'
-
-############Daily scraper
-- stage: BuildDailyScraper
-  displayName: Build DailyScraper image
-  dependsOn: []
-  jobs:
-  - job: BuildDailyScraper
-    displayName: Build Daily scraper
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build Daily scraper
-      inputs:
-        containerRegistry: 'niccolo-AzureContainer-connection'
-        repository: '$(imageRepoDailyScraper)'
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.dailyscraper'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.flask'
         tags: |
           $(tag)
     
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Build.SourcesDirectory)/kubernetes/daily-scraper-cronjob.yaml'
-        artifact: 'daily-scraper-manifest'
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/backend-service-deploy.yaml'
+        artifact: 'backend-manifest'
         publishLocation: 'pipeline'
 
+#####DEPLOYMENTS####################################################################################################
 ############reddit
-- stage: DeployReddit
-  displayName: Deploy Reddit to Dev
-  dependsOn: BuildReddit
-  variables: 
-    acrsecret: k8sexamplesacrauth
-    acrdevurl: 'nrregistry.azurecr.io'
-  jobs:
-    - deployment: DeployReddit
-      displayName: Deploy reddit to AKS
-      environment: niccolo-aks-environment.default
-      pool:
-        vmImage: ubuntu-latest
-      strategy:
-        runOnce:
-          deploy:         
-            steps:
-            - task: DownloadPipelineArtifact@2
-              inputs:
-                buildType: 'current'
-                artifactName: 'reddit-manifest'
-                targetPath: '$(Pipeline.Workspace)/reddit-manifest'
-            - task: KubernetesManifest@0
-              inputs:
-                action: 'createSecret'
-                #kubernetesServiceConnection: 'niccolo-AKS-connection'
-                namespace: 'default'
-                secretType: 'dockerRegistry'
-                secretName: '$(acrsecret)'
-                dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
-            - task: KubernetesManifest@0
-              inputs:
-                action: 'deploy'
-                #kubernetesServiceConnection: 'niccolo-AKS-connection'
-                namespace: 'default'
-                manifests: |
-                  $(Pipeline.Workspace)/reddit-manifest/reddit-service-deploy.yaml
-                #in questo modo sovrascrivo il campo container del yaml, con l'ultima versione generate qui- non latest
-                containers: '$(acrdevurl)/$(imageRepoReddit):$(tag)'  
 
-############Scrapers
-- stage: DeployScraper
-  displayName: Deploy Scraper to Dev
-  dependsOn: BuildScraper
+############Flask-Backend
+- stage: DeployBackend
+  displayName: Deploy Backend to Dev
+  dependsOn: BuildBackend
   variables: 
     acrsecret: k8sexamplesacrauth
     acrdevurl: 'nrregistry.azurecr.io'
   jobs:
-    - deployment: DeployScraper
-      displayName: Deploy scraper to AKS
-      environment: niccolo-aks-environment.default
+    - deployment: DeployBackend
+      displayName: Deploy Backend to AKS
+      environment: niccolo-aks-environment.webapp-space
       pool:
         vmImage: ubuntu-latest
       strategy:
@@ -152,13 +64,13 @@ stages:
           - task: DownloadPipelineArtifact@2
             inputs:
               buildType: 'current'
-              artifactName: 'scrapers-manifest'
-              targetPath: '$(Pipeline.Workspace)/scrapers-manifest'
+              artifactName: 'backend-manifest'
+              targetPath: '$(Pipeline.Workspace)/backend-manifest'
           - task: KubernetesManifest@0
             inputs:
               action: 'createSecret'
               #kubernetesServiceConnection: 'niccolo-AKS-connection'
-              namespace: 'default'
+              namespace: 'webapp-space'
               secretType: 'dockerRegistry'
               secretName: '$(acrsecret)'
               dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
@@ -166,47 +78,7 @@ stages:
             inputs:
               action: 'deploy'
               #kubernetesServiceConnection: 'niccolo-AKS-connection'
-              namespace: 'default'
+              namespace: 'webapp-space'
               manifests: |
-                $(Pipeline.Workspace)/scrapers-manifest/scrapers-service-deploy.yaml
-              containers: '$(acrdevurl)/$(imageRepoScrapers):$(tag)'
-
-
-############DailyScrapers
-- stage: DeployDailyScrapersScraper
-  displayName: Deploy DailyScrapers Scraper to Dev
-  dependsOn: BuildDailyScraper
-  variables: 
-    acrsecret: k8sexamplesacrauth
-    acrdevurl: 'nrregistry.azurecr.io'
-  jobs:
-    - deployment: DeployDailyScraper
-      displayName: Deploy daily_scraper to AKS
-      environment: niccolo-aks-environment.default
-      pool:
-        vmImage: ubuntu-latest
-      strategy:
-       runOnce:
-         deploy:
-          steps:     
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              buildType: 'current'
-              artifactName: 'daily-scraper-manifest'
-              targetPath: '$(Pipeline.Workspace)/daily-scraper-manifest'
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'createSecret'
-              #kubernetesServiceConnection: 'niccolo-AKS-connection'
-              namespace: 'default'
-              secretType: 'dockerRegistry'
-              secretName: '$(acrsecret)'
-              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'deploy'
-              #kubernetesServiceConnection: 'niccolo-AKS-connection'
-              namespace: 'default'
-              manifests: |
-                $(Pipeline.Workspace)/daily-scraper-manifest/daily-scraper-cronjob.yaml
-              containers: '$(acrdevurl)/$(imageRepoDailyScraper):$(tag)'
+                $(Pipeline.Workspace)/backend-manifest/backend-service-deploy.yaml
+              containers: '$(acrdevurl)/$(imageBackend):$(tag)'
