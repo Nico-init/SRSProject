@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-deploy
+  labels:
+    app: react
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+      - name: react-azure
+        #image: nrregistry.azurecr.io/server:2.1
+        image: nrregistry.azurecr.io/react-image-test
+        #tty: true
+        #stdin: true
+        #se non ci metto un comando tipo questo non crea il container (va tipo in loop)
+        #command: ["/bin/sleep", "3650d"]
+        ports:
+        - containerPort: 3000
+        env:
+          - name: KEY_VAULT_NAME
+            value: redditKeys
+          - name: AZURE_TENANT_ID
+            value: e99647dc-1b08-454a-bf8c-699181b389ab
+          - name: AZURE_CLIENT_SECRET
+            value: tPt8wiHYFt9k-ljI-QhLJsPInTPvWYsA8A
+          - name: AZURE_CLIENT_ID
+            value: 1e20a665-6170-4f7e-86c2-ed8f8c1429d6
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-load-balancer
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: react
+  type: LoadBalancer
+
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: server-test-svc
+#  labels:
+#    run: server-test-svc
+#spec:
+#  ports:
+#  - port: 8011
+#    protocol: UDP
+#  selector:
+#    app: server-test
