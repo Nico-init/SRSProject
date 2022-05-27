@@ -30,5 +30,5 @@ COPY src/utils /home/SRSProject/src/utils
 
 EXPOSE 5000
 
-#CMD ["python3","-u", "src/scraper/scraper.py"]
-CMD [ "sleep", "3600d" ]
+CMD ["python3","-u", "src/WebApp/flask-server/server.py"]
+#CMD [ "sleep", "3600d" ]
