@@ -12,6 +12,7 @@ variables:
   imageRepoReddit: reddit-test
   imageRepoScrapers: scrapers-test
   imageRepoDailyScraper: daily-scraper
+  imageBackend: flask-back-end
   tag: '$(Build.BuildId)'
 
 ############Reddit
@@ -92,6 +93,33 @@ stages:
         artifact: 'daily-scraper-manifest'
         publishLocation: 'pipeline'
 
+############Backend
+- stage: BuildBackend
+  displayName: Build Backend image
+  dependsOn: []
+  jobs:
+  - job: BuildBackend
+    displayName: Build Backend
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build Backend
+      inputs:
+        containerRegistry: 'niccolo-AzureContainer-connection'
+        repository: '$(imageBackend)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.flask'
+        tags: |
+          $(tag)
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/backend-service-deploy.yaml'
+        artifact: 'backend-manifest'
+        publishLocation: 'pipeline'
+
+#####DEPLOYMENTS####################################################################################################
 ############reddit
 - stage: DeployReddit
   displayName: Deploy Reddit to Dev
@@ -210,3 +238,43 @@ stages:
               manifests: |
                 $(Pipeline.Workspace)/daily-scraper-manifest/daily-scraper-cronjob.yaml
               containers: '$(acrdevurl)/$(imageRepoDailyScraper):$(tag)'
+
+
+############Flask-Backend
+- stage: DeployBackend
+  displayName: Deploy Backend to Dev
+  dependsOn: BuildBackend
+  variables: 
+    acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
+  jobs:
+    - deployment: DeployBackend
+      displayName: Deploy Backend to AKS
+      environment: niccolo-aks-environment.default
+      pool:
+        vmImage: ubuntu-latest
+      strategy:
+       runOnce:
+         deploy:
+          steps:     
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'backend-manifest'
+              targetPath: '$(Pipeline.Workspace)/backend-manifest'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'createSecret'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
+              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              manifests: |
+                $(Pipeline.Workspace)/backend-manifest/backend-service-deploy.yaml
+              containers: '$(acrdevurl)/$(imageBackend):$(tag)'
