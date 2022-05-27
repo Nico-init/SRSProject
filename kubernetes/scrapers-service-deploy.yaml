@@ -5,7 +5,7 @@ metadata:
   labels:
     app: scraper-test
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: scraper-test
@@ -18,8 +18,8 @@ spec:
       - name: scraper-azure
         #image: nrregistry.azurecr.io/client-test:2.3
         image: nrregistry.azurecr.io/scrapers-test
-        #tty: true
-        #stdin: true
+        tty: true
+        stdin: true
         #se non ci metto un comando tipo questo non crea il container (va tipo in loop)
         #command: ["/bin/sleep", "3650d"]
         env:

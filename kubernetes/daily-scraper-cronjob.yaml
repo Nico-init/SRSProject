@@ -3,7 +3,9 @@ kind: CronJob
 metadata:
   name: daily-scraper
 spec:
-  schedule: "5 * * * *"
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 100
   jobTemplate:
     spec:
       template:
@@ -12,6 +14,13 @@ spec:
           - name: daily-scraper-azure
             image: nrregistry.azurecr.io/daily-scraper
             imagePullPolicy: IfNotPresent
-  restartPolicy: OnFailure
-  concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 100
+            env:
+              - name: KEY_VAULT_NAME
+                value: redditKeys
+              - name: AZURE_TENANT_ID
+                value: e99647dc-1b08-454a-bf8c-699181b389ab
+              - name: AZURE_CLIENT_SECRET
+                value: tPt8wiHYFt9k-ljI-QhLJsPInTPvWYsA8A
+              - name: AZURE_CLIENT_ID
+                value: 1e20a665-6170-4f7e-86c2-ed8f8c1429d6
+          restartPolicy: OnFailure
