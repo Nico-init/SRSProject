@@ -6,24 +6,24 @@ FROM python:3.10.4-slim-bullseye
 
 #installations necessary to pandas
 RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    unixodbc \
-    unixodbc-dev \
-    curl \
-    gnupg \
+    #gcc \
+    #g++ \
+    #unixodbc \
+    #unixodbc-dev \
+    #curl \
+    #gnupg \
     nano
 
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-RUN curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get update
-RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
+#RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+#RUN curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list
+#RUN apt-get update
+#RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
 
 WORKDIR /home/SRSProject
-COPY requirements-flask.txt /home/SRSProject
+COPY requirements-flask-test.txt /home/SRSProject
 
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements-flask.txt
+    pip install --no-cache-dir -r requirements-flask-test.txt
 
 COPY src/WebApp /home/SRSProject/src/WebApp
 COPY src/utils /home/SRSProject/src/utils
