@@ -17,7 +17,7 @@ spec:
       containers:
       - name: flask-azure
         #image: nrregistry.azurecr.io/server:2.1
-        image: nrregistry.azurecr.io/flask-back-end
+        image: nrregistry.azurecr.io/flask-back-end-test
         #tty: true
         #stdin: true
         #se non ci metto un comando tipo questo non crea il container (va tipo in loop)
