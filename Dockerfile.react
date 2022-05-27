@@ -1,5 +1,7 @@
 FROM node:16.15.0-bullseye-slim
 
+#for avoid python print buffering
+ENV PYTHONUNBUFFERED=1
 
 COPY src/WebApp /home/SRSProject/src/WebApp
 COPY src/utils /home/SRSProject/src/utils
