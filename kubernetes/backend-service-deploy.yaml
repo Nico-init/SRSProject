@@ -22,8 +22,8 @@ spec:
         #stdin: true
         #se non ci metto un comando tipo questo non crea il container (va tipo in loop)
         #command: ["/bin/sleep", "3650d"]
-        #ports:
-        #- containerPort: 8011
+        ports:
+        - containerPort: 5000
         env:
           - name: KEY_VAULT_NAME
             value: redditKeys

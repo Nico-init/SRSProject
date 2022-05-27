@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     #g++ \
     #unixodbc \
     #unixodbc-dev \
-    #curl \
+    curl \
     #gnupg \
     nano
 

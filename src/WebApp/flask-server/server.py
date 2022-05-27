@@ -1,7 +1,7 @@
 from flask import Flask
 import sys
 sys.path.insert( 0, './src' ) 
-from utils.database import *
+#from utils.database import *
 
 app = Flask(__name__)
 
