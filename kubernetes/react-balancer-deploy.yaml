@@ -16,14 +16,11 @@ spec:
     spec:
       containers:
       - name: react-azure
-        #image: nrregistry.azurecr.io/server:2.1
-        image: nrregistry.azurecr.io/react-image-test
-        #tty: true
-        #stdin: true
-        #se non ci metto un comando tipo questo non crea il container (va tipo in loop)
-        #command: ["/bin/sleep", "3650d"]
+        #image: nrregistry.azurecr.io/react-image-test
+        image: nrregistry.azurecr.io/react-nginx
         ports:
-        - containerPort: 3000
+        #- containerPort: 3000
+        - containerPort: 80
         env:
           - name: KEY_VAULT_NAME
             value: redditKeys
@@ -40,9 +37,9 @@ metadata:
   name: react-load-balancer
 spec:
   ports:
-  - port: 3000
+  - port: 80
     protocol: TCP
-    targetPort: 3000
+    targetPort: 80
   selector:
     app: react
   type: LoadBalancer
