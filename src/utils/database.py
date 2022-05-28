@@ -318,6 +318,7 @@ def reset_db():
 
 
 def test_database():
+    pass
     # reset_db()
     # save_comment(Comment(4, "pippo_5", True, 0.798, "AAPL", 15.5912345, now() - day_in_sec()))
     # print(show_tables())
@@ -337,7 +338,6 @@ def test_database():
     # print("hello world")
     # print([[c.comment_id, c.user_id, c.stock_name, c.comment_value] for c in get_last_user_relevant_comments("Thab-Rudy", 10)])
     # print([[u.user_id, u.weekly_score] for u in get_best_users_weekly(2)])
-    # pass
     # save_user_history(User("pippo1", 9, 1, 7, now()))
     # print([(u.user_id, u.total_score, u.weekly_score, u.base, u.date) for u in get_user_history_score_global("pippo1", 1)])
 

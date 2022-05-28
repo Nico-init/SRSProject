@@ -6,6 +6,7 @@ import os
 from azure.identity import ClientSecretCredential
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
+from utils.configuration import USE_DEBUG_DB
 
 #export KEY_VAULT_NAME=redditKeys 
 #export AZURE_TENANT_ID={"e99647dc-1b08-454a-bf8c-699181b389ab"}
@@ -16,8 +17,9 @@ from azure.identity import DefaultAzureCredential
 def exec_query(query: str, show_result=False):
     import pyodbc
     server = 'slr-server.database.windows.net'
-    # database = 'ScalRelSys'
-    database = 'testDB'
+    database = 'ScalRelSys'
+    if USE_DEBUG_DB:
+        database = 'testDB'
 
     #username = 'slr_best_admin_ever'
     #password = '{vium4tBuK5DBjKv}'
