@@ -22,8 +22,8 @@ import socket
 #DB_CHECK_TIMEOUT = 600 # 10 minutes
 DB_CHECK_TIMEOUT = 60 # 1 minutes
 DB_POST_TIMEOUT = 100000000000 # temporarily infinite
-#TARGET_SUBREDDIT = "stocks"
-TARGET_SUBREDDIT = "SRSProject1"
+TARGET_SUBREDDIT = "stocks"
+#TARGET_SUBREDDIT = "SRSProject1"
 # ------------------------------------------------------------------------------------------ #
 
 
@@ -33,14 +33,18 @@ reddit_db = DB_reddit(DB_POST_TIMEOUT)
 
 
 def send_local(user_id, comment_value, reliability, stock_name, date):
-    publisher  = Sender("10.0.86.232:50000")
+    #Retrieve the kubemw service ip
+    ip_server = socket.gethostbyname("kubemq")
+    string_connection = ip_server+":"+"50000"
+    publisher  = Sender(string_connection)
+    #publisher  = Sender("10.0.86.232:50000")
     event = Event(
         metadata="EventMetaData",
         #body =("hello kubemq - sending single event").encode('UTF-8'),
         body=(":".join([str(c) for c in  [user_id, comment_value, reliability, stock_name, date]])).encode('UTF-8'),
-        store=False,
+        store=True,
         channel="testing_event_channel",
-        client_id="hello-world-subscriber"
+        client_id="reddit-publisher"
     )
     try:
         print("Sto provando ad inviare...")

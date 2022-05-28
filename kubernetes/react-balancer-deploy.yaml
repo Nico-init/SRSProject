@@ -1,29 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reddit-deploy
+  name: react-deploy
   labels:
-    app: reddit-test
+    app: react
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: reddit-test
+      app: react
   template:
     metadata:
       labels:
-        app: reddit-test
+        app: react
     spec:
       containers:
-      - name: reddit-azure
-        #image: nrregistry.azurecr.io/server:2.1
-        image: nrregistry.azurecr.io/reddit-test
-        #tty: true
-        #stdin: true
-        #se non ci metto un comando tipo questo non crea il container (va tipo in loop)
-        #command: ["/bin/sleep", "3650d"]
-        #ports:
-        #- containerPort: 8011
+      - name: react-azure
+        #image: nrregistry.azurecr.io/react-image-test
+        image: nrregistry.azurecr.io/react-nginx
+        ports:
+        #- containerPort: 3000
+        - containerPort: 80
         env:
           - name: KEY_VAULT_NAME
             value: redditKeys
@@ -33,6 +30,19 @@ spec:
             value: tPt8wiHYFt9k-ljI-QhLJsPInTPvWYsA8A
           - name: AZURE_CLIENT_ID
             value: 1e20a665-6170-4f7e-86c2-ed8f8c1429d6
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-load-balancer
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: react
+  type: LoadBalancer
 
 #---
 #apiVersion: v1
