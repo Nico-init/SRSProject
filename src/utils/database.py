@@ -1,10 +1,12 @@
 
-from utils.IDB import *
-from utils.date import now, today, day_in_sec
+from utils.IDB import update_values, add_object_to_table, get_values, delete, exec_query, clean_value_to_str, \
+    delete_all_tables, crate_table, get_all_values
+from utils.date import now, today, day_in_sec, get_timestamp_of_monday_morning
 from utils.DB_enum import TableNames
 from utils.DB_types import Column
-from utils.DB_naming import Comments, Users, Posts
+from utils.DB_naming import Comments, Users, Posts, History
 from utils.SRS_types import Comment, User, Post
+from typing import List, Union, Tuple
 
 
 class DB_reddit:
@@ -173,7 +175,7 @@ def get_users(days_num=None):
 def initialize_user(user_id):
     # initialize points to zero and starting point to zero
     add_object_to_table(TableNames.users,
-                        (Users.user_id, clean_value_to_str(user_id)),
+                        (Users.user_id, user_id),
                         (Users.total_score, 0),
                         (Users.weekly_score, 0),
                         (Users.base, 0)
@@ -191,24 +193,69 @@ def set_user_score(user: User):
                   )
 
 
+def save_user_history(user: User):
+    add_object_to_table(TableNames.history,
+                        (History.user_id, user.user_id),
+                        (History.total_score, user.total_score),
+                        (History.weekly_score, user.weekly_score),
+                        (History.base, user.base),
+                        (History.date, user.date)
+                        )
+
+
 def get_user_history_score_weekly(user_id):
-    return  # lista degli score dell'utente con data
+    condition = f"{History.user_id} = {clean_value_to_str(user_id)} AND {History.date} >= {get_timestamp_of_monday_morning()}"
+
+    requested_values = [History.user_id, History.total_score, History.weekly_score, History.base, History.date]
+    users = [User(u[0], u[1], u[2], u[3], u[4]) for u in
+             get_values(TableNames.history, requested_values, condition, order_by=[History.date], order_by_asc=True)]
+    return users
 
 
 def get_user_history_score_global(user_id, days_limit: int):
-    return  # lista degli score dell'utente con data
+    condition = f"{History.user_id} = {clean_value_to_str(user_id)} AND {History.date} >= {today() - days_limit * day_in_sec()}"
+
+    requested_values = [History.user_id, History.total_score, History.weekly_score, History.base, History.date]
+    users = [User(u[0], u[1], u[2], u[3], u[4]) for u in
+             get_values(TableNames.history, requested_values, condition, order_by=[History.date], order_by_asc=True)]
+    return users
 
 
-def get_last_user_comments(user_id, num_of_elements: int):
-    return  # lista di stock, sentiment e reliability
+def get_last_user_relevant_comments(user_id, num_of_elements: int, days_num=7):
+    """
+    return only the last comment per stock name, written by a user_id
+    :param user_id:
+    :param num_of_elements:
+    :param days_num:
+    :return:
+    """
+    comments = get_user_comments(user_id, days_num, order_by_asc=False)
+    unique_comments_per_stock = {}
+    # fill unique_comments_per_stock with the first comment per stock
+    for c in comments:
+        if c.stock_name not in unique_comments_per_stock:
+            unique_comments_per_stock[c.stock_name] = c
+        if len(unique_comments_per_stock) >= num_of_elements:
+            break
+    return list(unique_comments_per_stock.values())
 
 
 def get_best_users_weekly(num_of_users: int):
-    return  # list of users that have best weekly score this week
+    return get_best_users(num_of_users, order_by_weekly=True)
 
 
 def get_best_users_global(num_of_users: int):
-    return  # list of users that have best global score this week
+    return get_best_users(num_of_users, order_by_weekly=False)
+
+
+def get_best_users(num_of_users: int, order_by_weekly: bool):
+    order_by = Users.weekly_score if order_by_weekly else Users.total_score
+
+    requested_values = [Users.user_id, Users.total_score, Users.weekly_score, Users.base]
+
+    users = [User(u[0], u[1], u[2], u[3]) for u in get_values(TableNames.users, requested_values, order_by=order_by, order_by_asc=False)]
+    return users[:num_of_users]
+
 
 
 def get_user(user_id) -> User:
@@ -234,26 +281,35 @@ def initialize_db():
     col_list = [
         Column(name=Comments.user_id, type="nvarchar(50)"),
         Column(name=Comments.comment_value, type="BIT"),
-        Column(name=Comments.reliability, type="numeric"),
+        Column(name=Comments.reliability, type="real"),
         Column(name=Comments.stock_name, type="nvarchar(50)"),
-        Column(name=Comments.stock_value, type="numeric"),
-        Column(name=Comments.date, type="numeric")
+        Column(name=Comments.stock_value, type="real"),
+        Column(name=Comments.date, type="real")
     ]
     crate_table(TableNames.comments, Comments.comment_id, "int", col_list, autogen=True)
 
     col_list = [
-        Column(name=Users.total_score, type="numeric"),
-        Column(name=Users.weekly_score, type="numeric"),
-        Column(name=Users.base, type="numeric")
+        Column(name=Users.total_score, type="real"),
+        Column(name=Users.weekly_score, type="real"),
+        Column(name=Users.base, type="real")
     ]
     crate_table(TableNames.users, Users.user_id, "nvarchar(50)", col_list, autogen=False)
 
     col_list = [
         Column(name=Posts.comment_id, type="int"),
-        Column(name=Posts.start_time, type="numeric"),
-        Column(name=Posts.last_update, type="numeric")
+        Column(name=Posts.start_time, type="real"),
+        Column(name=Posts.last_update, type="real")
     ]
     crate_table(TableNames.posts, Posts.post_id, "int", col_list, autogen=False)
+
+    col_list = [
+        Column(name=History.user_id, type="nvarchar(50)"),
+        Column(name=History.total_score, type="real"),
+        Column(name=History.weekly_score, type="real"),
+        Column(name=History.base, type="real"),
+        Column(name=History.date, type="real")
+    ]
+    crate_table(TableNames.history, History.history_id, "int", col_list, autogen=True)
 
 
 def reset_db():
@@ -262,27 +318,31 @@ def reset_db():
 
 
 def test_database():
+    pass
     # reset_db()
-    # save_comment(Comment(4, 4, 0.057, 0.70, "AAPL", 0.59, now() - day_in_sec()))
+    # save_comment(Comment(4, "pippo_5", True, 0.798, "AAPL", 15.5912345, now() - day_in_sec()))
     # print(show_tables())
-    # print(get_all_values(TableNames.comments))
+    # print(get_all_values(TableNames.users))
 
     # print([(c.comment_id, c.user_id, c.comment_value, c.reliability, c.stock_name, c.stock_value, c.date)
     #        for c in get_user_comments(5)])
     # print(get_users())
     # print(exists_user(1))
     # delete_all_tables()
-    # set_user_score(User(5, 9, 10, 7))
+    # set_user_score(User("pippo1", 9, 10, 7))
     # print(get_user(2))
     # reddit_db = DB_reddit(100000000000)
     # reddit_db.save_post(7, 2)
     # print(reddit_db.get_posts(10)[0].post_id)
     # print([[[c.user_id, c.comment_value] for c in e] for e in get_stock_comments("AAPL", order_by_global=True)])
     # print("hello world")
-    pass
+    # print([[c.comment_id, c.user_id, c.stock_name, c.comment_value] for c in get_last_user_relevant_comments("Thab-Rudy", 10)])
+    # print([[u.user_id, u.weekly_score] for u in get_best_users_weekly(2)])
+    # save_user_history(User("pippo1", 9, 1, 7, now()))
+    # print([(u.user_id, u.total_score, u.weekly_score, u.base, u.date) for u in get_user_history_score_global("pippo1", 1)])
 
-
-test_database()
+if __name__ == "__main__":
+    test_database()
 
 
 

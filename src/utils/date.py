@@ -21,5 +21,9 @@ def day_in_sec():
     return 24 * 60 * 60
 
 
+def get_timestamp_of_monday_morning():
+    return today() - day_in_sec() * datetime.today().weekday()
+
+
 
 
