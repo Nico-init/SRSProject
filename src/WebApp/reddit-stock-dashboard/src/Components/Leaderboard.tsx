@@ -3,7 +3,6 @@ import Profiles from './Profiles';
 import CSS from 'csstype'
 
 type Props = {
-    DB: any,
     handleClickPanelChange: any
 }
 

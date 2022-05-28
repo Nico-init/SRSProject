@@ -4,7 +4,6 @@ import './Components/comp-styles/Leaderboards-style.css'
 import LeftBar from './Components/LeftBar';
 import Leaderboard from './Components/Leaderboard';
 import Users from './Components/Users';
-import { DB } from "./Components/test-database";
 import Stocks from './Components/Stocks';
 
 
@@ -24,8 +23,8 @@ function App() {
 
   const getActivePanel = (panel: string) => {
     switch (panel) {
-      case "Leaderboards": return <Leaderboard DB={DB} handleClickPanelChange={handleClickPanelChange}></Leaderboard>
-      case "Stocks": return <Stocks DB={DB} stock_symbol={addedSearch}></Stocks>
+      case "Leaderboards": return <Leaderboard handleClickPanelChange={handleClickPanelChange}></Leaderboard>
+      case "Stocks": return <Stocks stock_symbol={addedSearch}></Stocks>
       case "Users": return <Users user={addedSearch}></Users>
       case "Settings": return  <div>Settings</div>
     }

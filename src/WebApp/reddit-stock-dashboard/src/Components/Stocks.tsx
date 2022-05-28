@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 type Props = {
-    DB: any
     stock_symbol: string
 }
 
