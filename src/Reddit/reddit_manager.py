@@ -22,8 +22,8 @@ import socket
 #DB_CHECK_TIMEOUT = 600 # 10 minutes
 DB_CHECK_TIMEOUT = 60 # 1 minutes
 DB_POST_TIMEOUT = 100000000000 # temporarily infinite
-#TARGET_SUBREDDIT = "stocks"
-TARGET_SUBREDDIT = "SRSProject1"
+TARGET_SUBREDDIT = "stocks"
+#TARGET_SUBREDDIT = "SRSProject1"
 # ------------------------------------------------------------------------------------------ #
 
 
