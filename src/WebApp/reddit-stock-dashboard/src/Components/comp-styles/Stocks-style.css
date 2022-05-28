@@ -19,23 +19,3 @@
     height: 85%;
     overflow-y: hidden;
 }
-
-.userBox {
-    margin-right: 5%;
-    margin-left: 5%;
-    margin-top: 2%;
-}
-
-.userName {
-    text-align: left;
-}
-
-.userStats {
-    float: left;
-    text-align: left;
-}
-
-.userGraph {
-    float: right;
-    width: 60%;
-}

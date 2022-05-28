@@ -2,38 +2,75 @@ import React, { useEffect } from 'react'
 import './comp-styles/Users-style.css'
 import './comp-styles/bulma-input.scss'
 import { useState } from 'react'
+import UserInfo from './UserInfo'
 
 type Props = {
-    DB: any
     user: string
+    //handleClickPanelChange: any
+}
+
+export class User {
+    name: string;
+    w_score: number;
+    at_score: number;
+    positive_stocks: Array<string>;
+    negative_stocks: Array<string>;
+    weekly_performance: Array<number>;
+    all_time_performance: Array<number>;
+
+    constructor() {
+        this.name = "None";
+        this.w_score = 0;
+        this.at_score = 0;
+        this.positive_stocks = []
+        this.negative_stocks = []
+        this.weekly_performance = []
+        this.all_time_performance = []
+    }
 }
 
 function Users(props: Props) {
 
-    const [text, setText] = useState("");
+    //const [text, setText] = useState("");
+    const [currentUser, setCurrentUser] = useState(new User())
+
+    const getUserInfo = (text: string) => {
+        fetch("/user/"+text).then(
+            res => res.json()
+        ).then(
+            user => {
+                if (user !== "None") {
+                    console.log(user.name);
+                    setCurrentUser(user);
+                }
+                else {
+                    setCurrentUser(new User())
+                }
+            }
+        )
+        return
+    }
 
     const userCheck = () => {
         if(props.user) {
-            setText(props.user);
+            //setText(props.user);
+            getUserInfo(props.user);
         }
-    }
 
-    useEffect(userCheck, );
+    }
 
     const handleSearch = (e: any) => {
         if(e.key === "Enter") {
-            setText(e.target.value);
+            //setText(e.target.value);
+            getUserInfo(e.target.value);
         }
     }
 
-    const getUserInfo = (text: string) => {
-        for (const u_info of props.DB) {
-            if(u_info.name === text) {
-                return <div>{u_info.name} | {u_info.w_score} | {u_info.at_score}</div>;
-            }
-        }
-        return <div>No User Found</div>;
+    const showUserInfo = (userInfo: User) => {
+        return <UserInfo userInfo={userInfo}></UserInfo>
     }
+
+    useEffect(userCheck, [props.user]); // LOADING USER WHEN COMING FROM LEADERBOARDS LINK
 
     return (
         <div className="panel">
@@ -45,7 +82,7 @@ function Users(props: Props) {
             </div>
             <div className="userInfo">
                 {
-                    getUserInfo(text)
+                    showUserInfo(currentUser)
                 }
             </div>
         </div>

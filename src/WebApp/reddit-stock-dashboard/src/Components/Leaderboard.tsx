@@ -17,8 +17,8 @@ function Leaderboard(props: Props) {
             res => res.json()
         ).then(
             users => {
-                setUsers(users["users"])
-                console.log(users["users"])
+                setUsers(users["all_users"])
+                console.log(users["all_users"])
             }
         )
     }, [])

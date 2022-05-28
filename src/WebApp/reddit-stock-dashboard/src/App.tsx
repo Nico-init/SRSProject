@@ -5,6 +5,7 @@ import LeftBar from './Components/LeftBar';
 import Leaderboard from './Components/Leaderboard';
 import Users from './Components/Users';
 import { DB } from "./Components/test-database";
+import Stocks from './Components/Stocks';
 
 
 function App() {
@@ -24,8 +25,8 @@ function App() {
   const getActivePanel = (panel: string) => {
     switch (panel) {
       case "Leaderboards": return <Leaderboard DB={DB} handleClickPanelChange={handleClickPanelChange}></Leaderboard>
-      case "Stocks": return <div>Stocks</div>
-      case "Users": return <Users DB={DB} user={addedSearch}></Users>
+      case "Stocks": return <Stocks DB={DB} stock_symbol={addedSearch}></Stocks>
+      case "Users": return <Users user={addedSearch}></Users>
       case "Settings": return  <div>Settings</div>
     }
   }
