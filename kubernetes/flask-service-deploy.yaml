@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reddit-deploy
+  name: flask-deploy
   labels:
-    app: reddit-test
+    app: flask-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: reddit-test
+      app: flask-backend
   template:
     metadata:
       labels:
-        app: reddit-test
+        app: flask-backend
     spec:
       containers:
-      - name: reddit-azure
+      - name: flask-azure
         #image: nrregistry.azurecr.io/server:2.1
-        image: nrregistry.azurecr.io/reddit-test
+        image: nrregistry.azurecr.io/flask-back-end
         #tty: true
         #stdin: true
         #se non ci metto un comando tipo questo non crea il container (va tipo in loop)
         #command: ["/bin/sleep", "3650d"]
-        #ports:
-        #- containerPort: 8011
+        ports:
+        - containerPort: 5000
         env:
           - name: KEY_VAULT_NAME
             value: redditKeys
@@ -33,6 +33,17 @@ spec:
             value: tPt8wiHYFt9k-ljI-QhLJsPInTPvWYsA8A
           - name: AZURE_CLIENT_ID
             value: 1e20a665-6170-4f7e-86c2-ed8f8c1429d6
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  selector:
+    app: flask-backend
+  ports:
+  - port: 5000
+    targetPort: 5000
 
 #---
 #apiVersion: v1

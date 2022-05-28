@@ -20,12 +20,12 @@ START PRINT FUNCTIONS
 '''
 def print_comments(list):
     for comment in list:
-        print("- " + str(comment.user_id) + "_" + comment.stock_name + "_" + comment.comment_value + "_" + str(comment.stock_value))
+        print("- " + str(comment.user_id) + "_" + comment.stock_name + "_" + str(comment.comment_value) + "_" + str(comment.stock_value))
 def print_user(user):
     print("==========USER "+str(user.user_id)+"=================")
     print("Weekly Score: " + str(user.weekly_score))
     print("Total Score: " + str(user.total_score))
-    print("Base: " + str(user.base) + ", N: "+str(n))
+    print("Base: " + str(user.base))
 '''
 END PRINT FUNCTIONS
 '''
@@ -128,6 +128,7 @@ def main():
         #get user comments
         user_comments.clear()
         user_comments.extend(get_user_comments(user.user_id, since=monday, order_by_asc=True))
+        print_comments(user_comments)
         #checking if there are some buy/sell for the same stock
         for comment in user_comments:
             user.base += check_buysell(comment)
@@ -139,9 +140,9 @@ def main():
         user.weekly_score = (total + user.base) / n
         user.total_score = user.total_score * alpha + (1 - alpha) * user.weekly_score
         #save user score on db
-        set_user_score(user.user_id, user.total_score, user.weekly_score, user.base)
+        set_user_score(user)
         #debug
-        #print_user(user)
+        print_user(user)
 
 if __name__ == "__main__":
     main()

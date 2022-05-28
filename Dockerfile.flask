@@ -20,14 +20,15 @@ RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
 
 WORKDIR /home/SRSProject
-COPY requirements-scraper.txt /home/SRSProject
+COPY requirements-flask.txt /home/SRSProject
 
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements-scraper.txt
+    pip install --no-cache-dir -r requirements-flask.txt
 
-COPY src/daily_scraper /home/SRSProject/src/daily_scraper
-COPY src/scraper /home/SRSProject/src/scraper
+COPY src/WebApp /home/SRSProject/src/WebApp
 COPY src/utils /home/SRSProject/src/utils
 
-CMD ["python3","-u", "src/scraper/scraper.py"]
+EXPOSE 5000
+
+CMD ["python3","-u", "src/WebApp/flask-server/server.py"]
 #CMD [ "sleep", "3600d" ]

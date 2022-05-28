@@ -5,6 +5,7 @@ import sys
 sys.path.insert( 0, './src' )
 from utils.database import *
 from utils.comunication import *
+from utils.SRS_types import Comment
 from builtins import input
 from random import randint
 from kubemq.events.subscriber import Subscriber
@@ -12,6 +13,7 @@ from kubemq.tools.listener_cancellation_token import ListenerCancellationToken
 from kubemq.subscription.subscribe_type import SubscribeType
 from kubemq.subscription.events_store_type import EventsStoreType
 from kubemq.subscription.subscribe_request import SubscribeRequest
+import socket
 
 def check_stock_name(input):
     result = re.sub(r'[^a-zA-Z.]', '', input)
@@ -39,16 +41,19 @@ def scrape_reddit(event):
             event.body,
             event.tags
         ))
-        """
+        
         #es. event_body = user_id:comment_value:reliability:stock_name:date
-        reddit_info = event.body.split(':')
+        reddit_info = str(event.body.decode("UTF-8")).split(':')
+        #print(reddit_info[0])
+        #print(isinstance(reddit_info[0], str))
         #scrape stock value
         stock_value = scrape_value_yahoo(check_stock_name(reddit_info[3]))
         #save comment on database
-        save_comment(reddit_info[0], reddit_info[1], reddit_info[2], reddit_info[3], stock_value, reddit_info[4])
+        reddit_info[1] = reddit_info[1]=="positive"
+        save_comment(Comment(0, reddit_info[0], reddit_info[1], reddit_info[2], reddit_info[3], stock_value, reddit_info[4]))
         #debug
-        #print(stock_value)
-        """
+        print(stock_value)
+       
 
 def handle_incoming_error(error_msg):
     print("received error:%s'" % (
@@ -61,19 +66,23 @@ def main():
     cancel_token=ListenerCancellationToken()
 
     #Retrieve the kubemw service ip
-    #ip_server = socket.gethostbyname("kubemq")
-    #string_connection = ip_server+":"+"50000"
+    ip_server = socket.gethostbyname("kubemq")
+    string_connection = ip_server+":"+"50000"
     try:
         # Subscribe to events without store
-        subscriber = Subscriber("10.0.86.232:50000")
+        #subscriber = Subscriber("10.0.86.232:50000")
+        subscriber = Subscriber(string_connection)
+        
         print("Creating subscribe request..")
         subscribe_request = SubscribeRequest(
             channel="testing_event_channel",
-            client_id="hello-world-subscriber",
-            events_store_type=EventsStoreType.Undefined,
+            #client_id="hello-world-subscriber",
+            client_id=socket.gethostname(),
+            events_store_type=EventsStoreType.StartFromFirst,
+            #events_store_type=EventsStoreType.Undefined,
             events_store_type_value=0,
-            group="",
-            subscribe_type=SubscribeType.Events
+            group="group1",
+            subscribe_type=SubscribeType.EventsStore
         )
         print("Subscribe request created")
         print("Subscribing in progress..")

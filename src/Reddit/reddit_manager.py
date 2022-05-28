@@ -22,8 +22,8 @@ import socket
 #DB_CHECK_TIMEOUT = 600 # 10 minutes
 DB_CHECK_TIMEOUT = 60 # 1 minutes
 DB_POST_TIMEOUT = 100000000000 # temporarily infinite
-#TARGET_SUBREDDIT = "stocks"
-TARGET_SUBREDDIT = "SRSProject1"
+TARGET_SUBREDDIT = "stocks"
+#TARGET_SUBREDDIT = "SRSProject1"
 # ------------------------------------------------------------------------------------------ #
 
 
@@ -33,14 +33,18 @@ reddit_db = DB_reddit(DB_POST_TIMEOUT)
 
 
 def send_local(user_id, comment_value, reliability, stock_name, date):
-    publisher  = Sender("10.0.86.232:50000")
+    #Retrieve the kubemw service ip
+    ip_server = socket.gethostbyname("kubemq")
+    string_connection = ip_server+":"+"50000"
+    publisher  = Sender(string_connection)
+    #publisher  = Sender("10.0.86.232:50000")
     event = Event(
         metadata="EventMetaData",
         #body =("hello kubemq - sending single event").encode('UTF-8'),
         body=(":".join([str(c) for c in  [user_id, comment_value, reliability, stock_name, date]])).encode('UTF-8'),
-        store=False,
+        store=True,
         channel="testing_event_channel",
-        client_id="hello-world-subscriber"
+        client_id="reddit-publisher"
     )
     try:
         print("Sto provando ad inviare...")
@@ -70,21 +74,23 @@ def check_for_symbols_and_send(c, username, date):
         if is_that_a_stock(symbol):
             c = c.replace('$', '')   # REMOVE ALL STOCK PRE-FIXES FOR TARGET COHERENCE
             analysis_results = sentiment_analysis(c, target=symbol)
-            if (analysis_results[0] > 50):
+            print(analysis_results)
+            if (analysis_results[0] > 0.50):
                 comment_value = "positive"
-                reliability = analysis_results[0] - 50
+                reliability = analysis_results[0] - 0.50
                 #send(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
                 send_local(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
 
                 print("sending a positive comment by {} for this stock: {}. Reliability: [{}]".format(username, symbol, reliability))
-            elif (analysis_results[2] > 50):
+            elif (analysis_results[2] > 0.50):
                 comment_value = "negative"
-                reliability = analysis_results[2] - 50
+                reliability = analysis_results[2] - 0.50
                 #send(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
                 send_local(user_id=username, comment_value=comment_value, reliability=reliability, stock_name=symbol, date=date)
                 
                 print("sending a negative comment by {} for this stock: {}. Reliability: [{}]".format(username, symbol, reliability))
-    
+            else:
+                print("non sono entrato nei cicli")
     return
 
 

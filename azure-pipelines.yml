@@ -11,6 +11,9 @@ resources:
 variables:
   imageRepoReddit: reddit-test
   imageRepoScrapers: scrapers-test
+  imageRepoDailyScraper: daily-scraper
+  imageBackend: flask-back-end
+  imageReact: react-nginx
   tag: '$(Build.BuildId)'
 
 ############Reddit
@@ -39,7 +42,7 @@ stages:
         artifact: 'reddit-manifest'
         publishLocation: 'pipeline'
 
-############Scrapers
+############Scraper
 - stage: BuildScraper
   displayName: Build Scraper image
   dependsOn: []
@@ -64,7 +67,87 @@ stages:
         targetPath: '$(Build.SourcesDirectory)/kubernetes/scrapers-service-deploy.yaml'
         artifact: 'scrapers-manifest'
         publishLocation: 'pipeline'
-        
+
+############Daily scraper
+- stage: BuildDailyScraper
+  displayName: Build DailyScraper image
+  dependsOn: []
+  jobs:
+  - job: BuildDailyScraper
+    displayName: Build Daily scraper
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build Daily scraper
+      inputs:
+        containerRegistry: 'niccolo-AzureContainer-connection'
+        repository: '$(imageRepoDailyScraper)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.dailyscraper'
+        tags: |
+          $(tag)
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/daily-scraper-cronjob.yaml'
+        artifact: 'daily-scraper-manifest'
+        publishLocation: 'pipeline'
+
+############Backend
+- stage: BuildBackend
+  displayName: Build Backend image
+  dependsOn: []
+  jobs:
+  - job: BuildBackend
+    displayName: Build Backend
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build Backend
+      inputs:
+        containerRegistry: 'niccolo-AzureContainer-connection'
+        repository: '$(imageBackend)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.flask'
+        tags: |
+          $(tag)
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/flask-service-deploy.yaml'
+        artifact: 'backend-manifest'
+        publishLocation: 'pipeline'
+
+###########React
+- stage: BuildReact
+  displayName: Build React image
+  dependsOn: []
+  jobs:
+  - job: BuildReact
+    displayName: Build React
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build React
+      inputs:
+        containerRegistry: 'niccolo-AzureContainer-connection'
+        repository: '$(imageReact)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.react-nginx'
+        tags: |
+          $(tag)
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/react-balancer-deploy.yaml'
+        artifact: 'react-manifest'
+        publishLocation: 'pipeline'
+
+
+#####DEPLOYMENTS####################################################################################################
 ############reddit
 - stage: DeployReddit
   displayName: Deploy Reddit to Dev
@@ -144,3 +227,121 @@ stages:
                 $(Pipeline.Workspace)/scrapers-manifest/scrapers-service-deploy.yaml
               containers: '$(acrdevurl)/$(imageRepoScrapers):$(tag)'
 
+
+############DailyScrapers
+- stage: DeployDailyScrapersScraper
+  displayName: Deploy DailyScrapers Scraper to Dev
+  dependsOn: BuildDailyScraper
+  variables: 
+    acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
+  jobs:
+    - deployment: DeployDailyScraper
+      displayName: Deploy daily_scraper to AKS
+      environment: niccolo-aks-environment.default
+      pool:
+        vmImage: ubuntu-latest
+      strategy:
+       runOnce:
+         deploy:
+          steps:     
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'daily-scraper-manifest'
+              targetPath: '$(Pipeline.Workspace)/daily-scraper-manifest'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'createSecret'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
+              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              manifests: |
+                $(Pipeline.Workspace)/daily-scraper-manifest/daily-scraper-cronjob.yaml
+              containers: '$(acrdevurl)/$(imageRepoDailyScraper):$(tag)'
+
+
+############Flask-Backend
+- stage: DeployBackend
+  displayName: Deploy Backend to Dev
+  dependsOn: BuildBackend
+  variables: 
+    acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
+  jobs:
+    - deployment: DeployBackend
+      displayName: Deploy Backend to AKS
+      environment: niccolo-aks-environment.default
+      pool:
+        vmImage: ubuntu-latest
+      strategy:
+       runOnce:
+         deploy:
+          steps:     
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'backend-manifest'
+              targetPath: '$(Pipeline.Workspace)/backend-manifest'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'createSecret'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
+              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'default'
+              manifests: |
+                $(Pipeline.Workspace)/backend-manifest/flask-service-deploy.yaml
+              containers: '$(acrdevurl)/$(imageBackend):$(tag)'
+
+############React-Deployment
+- stage: DeployReact
+  displayName: Deploy React to Dev
+  dependsOn: BuildReact
+  variables: 
+    acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
+  jobs:
+    - deployment: DeployReact
+      displayName: Deploy React to AKS
+      environment: niccolo-aks-environment.webapp-space
+      pool:
+        vmImage: ubuntu-latest
+      strategy:
+       runOnce:
+         deploy:
+          steps:     
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'react-manifest'
+              targetPath: '$(Pipeline.Workspace)/react-manifest'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'createSecret'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'webapp-space'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
+              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'webapp-space'
+              manifests: |
+                $(Pipeline.Workspace)/react-manifest/react-balancer-deploy.yaml
+              containers: '$(acrdevurl)/$(imageReact):$(tag)'
