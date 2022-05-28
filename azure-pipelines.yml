@@ -333,7 +333,7 @@ stages:
             inputs:
               action: 'createSecret'
               #kubernetesServiceConnection: 'niccolo-AKS-connection'
-              namespace: 'webapp-space'
+              namespace: 'default'
               secretType: 'dockerRegistry'
               secretName: '$(acrsecret)'
               dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
@@ -341,7 +341,7 @@ stages:
             inputs:
               action: 'deploy'
               #kubernetesServiceConnection: 'niccolo-AKS-connection'
-              namespace: 'webapp-space'
+              namespace: 'default'
               manifests: |
                 $(Pipeline.Workspace)/react-manifest/react-balancer-deploy.yaml
               containers: '$(acrdevurl)/$(imageReact):$(tag)'
