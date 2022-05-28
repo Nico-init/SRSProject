@@ -13,7 +13,8 @@ function Leaderboard(props: Props) {
     const [users, setUsers] = useState([{}]) // DATA FROM THE BACKEND
 
     useEffect(() => {
-        fetch("/all_users").then(
+        //fetch("/all_users").then(
+        fetch("/backend/all_users").then(
             res => res.json()
         ).then(
             users => {
