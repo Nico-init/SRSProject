@@ -23,3 +23,12 @@ class Posts:
     start_time = "start_time"
     last_update = "last_update"
 
+
+class History:
+    history_id = "history_id"
+    user_id = "user_id"
+    total_score = "total_score"
+    weekly_score = "weekly_score"
+    base = "base"
+    date = "date"
+

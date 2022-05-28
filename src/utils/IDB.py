@@ -16,7 +16,9 @@ from azure.identity import DefaultAzureCredential
 def exec_query(query: str, show_result=False):
     import pyodbc
     server = 'slr-server.database.windows.net'
-    database = 'ScalRelSys'
+    # database = 'ScalRelSys'
+    database = 'testDB'
+
     #username = 'slr_best_admin_ever'
     #password = '{vium4tBuK5DBjKv}'
     driver = 'ODBC Driver 17 for SQL Server'
