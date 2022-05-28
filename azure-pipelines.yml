@@ -16,30 +16,30 @@ variables:
 stages:
 
 ############Backend
-- stage: BuildBackend
-  displayName: Build Backend image
-  dependsOn: []
-  jobs:
-  - job: BuildBackend
-    displayName: Build Backend
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build Backend
-      inputs:
-        containerRegistry: 'niccolo-AzureContainer-connection'
-        repository: '$(imageBackend)'
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.flask'
-        tags: |
-          $(tag)
-    
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: '$(Build.SourcesDirectory)/kubernetes/flask-service-deploy.yaml'
-        artifact: 'backend-manifest'
-        publishLocation: 'pipeline'
+#- stage: BuildBackend
+#  displayName: Build Backend image
+#  dependsOn: []
+#  jobs:
+#  - job: BuildBackend
+#    displayName: Build Backend
+#    pool:
+#      vmImage: ubuntu-latest
+#    steps:
+#    - task: Docker@2
+#      displayName: Build Backend
+#      inputs:
+#        containerRegistry: 'niccolo-AzureContainer-connection'
+#        repository: '$(imageBackend)'
+#        command: 'buildAndPush'
+#        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.flask'
+#        tags: |
+#          $(tag)
+#    
+#    - task: PublishPipelineArtifact@1
+#      inputs:
+#        targetPath: '$(Build.SourcesDirectory)/kubernetes/flask-service-deploy.yaml'
+#        artifact: 'backend-manifest'
+#        publishLocation: 'pipeline'
 
 ###########React
 - stage: BuildReact
@@ -71,46 +71,46 @@ stages:
 #####DEPLOYMENTS####################################################################################################
 ############reddit
 
-############Flask-Backend
-- stage: DeployBackend
-  displayName: Deploy Backend to Dev
-  dependsOn: BuildBackend
-  variables: 
-    acrsecret: k8sexamplesacrauth
-    acrdevurl: 'nrregistry.azurecr.io'
-  jobs:
-    - deployment: DeployBackend
-      displayName: Deploy Backend to AKS
-      environment: niccolo-aks-environment.webapp-space
-      pool:
-        vmImage: ubuntu-latest
-      strategy:
-       runOnce:
-         deploy:
-          steps:     
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              buildType: 'current'
-              artifactName: 'backend-manifest'
-              targetPath: '$(Pipeline.Workspace)/backend-manifest'
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'createSecret'
-              #kubernetesServiceConnection: 'niccolo-AKS-connection'
-              namespace: 'webapp-space'
-              secretType: 'dockerRegistry'
-              secretName: '$(acrsecret)'
-              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'deploy'
-              #kubernetesServiceConnection: 'niccolo-AKS-connection'
-              namespace: 'webapp-space'
-              manifests: |
-                $(Pipeline.Workspace)/backend-manifest/flask-service-deploy.yaml
-              containers: '$(acrdevurl)/$(imageBackend):$(tag)'
-
-
+#############Flask-Backend
+#- stage: DeployBackend
+#  displayName: Deploy Backend to Dev
+#  dependsOn: BuildBackend
+#  variables: 
+#    acrsecret: k8sexamplesacrauth
+#    acrdevurl: 'nrregistry.azurecr.io'
+#  jobs:
+#    - deployment: DeployBackend
+#      displayName: Deploy Backend to AKS
+#      environment: niccolo-aks-environment.webapp-space
+#      pool:
+#        vmImage: ubuntu-latest
+#      strategy:
+#       runOnce:
+#         deploy:
+#          steps:     
+#          - task: DownloadPipelineArtifact@2
+#            inputs:
+#              buildType: 'current'
+#              artifactName: 'backend-manifest'
+#              targetPath: '$(Pipeline.Workspace)/backend-manifest'
+#          - task: KubernetesManifest@0
+#            inputs:
+#              action: 'createSecret'
+#              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+#              namespace: 'webapp-space'
+#              secretType: 'dockerRegistry'
+#              secretName: '$(acrsecret)'
+#              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+#          - task: KubernetesManifest@0
+#            inputs:
+#              action: 'deploy'
+#              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+#              namespace: 'webapp-space'
+#              manifests: |
+#                $(Pipeline.Workspace)/backend-manifest/flask-service-deploy.yaml
+#              containers: '$(acrdevurl)/$(imageBackend):$(tag)'
+#
+#
 ############React-Deployment
 - stage: DeployReact
   displayName: Deploy React to Dev
