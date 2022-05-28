@@ -13,7 +13,7 @@ function Leaderboard(props: Props) {
     const [users, setUsers] = useState([{}]) // DATA FROM THE BACKEND
 
     useEffect(() => {
-        fetch("/all_users").then(
+        fetch("http://flask-service:5000").then(
             res => res.json()
         ).then(
             users => {
