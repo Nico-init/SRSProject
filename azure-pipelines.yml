@@ -317,7 +317,7 @@ stages:
   jobs:
     - deployment: DeployReact
       displayName: Deploy React to AKS
-      environment: niccolo-aks-environment.webapp-space
+      environment: niccolo-aks-environment.default
       pool:
         vmImage: ubuntu-latest
       strategy:
