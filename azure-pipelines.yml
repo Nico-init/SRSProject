@@ -10,7 +10,7 @@ resources:
 
 variables:
   imageBackend: flask-back-end-test
-  imageReact: react-image-test
+  imageReact: react-nginx
   tag: '$(Build.BuildId)'
 
 stages:
@@ -57,7 +57,7 @@ stages:
         containerRegistry: 'niccolo-AzureContainer-connection'
         repository: '$(imageReact)'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.react'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.react-nginx'
         tags: |
           $(tag)
     
