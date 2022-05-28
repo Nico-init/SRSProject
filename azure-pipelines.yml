@@ -13,6 +13,7 @@ variables:
   imageRepoScrapers: scrapers-test
   imageRepoDailyScraper: daily-scraper
   imageBackend: flask-back-end
+  imageReact: react-nginx
   tag: '$(Build.BuildId)'
 
 ############Reddit
@@ -115,9 +116,36 @@ stages:
     
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Build.SourcesDirectory)/kubernetes/backend-service-deploy.yaml'
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/flask-service-deploy.yaml'
         artifact: 'backend-manifest'
         publishLocation: 'pipeline'
+
+###########React
+- stage: BuildReact
+  displayName: Build React image
+  dependsOn: []
+  jobs:
+  - job: BuildReact
+    displayName: Build React
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build React
+      inputs:
+        containerRegistry: 'niccolo-AzureContainer-connection'
+        repository: '$(imageReact)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.react-nginx'
+        tags: |
+          $(tag)
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)/kubernetes/react-balancer-deploy.yaml'
+        artifact: 'react-manifest'
+        publishLocation: 'pipeline'
+
 
 #####DEPLOYMENTS####################################################################################################
 ############reddit
@@ -276,5 +304,44 @@ stages:
               #kubernetesServiceConnection: 'niccolo-AKS-connection'
               namespace: 'default'
               manifests: |
-                $(Pipeline.Workspace)/backend-manifest/backend-service-deploy.yaml
+                $(Pipeline.Workspace)/backend-manifest/flask-service-deploy.yaml
               containers: '$(acrdevurl)/$(imageBackend):$(tag)'
+
+############React-Deployment
+- stage: DeployReact
+  displayName: Deploy React to Dev
+  dependsOn: BuildReact
+  variables: 
+    acrsecret: k8sexamplesacrauth
+    acrdevurl: 'nrregistry.azurecr.io'
+  jobs:
+    - deployment: DeployReact
+      displayName: Deploy React to AKS
+      environment: niccolo-aks-environment.webapp-space
+      pool:
+        vmImage: ubuntu-latest
+      strategy:
+       runOnce:
+         deploy:
+          steps:     
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'react-manifest'
+              targetPath: '$(Pipeline.Workspace)/react-manifest'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'createSecret'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'webapp-space'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
+              dockerRegistryEndpoint: 'niccolo-AzureContainer-connection'
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+              #kubernetesServiceConnection: 'niccolo-AKS-connection'
+              namespace: 'webapp-space'
+              manifests: |
+                $(Pipeline.Workspace)/react-manifest/react-balancer-deploy.yaml
+              containers: '$(acrdevurl)/$(imageReact):$(tag)'
