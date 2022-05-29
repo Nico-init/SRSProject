@@ -9,15 +9,18 @@ type Props = {
 function Leaderboard(props: Props) {
 
     const [isWeekly, setWeekly] = useState(true)
-    const [users, setUsers] = useState([{}]) // DATA FROM THE BACKEND
+    const [usersByWeekly, setUsersByWeekly] = useState([{}])
+    const [usersByTotal, setUsersByTotal] = useState([{}])
+
 
     useEffect(() => {
         fetch("/all_users").then(
             res => res.json()
         ).then(
             users => {
-                setUsers(users["all_users"])
-                console.log(users["all_users"])
+                setUsersByWeekly(JSON.parse(users.weekly))
+                setUsersByTotal(JSON.parse(users.total))
+                console.log(users)
             }
         )
     }, [])
@@ -40,7 +43,7 @@ function Leaderboard(props: Props) {
             <button style={!isWeekly ? buttonStylePressed : buttonStyleNotPressed} onClick={handleClick} data-id='0'>All-Time</button>
         </div>
 
-        <Profiles isWeekly={isWeekly} DB={sort(users, isWeekly)} handleClickPanelChange={props.handleClickPanelChange}></Profiles>
+        <Profiles isWeekly={isWeekly} users={isWeekly ? usersByWeekly : usersByTotal} handleClickPanelChange={props.handleClickPanelChange}></Profiles>
 
         </div>
     )
@@ -49,7 +52,7 @@ function Leaderboard(props: Props) {
 
 export default Leaderboard;
 
-function sort(data: any, isWeekly: boolean) {
+/*function sort(data: any, isWeekly: boolean) {
     return data.sort((a: any, b: any) => {
         if (isWeekly) {
             if ( a.w_score === b.w_score){
@@ -66,7 +69,7 @@ function sort(data: any, isWeekly: boolean) {
             }
         }
     })
-}
+}*/
 
 const buttonStylePressed: CSS.Properties = {
     backgroundColor: "#2C3131", color: "#F3F3F2"
