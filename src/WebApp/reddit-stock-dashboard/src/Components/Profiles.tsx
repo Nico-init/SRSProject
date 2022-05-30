@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = {
-    DB: any,
+    users: any,
     isWeekly: boolean,
     handleClickPanelChange: any
 }
@@ -9,7 +9,7 @@ type Props = {
 function Profiles(props: Props) {
     return (
         <div id="profile">  
-            {Items(props.DB, props.isWeekly, props.handleClickPanelChange)}
+            {Items(props.users, props.isWeekly, props.handleClickPanelChange)}
         </div>
     )
 }
@@ -33,11 +33,11 @@ function Items(data: any, isWeekly: boolean, handleClickPanelChange: any) {
                             <div className="item">            
                                 <div className="info">
                                     <span className="name text-dark">{index+1}.&emsp;</span>
-                                    <span style={{cursor: "pointer", color: "blue", textDecoration: "underline"}} className='name text-dark' onClick={() => handleClickProfile(value.name)}>{value.name}</span>   
+                                    <span style={{cursor: "pointer", color: "blue", textDecoration: "underline"}} className='name text-dark' onClick={() => handleClickProfile(value.user_id)}>{value.user_id}</span>   
                                 </div>                 
                             </div>
                             <div className="item">
-                                {isWeekly ? <span>{value.w_score}</span> : <span>{value.at_score}</span>} 
+                                {isWeekly ? <span>{value.weekly_score}</span> : <span>{value.total_score}</span>} 
                             </div>
                         </div>
                         <hr className="rounded"></hr>
