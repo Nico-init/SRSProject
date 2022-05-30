@@ -32,5 +32,5 @@ EXPOSE 5000
 
 # i need to use all the path for the import src
 CMD gunicorn src.WebApp.flask-server.server:app -w 2 --threads 2 -b 0.0.0.0:5000
-#CMD gunicorn src.WebApp.flask-server.server:app --worker-class=gevent --worker-connections=1000 --workers=3 -b 0.0.0.0:5000
+#CMD gunicorn src.WebApp.flask-server.server:app --worker-class=gevent --worker-connections=1000 --workers=3 -b 0.0.0.0:5000    ##Requires gevent >= 1.4 (or install it via pip install gunicorn[gevent])
 #CMD [ "sleep", "3600d" ]
