@@ -14,6 +14,7 @@ from kubemq.subscription.subscribe_type import SubscribeType
 from kubemq.subscription.events_store_type import EventsStoreType
 from kubemq.subscription.subscribe_request import SubscribeRequest
 import socket
+import time
 
 def check_stock_name(input):
     result = re.sub(r'[^a-zA-Z.]', '', input)
@@ -92,9 +93,11 @@ def main():
         print('error, error:%s' % (
             err
         ))
-    input("Press 'Enter' to stop Listen...\n")
-    cancel_token.cancel()
-    input("Press 'Enter' to stop the application...\n")
+    while True:
+        time.sleep(0.3)
+    #input("Press 'Enter' to stop Listen...\n")
+    #cancel_token.cancel()
+    #input("Press 'Enter' to stop the application...\n")
 
 if __name__ == "__main__":
     main()
