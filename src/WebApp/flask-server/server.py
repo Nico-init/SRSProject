@@ -4,6 +4,7 @@ import json
 sys.path.insert( 0, './src' ) 
 from utils.database import *
 from utils.SRS_types import User
+sys.path.insert( 0, './src/WebApp/flask-server' ) 
 import test_db_list
 
 with open('./src/WebApp/flask-server/test_db.json', 'r') as db_file:
