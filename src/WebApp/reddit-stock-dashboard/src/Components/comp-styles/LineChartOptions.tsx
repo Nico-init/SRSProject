@@ -2,10 +2,14 @@ import { ApexOptions } from 'apexcharts'
 
 export const defaultOptions: ApexOptions = {
   chart: {
-    height: 350,
     type: 'line',
     zoom: {
-      enabled: true
+      enabled: false
+    }
+  },
+  yaxis: {
+    title: {
+      text: 'Score'
     }
   },
   grid: {

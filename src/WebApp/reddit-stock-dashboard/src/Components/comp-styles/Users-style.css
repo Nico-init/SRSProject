@@ -39,3 +39,11 @@
     float: right;
     width: 60%;
 }
+
+.weeklyGraph {
+    height: 50%;
+}
+
+.totalGraph {
+    height: 50%;
+}

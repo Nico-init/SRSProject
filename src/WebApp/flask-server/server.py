@@ -30,8 +30,8 @@ def get_user_info(username):
     except Exception: return jsonify("None")
     res = {
         "user": json.dumps(vars(user)),
-        "weekly_history": json.dumps(vars(u) for u in test_db_list.get_user_score_history_weekly(username)),
-        "total_history": json.dumps(vars(u) for u in test_db_list.get_user_score_history_weekly(username))
+        "weekly_history": json.dumps([u.weekly_score for u in test_db_list.get_user_score_history_weekly(username)]),
+        "total_history": json.dumps([u.total_score for u in test_db_list.get_user_score_history_weekly(username)])
     }
     return jsonify(res)
 

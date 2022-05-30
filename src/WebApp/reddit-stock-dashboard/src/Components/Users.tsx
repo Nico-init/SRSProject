@@ -4,6 +4,7 @@ import './comp-styles/bulma-input.scss'
 import { useState } from 'react'
 import UserInfo from './UserInfo'
 
+
 type Props = {
     user: string
     //handleClickPanelChange: any
@@ -11,8 +12,8 @@ type Props = {
 
 export class User {
     name: string;
-    w_score: number;
-    at_score: number;
+    weekly_score: number;
+    total_score: number;
     positive_stocks: Array<string>;
     negative_stocks: Array<string>;
     weekly_performance: Array<number>;
@@ -20,8 +21,8 @@ export class User {
 
     constructor() {
         this.name = "None";
-        this.w_score = 0;
-        this.at_score = 0;
+        this.weekly_score = 0;
+        this.total_score = 0;
         this.positive_stocks = []
         this.negative_stocks = []
         this.weekly_performance = []
@@ -40,8 +41,15 @@ function Users(props: Props) {
         ).then(
             user => {
                 if (user !== "None") {
-                    console.log(user.name);
-                    setCurrentUser(user);
+                    let u = JSON.parse(user['user']);
+                    let temp = new User();
+                    temp.name = u.user_id;
+                    temp.weekly_score = u.weekly_score;
+                    temp.total_score = u.total_score;
+                    temp.weekly_performance = JSON.parse(user['weekly_history'])
+                    temp.all_time_performance = JSON.parse(user['total_history'])
+                    console.log(temp.name);
+                    setCurrentUser(temp);
                 }
                 else {
                     setCurrentUser(new User())
