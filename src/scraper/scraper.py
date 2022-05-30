@@ -61,6 +61,17 @@ def handle_incoming_error(error_msg):
         error_msg
     ))
 
+def fake_function(event):
+    if event:
+        print("Subscriber Received Event: Metadata:'%s', Channel:'%s', Body:'%s tags:%s \n" % (
+            event.metadata,
+            event.channel,
+            event.body,
+            event.tags
+        ))
+    print("fine fake_function")
+
+
 def main():
     #read from the queue and scrape the value
     print("Subscribing to event on channel testing_event_channel")
@@ -87,7 +98,8 @@ def main():
         )
         print("Subscribe request created")
         print("Subscribing in progress..")
-        subscriber.subscribe_to_events(subscribe_request, scrape_reddit, handle_incoming_error,cancel_token)
+        #subscriber.subscribe_to_events(subscribe_request, scrape_reddit, handle_incoming_error,cancel_token)
+        subscriber.subscribe_to_events(subscribe_request, fake_function, handle_incoming_error,cancel_token)
         print("Scraper subscribed successfully!")
     except Exception as err:
         print('error, error:%s' % (
