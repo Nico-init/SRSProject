@@ -21,6 +21,7 @@ spec:
         ports:
         #- containerPort: 3000
         - containerPort: 80
+        - containerPort: 443
         env:
           - name: KEY_VAULT_NAME
             value: redditKeys
