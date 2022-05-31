@@ -139,10 +139,15 @@ def main():
                 user.base += check_buysell(comment)
                 #calculating the profit ratio
             for comment in user_comments:
-                total += calculate_profit(comment)
-                n += 1
+                percentage = calculate_profit(comment)
+                if (percentage is not None):
+                    total += percentage
+                    n += 1
             #updating weekly score
-            user.weekly_score = (total + user.base) / n
+            if (n != 0):
+                user.weekly_score = (total + user.base) / n
+            else:
+                user.weekly_score = 0
         else:
             #updating weekly score
             user.weekly_score = 0
@@ -151,6 +156,8 @@ def main():
         user.total_score = user.total_score * alpha + (1 - alpha) * user.weekly_score
         #save user score on db
         set_user_score(user)
+        #save user history
+        save_user_history(user)
         ## DEBUG:
         print_user(user)
 
