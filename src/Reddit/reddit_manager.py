@@ -137,8 +137,11 @@ def find_and_check_new_comments(reddit):
             if post_instance.comments.__len__() > post.comment_id:   # There are new comments
                 print("Found new comments for {}".format(post_instance.id))
                 for comment in post_instance.comments[post.comment_id:]:
-                    check_for_symbols_and_send(comment.body, comment.author.name, comment.created_utc)
-            
+                    try:
+                        check_for_symbols_and_send(comment.body, comment.author.name, comment.created_utc)
+                    except:
+                        print("Unable to process comment!")
+
             reddit_db.save_post(base36decode(post_id), post_instance.comments.__len__())
         time.sleep(60)
     
