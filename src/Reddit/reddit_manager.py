@@ -47,7 +47,7 @@ def send_local(user_id, comment_value, reliability, stock_name, date):
         client_id="reddit-publisher"
     )
     try:
-        print("Sto provando ad inviare...")
+        print("Sending event...")
         res = publisher.send_event(event)
         print(res)
         print()
