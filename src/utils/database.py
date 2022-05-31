@@ -351,8 +351,8 @@ def test_database():
     # print( get_user_history_score_global("pippo1", 100))
     # print(get_user_history_score_weekly("pippo1"))
 
-if __name__ == "__main__":
-    test_database()
+    if __name__ == "__main__":
+        test_database()
 
 
 
