@@ -23,11 +23,6 @@
 .userBox {
     margin-right: 5%;
     margin-left: 5%;
-    margin-top: 2%;
-}
-
-.userName {
-    text-align: left;
 }
 
 .userStats {
@@ -38,10 +33,12 @@
 .userGraph {
     float: right;
     width: 60%;
+    margin-top: 1%;
 }
 
 .weeklyGraph {
     height: 50%;
+    margin-top: 0%;
 }
 
 .totalGraph {

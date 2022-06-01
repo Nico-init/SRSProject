@@ -12,11 +12,15 @@ function App() {
   const [collapsed, setCollapsed] = useState(true);
   const [toggled, setToggled] = useState(true);
   const [activeMainPanel, setActiveMainPanel] = useState("Leaderboards")
-  const [addedSearch, setAddedSearch] = useState("")
+  const [addedSearchUser, setAddedSearchUser] = useState("")
+  const [addedSearchStock, setAddedSearchStock] = useState("")
 
   const handleClickPanelChange = (panel: string, search: string) => {
-    if(search) {
-      setAddedSearch(search);
+    if(search && panel === "Users") {
+      setAddedSearchUser(search);
+    }
+    else if (search && panel === "Stocks") {
+      setAddedSearchStock(search)
     }
     setActiveMainPanel(panel);
   }
@@ -24,8 +28,8 @@ function App() {
   const getActivePanel = (panel: string) => {
     switch (panel) {
       case "Leaderboards": return <Leaderboard handleClickPanelChange={handleClickPanelChange}></Leaderboard>
-      case "Stocks": return <Stocks stock_symbol={addedSearch}></Stocks>
-      case "Users": return <Users user={addedSearch}></Users>
+      case "Stocks": return <Stocks stock_symbol={addedSearchStock} handleClickPanelChange={handleClickPanelChange}></Stocks>
+      case "Users": return <Users user={addedSearchUser} handleClickPanelChange={handleClickPanelChange}></Users>
       case "Settings": return  <div>Settings</div>
     }
   }

@@ -3,18 +3,21 @@ import { User } from './Users'
 import ReactApexChart from 'react-apexcharts'
 import {defaultOptions} from './comp-styles/LineChartOptions'
 import {ApexOptions} from 'apexcharts'
+import StarRating from './StarRating'
 
 type Props = {
     userInfo: User
+    handleClickPanelChange: any
 }
 
 function UserInfo(props: Props) {
+  const [chartOptionsW, setChartOptionsW] = useState(defaultOptions);
+  const [chartOptionsT, setChartOptionsT] = useState(defaultOptions);
+  const [chartSeriesW, setChartSeriesW] = useState([{data: [0]}]);
+  const [chartSeriesT, setChartSeriesT] = useState([{data: [0]}]);
+  const [reliability, setReliability] = useState(0.0);
 
-  //const [chartType, setChartType] = useState("weekly");ul
-  const [chartOptions, setChartOptions] = useState(defaultOptions)
-  const [chartSeries, setChartSeries] = useState([{data: [0]}])
-
-  const newOptions = (performance: number[]) => {
+  const newOptions = (color: string, performance: number[], show: boolean, dataLabels: boolean, title: string) => {
     var op: ApexOptions = {
       chart: {
         type: 'line',
@@ -22,11 +25,17 @@ function UserInfo(props: Props) {
           enabled: false
         }
       },
+      title: {
+        text: title
+      },
+      colors: [color],
       yaxis: {
         title: {
           text: 'Score'
         },
-        max: Math.max(...performance)
+        min: 0,
+        max: Math.max(...performance)+0.25*Math.max(...performance),
+        tickAmount: 6
       },
       grid: {
         borderColor: '#e7e7e7',
@@ -36,10 +45,16 @@ function UserInfo(props: Props) {
         },
       },
       markers: {
-        size: 1
+        size: 0
       },
       dataLabels: {
-        enabled: true
+        enabled: dataLabels
+      },
+      xaxis: {
+        categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        labels: {
+          show: show
+        }
       }
     }
     return op;
@@ -47,30 +62,66 @@ function UserInfo(props: Props) {
 
   const updateOptions = () => {
     if(props.userInfo.name !== "None") {
-      setChartSeries([{data: props.userInfo.weekly_performance}])
-      setChartOptions(newOptions(props.userInfo.weekly_performance));
+      setChartSeriesW([{data: props.userInfo.weekly_performance}]);
+      setChartOptionsW(newOptions("#6495ED", props.userInfo.weekly_performance, true, true, "User performance for current week"));
+      setChartSeriesT([{data: props.userInfo.all_time_performance}]);
+      setChartOptionsT(newOptions("#50C878", props.userInfo.all_time_performance, false, false, "Total user performance"));
     }
     else {
-      setChartSeries([{data: [0]}])
-      setChartOptions(defaultOptions)
+      setChartSeriesW([{data: [0]}]);
+      setChartOptionsW(defaultOptions);
+      setChartSeriesT([{data: [0]}]);
+      setChartOptionsT(defaultOptions);
     }
+
+    let r: any[] = [];
+    props.userInfo.stocks.forEach(s => {
+      r.push(s.reliability)
+    });
+    setReliability(Math.round((r.reduce((a,b) => a+b, 0) / r.length)*10) || 0)
   }
 
-  useEffect(updateOptions, );
+  const handleClickStock = (stock_name: string) => {
+    props.handleClickPanelChange("Stocks", stock_name);
+  }
+
+  useEffect(updateOptions, [props.userInfo]);
 
   return (
     <div className='userBox'>
-        <h2 className='userName'>{props.userInfo.name}</h2>
-        <br/><br/>
+        <br></br>
         <div className='userStats'>
-            <h3 className='score'>Weekly Score: {props.userInfo.weekly_score}</h3>
-            <h3 className='score'>All Time Score: {props.userInfo.total_score}</h3>
-            <br/>
-            Positive/negative stocks
+          <h2 className='userName'>{props.userInfo.name}</h2>
+          <StarRating num_stars={reliability}></StarRating>
+          <br/><br/>
+          <h3 className='score'>Weekly Score: {props.userInfo.weekly_score}</h3>
+          <h3 className='score'>All Time Score: {props.userInfo.total_score}</h3>
+          <br/>
+          <br/>
+          <h3>Comments in the past 7 days:</h3>
+          <div className='scrollableLog'>
+            <>
+            {
+              props.userInfo.stocks.map((value: any, index: number) => (
+                <div className='commentEntry' key={index}>
+                <span>{value.date}:&emsp;</span>
+                {value.comment_value ? <span style={{"color": "green"}}>POSITIVE</span> : <span style={{"color": "red"}}>NEGATIVE</span>}
+                <span> for </span>
+                <span style={{cursor: "pointer", color: "blue", textDecoration: "underline"}} className='name text-dark' onClick={() => handleClickStock(value.stock_name)}>{value.stock_name}</span>
+                </div>
+
+              ))
+            }
+            </>
+          </div>
         </div>
         <div className="userGraph">
-          <h3 className='chartTitle'>Temp</h3>
-          <ReactApexChart options={chartOptions} series={chartSeries} type="line" height={350}/>
+          <div className="weeklyGraph">
+            <ReactApexChart options={chartOptionsW} series={chartSeriesW} type="line" height={200}/>
+          </div>
+          <div className="totalGraph">
+            <ReactApexChart options={chartOptionsT} series={chartSeriesT} type="line" height={200}/>
+          </div>
         </div>
     </div>
   )

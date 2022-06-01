@@ -19,19 +19,19 @@ def all_users():
 def user(username):
     return get_user_info(username)
 
+@app.route("/stock/<symbol>")
+def stock(symbol):
+    return get_stock_info(symbol)
+
 def get_user_info(username):
-    #username = 'u/' + username  #ONLY IF THE REDDIT USERNAMES BEGIN WITH u/, OTHERWISE COMMENT THIS
-    #for u in db['all_users']:
-    #    if u['name'] == username:
-    #        return u
-    #return jsonify("None")
     try:
         user = test_db_list.get_user(username)
     except Exception: return jsonify("None")
     res = {
         "user": json.dumps(vars(user)),
         "weekly_history": json.dumps([u.weekly_score for u in test_db_list.get_user_score_history_weekly(username)]),
-        "total_history": json.dumps([u.total_score for u in test_db_list.get_user_score_history_weekly(username)])
+        "total_history": json.dumps([u.total_score for u in test_db_list.get_user_score_history_weekly(username)]),
+        "relevant_comments": json.dumps([vars(c) for c in test_db_list.get_last_user_relevant_comments(username)])
     }
     return jsonify(res)
 
@@ -41,6 +41,12 @@ def get_all_users():
         "total": json.dumps([vars(u) for u in test_db_list.get_best_users_global()])
     }
     return jsonify(res)
+
+
+def get_stock_info(symbol):
+    return json.dumps([[vars(c) for c in s] for s in test_db_list.get_stock_comments(symbol)])
+
+
 
 if __name__ == "__main__":
     app.run(

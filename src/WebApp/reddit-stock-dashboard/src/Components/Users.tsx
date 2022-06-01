@@ -7,15 +7,14 @@ import UserInfo from './UserInfo'
 
 type Props = {
     user: string
-    //handleClickPanelChange: any
+    handleClickPanelChange: any
 }
 
 export class User {
     name: string;
     weekly_score: number;
     total_score: number;
-    positive_stocks: Array<string>;
-    negative_stocks: Array<string>;
+    stocks: Array<any>;
     weekly_performance: Array<number>;
     all_time_performance: Array<number>;
 
@@ -23,8 +22,7 @@ export class User {
         this.name = "None";
         this.weekly_score = 0;
         this.total_score = 0;
-        this.positive_stocks = []
-        this.negative_stocks = []
+        this.stocks = []
         this.weekly_performance = []
         this.all_time_performance = []
     }
@@ -46,8 +44,9 @@ function Users(props: Props) {
                     temp.name = u.user_id;
                     temp.weekly_score = u.weekly_score;
                     temp.total_score = u.total_score;
-                    temp.weekly_performance = JSON.parse(user['weekly_history'])
-                    temp.all_time_performance = JSON.parse(user['total_history'])
+                    temp.weekly_performance = JSON.parse(user['weekly_history']);
+                    temp.all_time_performance = JSON.parse(user['total_history']);
+                    temp.stocks = JSON.parse(user['relevant_comments']);
                     console.log(temp.name);
                     setCurrentUser(temp);
                 }
@@ -75,7 +74,7 @@ function Users(props: Props) {
     }
 
     const showUserInfo = (userInfo: User) => {
-        return <UserInfo userInfo={userInfo}></UserInfo>
+        return <UserInfo userInfo={userInfo} handleClickPanelChange={props.handleClickPanelChange}></UserInfo>
     }
 
     useEffect(userCheck, [props.user]); // LOADING USER WHEN COMING FROM LEADERBOARDS LINK
