@@ -40,7 +40,7 @@ spec:
       #imagePullSecrets:
       #  - name: regcred
 ---
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: scraper-autoscaler
