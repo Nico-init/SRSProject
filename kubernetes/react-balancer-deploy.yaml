@@ -55,8 +55,25 @@ spec:
   selector:
     app: react
   type: LoadBalancer
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: react-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: react-deploy
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 70
+---
+
+
+
 #---
-#apiVersion: autoscaling/v1
+#apiVersion: autoscaling/v2
 #kind: HorizontalPodAutoscaler
 #metadata:
 #  name: react-autoscaler

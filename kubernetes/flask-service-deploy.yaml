@@ -50,7 +50,20 @@ spec:
   - port: 5000
     targetPort: 5000
 ---
-#apiVersion: autoscaling/v1
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: flask-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: flask-deploy
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 50
+#---
+#apiVersion: autoscaling/v2
 #kind: HorizontalPodAutoscaler
 #metadata:
 #  name: flask-autoscaler
