@@ -174,12 +174,15 @@ def get_users(days_num=None):
 # # when save_comment, must call this
 def initialize_user(user_id):
     # initialize points to zero and starting point to zero
-    add_object_to_table(TableNames.users,
-                        (Users.user_id, user_id),
-                        (Users.total_score, 0),
-                        (Users.weekly_score, 0),
-                        (Users.base, 0)
-                        )
+    try:
+        add_object_to_table(TableNames.users,
+                            (Users.user_id, user_id),
+                            (Users.total_score, 0),
+                            (Users.weekly_score, 0),
+                            (Users.base, 0)
+                            )
+    except:
+        pass
 
 
 def set_user_score(user: User):
@@ -194,6 +197,7 @@ def set_user_score(user: User):
 
 
 def save_user_history(user: User):
+    user.date = now()
     add_object_to_table(TableNames.history,
                         (History.user_id, user.user_id),
                         (History.total_score, user.total_score),
@@ -209,7 +213,8 @@ def get_user_history_score_weekly(user_id):
     requested_values = [History.user_id, History.total_score, History.weekly_score, History.base, History.date]
     users = [User(u[0], u[1], u[2], u[3], u[4]) for u in
              get_values(TableNames.history, requested_values, condition, order_by=[History.date], order_by_asc=True)]
-    return users
+    scores = [{"x": u.date * 1000, "y": u.weekly_score} for u in users]
+    return scores
 
 
 def get_user_history_score_global(user_id, days_limit: int):
@@ -218,7 +223,8 @@ def get_user_history_score_global(user_id, days_limit: int):
     requested_values = [History.user_id, History.total_score, History.weekly_score, History.base, History.date]
     users = [User(u[0], u[1], u[2], u[3], u[4]) for u in
              get_values(TableNames.history, requested_values, condition, order_by=[History.date], order_by_asc=True)]
-    return users
+    scores = [{"x": u.date * 1000, "y": u.total_score} for u in users]
+    return scores
 
 
 def get_last_user_relevant_comments(user_id, num_of_elements: int, days_num=7):
@@ -318,11 +324,14 @@ def reset_db():
 
 
 def test_database():
-    pass
+    # pass
     # reset_db()
     # save_comment(Comment(4, "pippo_5", True, 0.798, "AAPL", 15.5912345, now() - day_in_sec()))
     # print(show_tables())
+    # print(now())
+    # print(today())
     # print(get_all_values(TableNames.users))
+    # print(exists_user("mgmt_professor"))
 
     # print([(c.comment_id, c.user_id, c.comment_value, c.reliability, c.stock_name, c.stock_value, c.date)
     #        for c in get_user_comments(5)])
@@ -339,10 +348,11 @@ def test_database():
     # print([[c.comment_id, c.user_id, c.stock_name, c.comment_value] for c in get_last_user_relevant_comments("Thab-Rudy", 10)])
     # print([[u.user_id, u.weekly_score] for u in get_best_users_weekly(2)])
     # save_user_history(User("pippo1", 9, 1, 7, now()))
-    # print([(u.user_id, u.total_score, u.weekly_score, u.base, u.date) for u in get_user_history_score_global("pippo1", 1)])
+    # print( get_user_history_score_global("pippo1", 100))
+    # print(get_user_history_score_weekly("pippo1"))
 
-if __name__ == "__main__":
-    test_database()
+    if __name__ == "__main__":
+        test_database()
 
 
 

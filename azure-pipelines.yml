@@ -110,7 +110,7 @@ stages:
         containerRegistry: 'niccolo-AzureContainer-connection'
         repository: '$(imageBackend)'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.flask'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile.flask-gunicorn'
         tags: |
           $(tag)
     

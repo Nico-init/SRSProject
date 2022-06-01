@@ -29,5 +29,6 @@ COPY src/daily_scraper /home/SRSProject/src/daily_scraper
 COPY src/scraper /home/SRSProject/src/scraper
 COPY src/utils /home/SRSProject/src/utils
 
+#CMD ["python3", "src/scraper/scraper.py"]
 CMD ["python3","-u", "src/scraper/scraper.py"]
 #CMD [ "sleep", "3600d" ]
