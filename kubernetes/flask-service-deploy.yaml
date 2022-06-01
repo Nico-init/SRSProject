@@ -33,6 +33,11 @@ spec:
             value: tPt8wiHYFt9k-ljI-QhLJsPInTPvWYsA8A
           - name: AZURE_CLIENT_ID
             value: 1e20a665-6170-4f7e-86c2-ed8f8c1429d6
+        resources:
+          #limits:
+          #  cpu: 2000m
+          requests:
+            cpu: 400m
 ---
 apiVersion: v1
 kind: Service
@@ -44,6 +49,26 @@ spec:
   ports:
   - port: 5000
     targetPort: 5000
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: flask-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: flask-deploy
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+
 
 #---
 #apiVersion: v1

@@ -31,6 +31,12 @@ spec:
             value: tPt8wiHYFt9k-ljI-QhLJsPInTPvWYsA8A
           - name: AZURE_CLIENT_ID
             value: 1e20a665-6170-4f7e-86c2-ed8f8c1429d6
+        resources:
+          #limits:
+          #  cpu: 2000m
+          requests:
+            cpu: 300m
+
 ---
 apiVersion: v1
 kind: Service
@@ -49,7 +55,25 @@ spec:
   selector:
     app: react
   type: LoadBalancer
-
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: react-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: react-deploy
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
 #---
 #apiVersion: v1
 #kind: Service
