@@ -37,7 +37,7 @@ spec:
           #limits:
           #  cpu: 2000m
           requests:
-            cpu: 400m
+            cpu: 200m
 ---
 apiVersion: v1
 kind: Service
@@ -50,24 +50,24 @@ spec:
   - port: 5000
     targetPort: 5000
 ---
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: flask-autoscaler
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: flask-deploy
-  minReplicas: 1
-  maxReplicas: 3
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50
+#apiVersion: autoscaling/v1
+#kind: HorizontalPodAutoscaler
+#metadata:
+#  name: flask-autoscaler
+#spec:
+#  scaleTargetRef:
+#    apiVersion: apps/v1
+#    kind: Deployment
+#    name: flask-deploy
+#  minReplicas: 1
+#  maxReplicas: 3
+#  metrics:
+#  - type: Resource
+#    resource:
+#      name: cpu
+#      target:
+#        type: Utilization
+#        averageUtilization: 50
 
 
 #---
