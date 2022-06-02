@@ -33,6 +33,11 @@ spec:
             value: tPt8wiHYFt9k-ljI-QhLJsPInTPvWYsA8A
           - name: AZURE_CLIENT_ID
             value: 1e20a665-6170-4f7e-86c2-ed8f8c1429d6
+        resources:
+          #limits:
+          #  cpu: 2000m
+          requests:
+            cpu: 100m
 
 #---
 #apiVersion: v1

@@ -14,5 +14,7 @@ FROM nginx:1.20.2
 
 COPY --from=build /home/reddit-stock-dashboard/build/ /usr/share/nginx/html
 COPY src/WebApp/reddit-stock-dashboard/default.conf /etc/nginx/conf.d/default.conf
+COPY src/WebApp/reddit-stock-dashboard/nginx.conf /etc/nginx/nginx.conf
 COPY src/WebApp/reddit-stock-dashboard/nginx/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
 COPY src/WebApp/reddit-stock-dashboard/nginx/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
+RUN mkdir -p /cache/to/nginx
