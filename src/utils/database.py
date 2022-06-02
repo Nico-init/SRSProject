@@ -1,6 +1,5 @@
 
-from utils.IDB import update_values, add_object_to_table, get_values, delete, exec_query, clean_value_to_str, \
-    delete_all_tables, crate_table, get_all_values
+from utils.IDB import clean_value_to_str, DB_Connection
 from utils.date import now, today, day_in_sec, get_timestamp_of_monday_morning
 from utils.DB_enum import TableNames
 from utils.DB_types import Column
@@ -8,6 +7,7 @@ from utils.DB_naming import Comments, Users, Posts, History
 from utils.SRS_types import Comment, User, Post
 from typing import List, Union, Tuple
 
+BD_conn = DB_Connection()
 
 class DB_reddit:
 
@@ -21,14 +21,14 @@ class DB_reddit:
     def save_post(self, post_id: int, comment_id):
         now_ts = now()
         if not self.exists_post(post_id):
-            add_object_to_table(TableNames.posts,
+            BD_conn.add_object_to_table(TableNames.posts,
                                 (Posts.post_id, post_id),
                                 (Posts.comment_id, comment_id),
                                 (Posts.start_time, now_ts),
                                 (Posts.last_update, now_ts)
                                 )
         else:
-            update_values(TableNames.posts,
+            BD_conn.update_values(TableNames.posts,
                           f"{Posts.post_id} = {post_id}",
                           (Posts.comment_id, comment_id),
                           (Posts.last_update, now_ts)
@@ -47,7 +47,7 @@ class DB_reddit:
         before_time = now_ts - time_lapse
         condition = f"{Posts.last_update} <= {before_time}"
 
-        user_comments = [Post(c[0], c[1], c[2], c[3]) for c in get_values(TableNames.posts, requested_values, condition)]
+        user_comments = [Post(c[0], c[1], c[2], c[3]) for c in BD_conn.get_values(TableNames.posts, requested_values, condition)]
         return user_comments
 
     @staticmethod
@@ -59,13 +59,13 @@ class DB_reddit:
         """
         now_ts = now()
         delete_time = now_ts - time
-        delete(TableNames.posts, f"{Posts.start_time} < {delete_time}")
+        BD_conn.delete(TableNames.posts, f"{Posts.start_time} < {delete_time}")
 
     @staticmethod
     def exists_post(post_id):
         requested_values = [Posts.post_id]
         condition = f"{Posts.post_id} = {post_id}"
-        result = get_values(TableNames.posts, requested_values, condition)
+        result = BD_conn.get_values(TableNames.posts, requested_values, condition)
         return len(result) > 0      # if exists a user, the list of users with user_id will be non-empty
 
 
@@ -73,7 +73,7 @@ def save_comment(comment: Comment):
     # now = today()
     if not exists_user(comment.user_id):
         initialize_user(comment.user_id)
-    add_object_to_table(TableNames.comments,
+    BD_conn.add_object_to_table(TableNames.comments,
                         (Comments.user_id, comment.user_id),
                         (Comments.comment_value, int(comment.comment_value)),
                         (Comments.reliability, comment.reliability),
@@ -112,7 +112,7 @@ def get_stock_comments(stock_name, order_by_global: bool, days_num=7) -> List[Li
     stock_comments_daily = []
     for i in range(days_num):
         stock_comments_daily.append([])
-    comments = exec_query(query, show_result=True)
+    comments = BD_conn.exec_query(query, show_result=True)
     for c in comments:
         print(c)
         t = c[6]        # c[date]
@@ -142,14 +142,14 @@ def get_user_comments(user_id, days_num=None, since=None, order_by_asc=True) -> 
 
     requested_values = [Comments.comment_id, Comments.user_id, Comments.comment_value, Comments.reliability, Comments.stock_name, Comments.stock_value, Comments.date]
 
-    user_comments = [Comment(c[0], c[1], c[2], c[3], c[4], c[5], c[6]) for c in get_values(TableNames.comments, requested_values, condition, order_by=["date"], order_by_asc=order_by_asc)]
+    user_comments = [Comment(c[0], c[1], c[2], c[3], c[4], c[5], c[6]) for c in BD_conn.get_values(TableNames.comments, requested_values, condition, order_by=["date"], order_by_asc=order_by_asc)]
 
     return user_comments
 
 
 def delete_comment(id_commento):
     condition = f"{Comments.comment_id} = {id_commento}"
-    delete(TableNames.comments, condition)
+    BD_conn.delete(TableNames.comments, condition)
 
 
 def get_users(days_num=None):
@@ -166,7 +166,7 @@ def get_users(days_num=None):
         condition = None
 
     requested_values = [Comments.user_id]
-    users = [u[0] for u in get_values(TableNames.comments, requested_values, condition, unique=True)]
+    users = [u[0] for u in BD_conn.get_values(TableNames.comments, requested_values, condition, unique=True)]
 
     return users
 
@@ -175,7 +175,7 @@ def get_users(days_num=None):
 def initialize_user(user_id):
     # initialize points to zero and starting point to zero
     try:
-        add_object_to_table(TableNames.users,
+        BD_conn.add_object_to_table(TableNames.users,
                             (Users.user_id, user_id),
                             (Users.total_score, 0),
                             (Users.weekly_score, 0),
@@ -188,7 +188,7 @@ def initialize_user(user_id):
 def set_user_score(user: User):
     if not exists_user(user.user_id):
         initialize_user(user.user_id)
-    update_values(TableNames.users,
+    BD_conn.update_values(TableNames.users,
                   f"{Users.user_id} = {clean_value_to_str(user.user_id)}",
                   (Users.total_score, user.total_score),
                   (Users.weekly_score, user.weekly_score),
@@ -198,7 +198,7 @@ def set_user_score(user: User):
 
 def save_user_history(user: User):
     user.date = now()
-    add_object_to_table(TableNames.history,
+    BD_conn.add_object_to_table(TableNames.history,
                         (History.user_id, user.user_id),
                         (History.total_score, user.total_score),
                         (History.weekly_score, user.weekly_score),
@@ -212,7 +212,7 @@ def get_user_history_score_weekly(user_id):
 
     requested_values = [History.user_id, History.total_score, History.weekly_score, History.base, History.date]
     users = [User(u[0], u[1], u[2], u[3], u[4]) for u in
-             get_values(TableNames.history, requested_values, condition, order_by=[History.date], order_by_asc=True)]
+             BD_conn.get_values(TableNames.history, requested_values, condition, order_by=[History.date], order_by_asc=True)]
     scores = [{"x": u.date * 1000, "y": u.weekly_score} for u in users]
     return scores
 
@@ -222,7 +222,7 @@ def get_user_history_score_global(user_id, days_limit: int):
 
     requested_values = [History.user_id, History.total_score, History.weekly_score, History.base, History.date]
     users = [User(u[0], u[1], u[2], u[3], u[4]) for u in
-             get_values(TableNames.history, requested_values, condition, order_by=[History.date], order_by_asc=True)]
+             BD_conn.get_values(TableNames.history, requested_values, condition, order_by=[History.date], order_by_asc=True)]
     scores = [{"x": u.date * 1000, "y": u.total_score} for u in users]
     return scores
 
@@ -259,7 +259,7 @@ def get_best_users(num_of_users: int, order_by_weekly: bool):
 
     requested_values = [Users.user_id, Users.total_score, Users.weekly_score, Users.base]
 
-    users = [User(u[0], u[1], u[2], u[3]) for u in get_values(TableNames.users, requested_values, order_by=order_by, order_by_asc=False)]
+    users = [User(u[0], u[1], u[2], u[3]) for u in BD_conn.get_values(TableNames.users, requested_values, order_by=order_by, order_by_asc=False)]
     return users[:num_of_users]
 
 
@@ -267,7 +267,7 @@ def get_best_users(num_of_users: int, order_by_weekly: bool):
 def get_user(user_id) -> User:
     requested_values = [Users.total_score, Users.weekly_score, Users.base]
     condition = f"{Users.user_id} = {clean_value_to_str(user_id)}"
-    user_info = get_values(TableNames.users, requested_values, condition)
+    user_info = BD_conn.get_values(TableNames.users, requested_values, condition)
     assert len(user_info) <= 1
     if len(user_info) == 1:
         total_score, weekly_score, base = tuple(user_info[0])
@@ -279,7 +279,7 @@ def get_user(user_id) -> User:
 def exists_user(user_id):
     requested_values = [Users.user_id]
     condition = f"{Users.user_id} = {clean_value_to_str(user_id)}"
-    result = get_values(TableNames.users, requested_values, condition)
+    result = BD_conn.get_values(TableNames.users, requested_values, condition)
     return len(result) > 0      # if exists a user, the list of users with user_id will be non-empty
 
 
@@ -292,21 +292,21 @@ def initialize_db():
         Column(name=Comments.stock_value, type="real"),
         Column(name=Comments.date, type="real")
     ]
-    crate_table(TableNames.comments, Comments.comment_id, "int", col_list, autogen=True)
+    BD_conn.crate_table(TableNames.comments, Comments.comment_id, "int", col_list, autogen=True)
 
     col_list = [
         Column(name=Users.total_score, type="real"),
         Column(name=Users.weekly_score, type="real"),
         Column(name=Users.base, type="real")
     ]
-    crate_table(TableNames.users, Users.user_id, "nvarchar(50)", col_list, autogen=False)
+    BD_conn.crate_table(TableNames.users, Users.user_id, "nvarchar(50)", col_list, autogen=False)
 
     col_list = [
         Column(name=Posts.comment_id, type="int"),
         Column(name=Posts.start_time, type="real"),
         Column(name=Posts.last_update, type="real")
     ]
-    crate_table(TableNames.posts, Posts.post_id, "int", col_list, autogen=False)
+    BD_conn.crate_table(TableNames.posts, Posts.post_id, "int", col_list, autogen=False)
 
     col_list = [
         Column(name=History.user_id, type="nvarchar(50)"),
@@ -315,16 +315,16 @@ def initialize_db():
         Column(name=History.base, type="real"),
         Column(name=History.date, type="real")
     ]
-    crate_table(TableNames.history, History.history_id, "int", col_list, autogen=True)
+    BD_conn.crate_table(TableNames.history, History.history_id, "int", col_list, autogen=True)
 
 
 def reset_db():
-    delete_all_tables()
+    BD_conn.delete_all_tables()
     initialize_db()
 
 
 def test_database():
-    # pass
+    pass
     # reset_db()
     # save_comment(Comment(4, "pippo_5", True, 0.798, "AAPL", 15.5912345, now() - day_in_sec()))
     # print(show_tables())
@@ -346,7 +346,7 @@ def test_database():
     # print([[[c.user_id, c.comment_value] for c in e] for e in get_stock_comments("AAPL", order_by_global=True)])
     # print("hello world")
     # print([[c.comment_id, c.user_id, c.stock_name, c.comment_value] for c in get_last_user_relevant_comments("Thab-Rudy", 10)])
-    print([[u.user_id, u.weekly_score] for u in get_best_users_weekly(2)])
+    # print([[u.user_id, u.weekly_score] for u in get_best_users_weekly(2)])
     # save_user_history(User("pippo1", 9, 1, 7, now()))
     # print( get_user_history_score_global("pippo1", 100))
     # print(get_user_history_score_weekly("pippo1"))
