@@ -1,4 +1,4 @@
 
 
 USE_DEBUG_DB = False
-
+ROUND_DIGIT = 2

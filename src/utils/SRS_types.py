@@ -1,3 +1,4 @@
+from utils.configuration import ROUND_DIGIT
 class Comment:
     def __init__(self, comment_id, user_id, comment_value, reliability, stock_name, stock_value, date):
         self.comment_id = comment_id
@@ -14,8 +15,8 @@ class User:
         :param date: optional, used for the history to save the scores of a user at a certain date
         """
         self.user_id = user_id
-        self.total_score = total_score
-        self.weekly_score = weekly_score
+        self.total_score = round(total_score, ROUND_DIGIT)
+        self.weekly_score = round(weekly_score, ROUND_DIGIT)
         self.base = base
         self.date = date
 
