@@ -24,5 +24,8 @@ export const defaultOptions: ApexOptions = {
   },
   dataLabels: {
     enabled: true
+  },
+  xaxis: {
+    type: 'datetime'
   }
 };

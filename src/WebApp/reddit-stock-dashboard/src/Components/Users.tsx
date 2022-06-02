@@ -15,8 +15,8 @@ export class User {
     weekly_score: number;
     total_score: number;
     stocks: Array<any>;
-    weekly_performance: Array<number>;
-    all_time_performance: Array<number>;
+    weekly_performance: Array<{x: number, y: number}>;
+    all_time_performance: Array<{x: number, y: number}>;
 
     constructor() {
         this.name = "None";

@@ -13,11 +13,11 @@ type Props = {
 function UserInfo(props: Props) {
   const [chartOptionsW, setChartOptionsW] = useState(defaultOptions);
   const [chartOptionsT, setChartOptionsT] = useState(defaultOptions);
-  const [chartSeriesW, setChartSeriesW] = useState([{data: [0]}]);
-  const [chartSeriesT, setChartSeriesT] = useState([{data: [0]}]);
+  const [chartSeriesW, setChartSeriesW] = useState([{x: new Date().getTime(), y: 0}]);
+  const [chartSeriesT, setChartSeriesT] = useState([{x: new Date().getTime(), y: 0}]);
   const [reliability, setReliability] = useState(0.0);
 
-  const newOptions = (color: string, performance: number[], show: boolean, dataLabels: boolean, title: string) => {
+  const newOptions = (color: string, performance: number[], dataLabels: boolean, title: string, smooth: boolean) => {
     var op: ApexOptions = {
       chart: {
         type: 'line',
@@ -27,6 +27,9 @@ function UserInfo(props: Props) {
       },
       title: {
         text: title
+      },
+      stroke: {
+        curve: smooth ? 'smooth' : 'straight'
       },
       colors: [color],
       yaxis: {
@@ -51,10 +54,7 @@ function UserInfo(props: Props) {
         enabled: dataLabels
       },
       xaxis: {
-        categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        labels: {
-          show: show
-        }
+        type: 'datetime'
       }
     }
     return op;
@@ -62,15 +62,15 @@ function UserInfo(props: Props) {
 
   const updateOptions = () => {
     if(props.userInfo.name !== "None") {
-      setChartSeriesW([{data: props.userInfo.weekly_performance}]);
-      setChartOptionsW(newOptions("#6495ED", props.userInfo.weekly_performance, true, true, "User performance for current week"));
-      setChartSeriesT([{data: props.userInfo.all_time_performance}]);
-      setChartOptionsT(newOptions("#50C878", props.userInfo.all_time_performance, false, false, "Total user performance"));
+      setChartSeriesW(props.userInfo.weekly_performance);
+      setChartOptionsW(newOptions("#6495ED", props.userInfo.weekly_performance.map(({y}) => y), true, "User performance for current week", false));
+      setChartSeriesT(props.userInfo.all_time_performance);
+      setChartOptionsT(newOptions("#50C878", props.userInfo.all_time_performance.map(({y}) => y), false, "Total user performance", true));
     }
     else {
-      setChartSeriesW([{data: [0]}]);
+      setChartSeriesW([{x: 0, y: 0}]);
       setChartOptionsW(defaultOptions);
-      setChartSeriesT([{data: [0]}]);
+      setChartSeriesT([{x: 0, y: 0}]);
       setChartOptionsT(defaultOptions);
     }
 
@@ -104,7 +104,7 @@ function UserInfo(props: Props) {
             {
               props.userInfo.stocks.map((value: any, index: number) => (
                 <div className='commentEntry' key={index}>
-                <span>{value.date}:&emsp;</span>
+                <span>{new Date(value.date*1000).toLocaleDateString()}:&emsp;</span>
                 {value.comment_value ? <span style={{"color": "green"}}>POSITIVE</span> : <span style={{"color": "red"}}>NEGATIVE</span>}
                 <span> for </span>
                 <span style={{cursor: "pointer", color: "blue", textDecoration: "underline"}} className='name text-dark' onClick={() => handleClickStock(value.stock_name)}>{value.stock_name}</span>
@@ -117,10 +117,10 @@ function UserInfo(props: Props) {
         </div>
         <div className="userGraph">
           <div className="weeklyGraph">
-            <ReactApexChart options={chartOptionsW} series={chartSeriesW} type="line" height={200}/>
+            <ReactApexChart options={chartOptionsW} series={[{name: 'Score',data: chartSeriesW}]} type="line" height={200}/>
           </div>
           <div className="totalGraph">
-            <ReactApexChart options={chartOptionsT} series={chartSeriesT} type="line" height={200}/>
+            <ReactApexChart options={chartOptionsT} series={[{name: 'Score',data: chartSeriesT}]} type="line" height={200}/>
           </div>
         </div>
     </div>

@@ -53,7 +53,7 @@ function Stocks(props: Props) {
         <div className="panel">
                 <div className="searchBar">
                     <div className="control is-small">
-                        <input className="input is-small is-rounded" type="text" placeholder="u/username" onKeyDown={handleSearch}>
+                        <input className="input is-small is-rounded" type="text" placeholder="stock-symbol" onKeyDown={handleSearch}>
                         </input>
                     </div>
                 </div>
@@ -83,21 +83,21 @@ const getStockInfoView = (info: Comment[][], handleClickUser: any) => {
                         <>
                         {
                             info.map((value: any[], index: number) => (
-                                <div className='entry' key={index}>
-                                    <br/>
-                                    <h3 className='score'>{value[0].date}</h3>
-                                    <>
-                                    {
-                                        value.map((value: any, index: number) => (
-                                            <div className="entry" key={index}>
-                                                {value.comment_value ? <span style={{"color": "green"}}>POSITIVE</span> : <span style={{"color": "red"}}>NEGATIVE</span>}
-                                                <span> by </span>
-                                                <span style={{cursor: "pointer", color: "blue", textDecoration: "underline"}} className='name text-dark' onClick={() => handleClickUser(value.user_id)}>{value.user_id}</span>
-                                            </div>
-                                        ))
-                                    }
-                                    </>
-                                </div>
+                                value[0] ? <div className='entry' key={index}>
+                                        <br/>
+                                        <h3 className='score'>{new Date(value[0].date*1000).toLocaleDateString()}</h3>
+                                        <>
+                                        {
+                                            value.map((value: any, index: number) => (
+                                                <div className="entry" key={index}>
+                                                    {value.comment_value ? <span style={{"color": "green"}}>POSITIVE</span> : <span style={{"color": "red"}}>NEGATIVE</span>}
+                                                    <span> by </span>
+                                                    <span style={{cursor: "pointer", color: "blue", textDecoration: "underline"}} className='name text-dark' onClick={() => handleClickUser(value.user_id)}>{value.user_id}</span>
+                                                </div>
+                                            ))
+                                        }
+                                        </>
+                                    </div> : <></>
                             ))
                         }
                         </>
