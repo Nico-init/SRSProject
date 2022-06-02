@@ -255,7 +255,7 @@ def get_best_users_global(num_of_users: int):
 
 
 def get_best_users(num_of_users: int, order_by_weekly: bool):
-    order_by = Users.weekly_score if order_by_weekly else Users.total_score
+    order_by = [Users.weekly_score] if order_by_weekly else [Users.total_score]
 
     requested_values = [Users.user_id, Users.total_score, Users.weekly_score, Users.base]
 
@@ -330,7 +330,7 @@ def test_database():
     # print(show_tables())
     # print(now())
     # print(today())
-    # print(get_all_values(TableNames.users))
+    # print(get_all_values(TableNames.history))
     # print(exists_user("mgmt_professor"))
 
     # print([(c.comment_id, c.user_id, c.comment_value, c.reliability, c.stock_name, c.stock_value, c.date)
@@ -346,7 +346,7 @@ def test_database():
     # print([[[c.user_id, c.comment_value] for c in e] for e in get_stock_comments("AAPL", order_by_global=True)])
     # print("hello world")
     # print([[c.comment_id, c.user_id, c.stock_name, c.comment_value] for c in get_last_user_relevant_comments("Thab-Rudy", 10)])
-    # print([[u.user_id, u.weekly_score] for u in get_best_users_weekly(2)])
+    print([[u.user_id, u.weekly_score] for u in get_best_users_weekly(2)])
     # save_user_history(User("pippo1", 9, 1, 7, now()))
     # print( get_user_history_score_global("pippo1", 100))
     # print(get_user_history_score_weekly("pippo1"))
