@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 @app.route("/all_users")
 def all_users():
-    return get_all_users(True)
+    return get_all_users()
 
 @app.route("/user/<username>")
 def user(username):
@@ -41,10 +41,10 @@ def get_user_info(username):
     }
     return jsonify(res)
 
-def get_all_users(local):
+def get_all_users():
     res = {
-        "weekly": json.dumps([vars(u) for u in (test_db_list.get_best_users_weekly() if local else database.get_best_users_weekly(3))]),
-        "total": json.dumps([vars(u) for u in (test_db_list.get_best_users_global() if local else database.get_best_users_global(3))])
+        "weekly": json.dumps([vars(u) for u in (test_db_list.get_best_users_weekly() if LOCAL else database.get_best_users_weekly(25))]),
+        "total": json.dumps([vars(u) for u in (test_db_list.get_best_users_global() if LOCAL else database.get_best_users_global(25))])
     }   
     return jsonify(res)
 
