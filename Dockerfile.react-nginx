@@ -18,3 +18,4 @@ COPY src/WebApp/reddit-stock-dashboard/nginx.conf /etc/nginx/nginx.conf
 COPY src/WebApp/reddit-stock-dashboard/nginx/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
 COPY src/WebApp/reddit-stock-dashboard/nginx/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
 RUN mkdir -p /cache/to/nginx
+RUN gzip -k -r -f /usr/share/nginx/html/static
