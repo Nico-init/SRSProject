@@ -3,6 +3,7 @@ import './comp-styles/Users-style.css'
 import './comp-styles/bulma-input.scss'
 import { useState } from 'react'
 import UserInfo from './UserInfo'
+import { ClipLoader } from 'react-spinners'
 
 
 type Props = {
@@ -32,8 +33,10 @@ function Users(props: Props) {
 
     //const [text, setText] = useState("");
     const [currentUser, setCurrentUser] = useState(new User())
+    const [loading, setLoading] = useState(false)
 
     const getUserInfo = (text: string) => {
+        setLoading(true)
         fetch("/user/"+text).then(
             res => res.json()
         ).then(
@@ -49,13 +52,14 @@ function Users(props: Props) {
                     temp.stocks = JSON.parse(user['relevant_comments']);
                     console.log(temp.name);
                     setCurrentUser(temp);
+                    setLoading(false);
                 }
                 else {
-                    setCurrentUser(new User())
+                    setLoading(false);
+                    setCurrentUser(new User());
                 }
             }
         )
-        return
     }
 
     const userCheck = () => {
@@ -89,7 +93,7 @@ function Users(props: Props) {
             </div>
             <div className="userInfo">
                 {
-                    showUserInfo(currentUser)
+                    loading ? <ClipLoader css={"margin-top: 5%;"} color={'#000000'} loading={loading} size={50} ></ClipLoader> : showUserInfo(currentUser)
                 }
             </div>
         </div>

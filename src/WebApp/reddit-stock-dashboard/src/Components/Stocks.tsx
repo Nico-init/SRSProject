@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { ClipLoader } from 'react-spinners'
 import {Comment} from './SRS_types'
 
 type Props = {
@@ -8,7 +9,8 @@ type Props = {
 
 function Stocks(props: Props) {
     const [stockName, setStockName] = useState("");
-    const [info, setStockInfo] = useState([[new Comment()]])
+    const [info, setStockInfo] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const stockCheck = () => {
         if(props.stock_symbol) {
@@ -24,6 +26,7 @@ function Stocks(props: Props) {
     }
 
     const getStockInfo = (text: string) => {
+        setLoading(true);
         fetch("/stock/"+text).then(
             res => res.json()
         ).then(
@@ -33,10 +36,12 @@ function Stocks(props: Props) {
                     console.log(info)
                     setStockInfo(info); 
                     setStockName(text);
+                    setLoading(false)
                 }
                 else {
                     setStockInfo([]);
                     setStockName("The symbol doesn't exist or there are no commets yet...");
+                    setLoading(false)
                 }
             }
         )
@@ -64,7 +69,7 @@ function Stocks(props: Props) {
                         <h1 className='userName'>{stockName}</h1>
                         <br/><br/>
                         <br/>   
-                        {info.length !== 0 ? getStockInfoView(info, handleClickUser) : <></>}
+                        {loading ? <ClipLoader css={"margin-top: 5%; margin-left: 7pc;"} color={'#000000'} loading={loading} size={50} ></ClipLoader> : info.length !== 0 ? getStockInfoView(info, handleClickUser) : <></>}
                     </div>
                     <div className="userGraph">
                     </div>

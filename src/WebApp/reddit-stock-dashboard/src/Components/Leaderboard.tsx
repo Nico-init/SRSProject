@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Profiles from './Profiles';
 import CSS from 'csstype'
+import {ClipLoader} from 'react-spinners'
 
 type Props = {
     handleClickPanelChange: any
@@ -11,9 +12,11 @@ function Leaderboard(props: Props) {
     const [isWeekly, setWeekly] = useState(true)
     const [usersByWeekly, setUsersByWeekly] = useState([{}])
     const [usersByTotal, setUsersByTotal] = useState([{}])
+    const [loading, setLoading] = useState(false)
 
 
     useEffect(() => {
+        setLoading(true);
         fetch("/all_users").then(
             res => res.json()
         ).then(
@@ -21,6 +24,7 @@ function Leaderboard(props: Props) {
                 setUsersByWeekly(JSON.parse(users.weekly))
                 setUsersByTotal(JSON.parse(users.total))
                 console.log(users)
+                setLoading(false)
             }
         )
     }, [])
@@ -43,8 +47,7 @@ function Leaderboard(props: Props) {
             <button style={!isWeekly ? buttonStylePressed : buttonStyleNotPressed} onClick={handleClick} data-id='0'>All-Time</button>
         </div>
 
-        <Profiles isWeekly={isWeekly} users={isWeekly ? usersByWeekly : usersByTotal} handleClickPanelChange={props.handleClickPanelChange}></Profiles>
-
+        {loading ? <ClipLoader css={"margin-top: 5%;"} color={'#000000'} loading={loading} size={50} ></ClipLoader> : <Profiles isWeekly={isWeekly} users={isWeekly ? usersByWeekly : usersByTotal} handleClickPanelChange={props.handleClickPanelChange}></Profiles>}
         </div>
     )
 
