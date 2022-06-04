@@ -28,7 +28,7 @@ function Items(data: any, isWeekly: boolean, handleClickPanelChange: any) {
         <>
             {
                 data.map((value: any, index: number) => (
-                    <div className="entry" key={index}>
+                    <div className="entryL" key={index}>
                         <div className="flex" key={index}>
                             <div className="item">            
                                 <div className="info">
@@ -37,7 +37,7 @@ function Items(data: any, isWeekly: boolean, handleClickPanelChange: any) {
                                 </div>                 
                             </div>
                             <div className="item">
-                                {isWeekly ? <span>{value.weekly_score}</span> : <span>{value.total_score}</span>} 
+                                {isWeekly ? <span style={value.weekly_score >= 0 ? {"color": "green"} : {"color": "red"}}>{value.weekly_score >= 0 ? "+" : ""}{value.weekly_score}%</span> : <span style={value.total_score >= 0 ? {"color": "green"} : {"color": "red"}}>{value.total_score >= 0 ? "+" : ""}{value.total_score}%</span>} 
                             </div>
                         </div>
                         <hr className="rounded"></hr>

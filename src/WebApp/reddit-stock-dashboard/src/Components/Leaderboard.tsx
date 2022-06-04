@@ -55,25 +55,6 @@ function Leaderboard(props: Props) {
 
 export default Leaderboard;
 
-/*function sort(data: any, isWeekly: boolean) {
-    return data.sort((a: any, b: any) => {
-        if (isWeekly) {
-            if ( a.w_score === b.w_score){
-                return b.w_score - a.w_score;
-            } else{
-                return b.w_score - a.w_score;
-            }
-        }
-        else {
-            if ( a.at_score === b.at_score){
-                return b.at_score - a.at_score;
-            } else{
-                return b.at_score - a.at_score;
-            }
-        }
-    })
-}*/
-
 const buttonStylePressed: CSS.Properties = {
     backgroundColor: "#2C3131", color: "#F3F3F2"
 }

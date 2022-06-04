@@ -19,3 +19,21 @@
     height: 85%;
     overflow-y: hidden;
 }
+
+.userGraph {
+    float: right;
+    width: 60%;
+    height: 75vh;
+    margin-top: 2ch;
+}
+
+.Log {
+    height: 65vh;
+    margin-bottom: 2ch;
+  }
+  
+  .scrollableLog {
+    margin-top: 2vh;
+    height: 61vh;
+    overflow: auto;
+  }

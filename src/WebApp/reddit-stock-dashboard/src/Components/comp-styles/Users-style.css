@@ -23,17 +23,14 @@
 .userBox {
     margin-right: 5%;
     margin-left: 5%;
+    height: 80vh;
 }
 
 .userStats {
     float: left;
     text-align: left;
-}
-
-.userGraph {
-    float: right;
-    width: 60%;
-    margin-top: 1%;
+    height: 75vh;
+    margin-top: 2ch;
 }
 
 .weeklyGraph {
@@ -43,4 +40,18 @@
 
 .totalGraph {
     height: 50%;
+}
+
+.entry {
+    margin-bottom: 2ch;
+}
+
+.scrollableLogUsers {
+    margin-top: 2vh;
+    height: 37vh;
+    overflow: auto;
+}
+
+.score {
+    margin-top: 4vh;
 }

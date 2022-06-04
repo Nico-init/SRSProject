@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { User } from './Users'
 import ReactApexChart from 'react-apexcharts'
-import {defaultOptions} from './comp-styles/LineChartOptions'
+import {defaultOptions} from './comp-styles/ChartOptions'
 import {ApexOptions} from 'apexcharts'
 import StarRating from './StarRating'
 
@@ -89,18 +89,13 @@ function UserInfo(props: Props) {
 
   return (
     <div className='userBox'>
-        <br></br>
         <div className='userStats'>
           <h2 className='userName'>{props.userInfo.name}</h2>
           <StarRating num_stars={reliability}></StarRating>
-          <br/><br/>
-          <h3 className='score'>Weekly Score: {props.userInfo.weekly_score}</h3>
-          <h3 className='score'>All Time Score: {props.userInfo.total_score}</h3>
-          <br/>
-          <br/>
-          <h3>Comments in the past 7 days:</h3>
-          <div className='scrollableLog'>
-            <>
+          <h3 className='score'>Weekly Score: {props.userInfo.weekly_score >= 0 ? "+" : ""}{props.userInfo.weekly_score}%</h3>
+          <h3 className='score'>All Time Score: {props.userInfo.total_score >= 0 ? "+" : ""}{props.userInfo.total_score}%</h3>
+          <h3 className='score'>Comments in the past 7 days:</h3>
+          <div className='scrollableLogUsers'>
             {
               props.userInfo.stocks.map((value: any, index: number) => (
                 <div className='commentEntry' key={index}>
@@ -112,7 +107,6 @@ function UserInfo(props: Props) {
 
               ))
             }
-            </>
           </div>
         </div>
         <div className="userGraph">

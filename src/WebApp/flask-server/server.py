@@ -5,6 +5,7 @@ import json
 sys.path.insert( 0, './src' ) 
 from utils import database
 from utils.SRS_types import User
+from yf_history import get_stock_history
 sys.path.insert( 0, './src/WebApp/flask-server' ) 
 import test_db_list
 
@@ -28,6 +29,10 @@ def user(username):
 @app.route("/stock/<symbol>")
 def stock(symbol):
     return get_stock_info(symbol)
+
+@app.route("/stock/<symbol>/history")
+def stock_history(symbol):
+    return json.dumps(get_stock_history(symbol))
 
 def get_user_info(username):
     try:
