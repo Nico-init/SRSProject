@@ -5,9 +5,9 @@ import json
 sys.path.insert( 0, './src' ) 
 from utils import database
 from utils.SRS_types import User
-from yf_history import get_stock_history
 sys.path.insert( 0, './src/WebApp/flask-server' ) 
 import test_db_list
+from yf_history import get_stock_history
 
 ################
 LOCAL = False    #USE LOCAL OR AZURE DB
