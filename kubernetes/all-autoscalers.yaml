@@ -8,8 +8,8 @@ spec:
     kind: Deployment
     name: react-deploy
   minReplicas: 1
-  maxReplicas: 3
-  targetCPUUtilizationPercentage: 70
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 40
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -21,7 +21,7 @@ spec:
     kind: Deployment
     name: scraper-deploy
   minReplicas: 1
-  maxReplicas: 3
+  maxReplicas: 1
   targetCPUUtilizationPercentage: 800
 ---
 apiVersion: autoscaling/v1

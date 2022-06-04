@@ -1,5 +1,5 @@
 import yfinance as yf
-import pandas as pd
+#import pandas as pd
 
 def get_stock_history(symbol):
     res = []
