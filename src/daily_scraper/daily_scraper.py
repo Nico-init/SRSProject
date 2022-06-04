@@ -155,7 +155,7 @@ def main():
         #updating totale score
         user.total_score = user.total_score * alpha + (1 - alpha) * user.weekly_score
         #if sunday, delete all bases
-        if (date.today().weekday() == 6):
+        if (datetime.now().weekday() == 6):
             user.base = 0
         #save user score on db
         set_user_score(user)
