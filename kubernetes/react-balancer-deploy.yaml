@@ -67,7 +67,7 @@ spec:
     name: react-deploy
   minReplicas: 1
   maxReplicas: 3
-  targetCPUUtilizationPercentage: 70
+  targetCPUUtilizationPercentage: 40
 ---
 
 
