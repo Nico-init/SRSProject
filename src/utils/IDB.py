@@ -121,11 +121,7 @@ class DB_Connection:
         if order_by is not None:
             query += " ORDER BY " + ", ".join(order_by)
             query += " ASC " if order_by_asc else " DESC "
-        import time
-        start = time.time()
         values = self.exec_query(query, show_result=True)
-        end = time.time()
-        print(f"exec_query: {end-start}")
         return values
 
 
