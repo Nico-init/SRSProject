@@ -8,10 +8,14 @@ COPY src/WebApp/reddit-stock-dashboard /home/reddit-stock-dashboard
 WORKDIR /home/reddit-stock-dashboard
 RUN npm install
 RUN npm run build
-#RUN ls
-#COPY ./build /home/reddit-stock-dashboard/build
+
 
 FROM nginx:1.20.2
 
 COPY --from=build /home/reddit-stock-dashboard/build/ /usr/share/nginx/html
 COPY src/WebApp/reddit-stock-dashboard/default.conf /etc/nginx/conf.d/default.conf
+COPY src/WebApp/reddit-stock-dashboard/nginx.conf /etc/nginx/nginx.conf
+COPY src/WebApp/reddit-stock-dashboard/nginx/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
+COPY src/WebApp/reddit-stock-dashboard/nginx/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
+RUN mkdir -p /cache/to/nginx
+RUN gzip -k -r -f /usr/share/nginx/html/static

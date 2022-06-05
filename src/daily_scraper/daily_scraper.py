@@ -1,5 +1,5 @@
 import sys
-sys.path.insert( 0, './src' ) 
+sys.path.insert( 0, './src' )
 
 import requests
 from bs4 import BeautifulSoup
@@ -11,7 +11,7 @@ from datetime import datetime, time, timedelta
 #__________________________________________________________________#
 #variabili globali
 user_comments = []
-#total score calculating
+#alpha for total score
 alpha = 0.5
 #__________________________________________________________________#
 
@@ -20,7 +20,7 @@ START PRINT FUNCTIONS
 '''
 def print_comments(list):
     for comment in list:
-        print("- " + str(comment.user_id) + "_" + comment.stock_name + "_" + str(comment.comment_value) + "_" + str(comment.stock_value))
+        print(", ".join([str(c) for c in [comment.user_id, comment.comment_value, comment.reliability, comment.stock_name, comment.date]]))
 def print_user(user):
     print("==========USER "+str(user.user_id)+"=================")
     print("Weekly Score: " + str(user.weekly_score))
@@ -122,26 +122,46 @@ def main():
     for user_id in users:
         #getting user data
         user = get_user(user_id)
+        ## DEBUG:
+        print_user(user)
         #setting user variables
         total = 0
         n = 0
         #get user comments
         user_comments.clear()
         user_comments.extend(get_user_comments(user.user_id, since=monday, order_by_asc=True))
+        ## DEBUG:
         print_comments(user_comments)
-        #checking if there are some buy/sell for the same stock
-        for comment in user_comments:
-            user.base += check_buysell(comment)
-            #calculating the profit ratio
-        for comment in user_comments:
-            total += calculate_profit(comment)
-            n += 1
-        #updating scores
-        user.weekly_score = (total + user.base) / n
+        #Checking if the user has some comments for the week
+        if (user_comments):
+            #checking if there are some buy/sell for the same stock
+            for comment in user_comments:
+                user.base += check_buysell(comment)
+                #calculating the profit ratio
+            for comment in user_comments:
+                percentage = calculate_profit(comment)
+                if (percentage is not None):
+                    total += percentage
+                    n += 1
+            #updating weekly score
+            if (n != 0):
+                user.weekly_score = (total + user.base) / n
+            else:
+                user.weekly_score = 0
+        else:
+            #updating weekly score
+            user.weekly_score = 0
+
+        #updating totale score
         user.total_score = user.total_score * alpha + (1 - alpha) * user.weekly_score
+        #if sunday, delete all bases
+        if (datetime.now().weekday() == 6):
+            user.base = 0
         #save user score on db
         set_user_score(user)
-        #debug
+        #save user history
+        save_user_history(user)
+        ## DEBUG:
         print_user(user)
 
 if __name__ == "__main__":

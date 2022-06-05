@@ -1,0 +1,234 @@
+{
+    "all_users": [
+        {
+            "name": "giacomino79",
+            "w_score": 300,
+            "at_score": 1496,
+            "positive_stocks": ["AAPL", "TSLA"],
+            "neagtive_stocks": [],
+            "weekly_performance": [0, 20, 57, 24, 60, 33, 70],
+            "all_time_performance": [23,57,34,57,3,57,97,5,2,6,85,73,42,54,69,53,84,3,32]
+        },
+        {
+            "name": "vrahsssoss9",
+            "w_score" : 75,
+            "at_score" : 9762,
+            "positive_stocks": ["CSX"],
+            "neagtive_stocks": ["NFLX", "TSLA"],
+            "weekly_performance": [52,47,4,35],
+            "all_time_performance": [5,2,6,52,36,25,74,3,7,5,36,4,25,2,25,36,47]
+        }
+    ],
+    "history": {
+        "giacomino79": [
+            {
+                "name": "giacomino79",
+                "w_score": 0,
+                "at_score": 1496,
+                "date": "23/05/2022"
+                
+            },
+            {
+                "name": "giacomino79",
+                "w_score": 20,
+                "at_score": 1499,
+                "date": "24/05/2022"
+                
+            },
+            {
+                "name": "giacomino79",
+                "w_score": 57,
+                "at_score": 1600,
+                "date": "25/05/2022"
+                    
+            },
+            {
+                "name": "giacomino79",
+                "w_score": 45,
+                "at_score": 1550,
+                "date": "26/05/2022"
+                    
+            },
+            {
+                "name": "giacomino79",
+                "w_score": 79,
+                "at_score": 1995,
+                "date": "27/05/2022"
+                    
+            },
+            {
+                "name": "giacomino79",
+                "w_score": 106,
+                "at_score": 2000,
+                "date": "28/05/2022"
+                
+            },
+            {
+                "name": "giacomino79",
+                "w_score": 300,
+                "at_score": 2250,
+                "date": "29/05/2022"
+                    
+            }
+        ],
+        "vrahsssoss9": [
+            {
+                "name": "vrahsssoss9",
+                "w_score": 70,
+                "at_score": 2347,
+                "date": "23/05/2022"
+            },
+            {
+                "name": "vrahsssoss9",
+                "w_score": 44,
+                "at_score": 2324,
+                "date": "23/05/2022"
+            },
+            {
+                "name": "vrahsssoss9",
+                "w_score": 98,
+                "at_score": 2400,
+                "date": "23/05/2022"
+            },
+            {
+                "name": "vrahsssoss9",
+                "w_score": 75,
+                "at_score": 2345,
+                "date": "23/05/2022"
+            }
+        ]
+    },
+    "relevant_comments": {
+        "giacomino79": [
+            {
+                "comment_id": "grah",
+                "user_id": "giacomino79",
+                "comment_value": true,
+                "reliability": 0.4,
+                "stock_name": "AAPL",
+                "stock_value": 0,
+                "date": "24/05/2022"
+            },
+            {
+                "comment_id": "rhgthfg",
+                "user_id": "giacomino79",
+                "comment_value": false,
+                "reliability": 0.3,
+                "stock_name": "NVDA",
+                "stock_value": 0,
+                "date": "24/05/2022"
+            },
+            {
+                "comment_id": "adhfyjs",
+                "user_id": "giacomino79",
+                "comment_value": true,
+                "reliability": 0.5,
+                "stock_name": "NFLX",
+                "stock_value": 0,
+                "date": "26/05/2022"
+            },
+            {
+                "comment_id": "sbdtgbadrh",
+                "user_id": "giacomino79",
+                "comment_value": true,
+                "reliability": 0.1,
+                "stock_name": "TSLA",
+                "stock_value": 0,
+                "date": "28/05/2022"
+            }
+        ],
+        "vrahsssoss9": [
+            {
+                "comment_id": "zdtgae",
+                "user_id": "vrahsssoss9",
+                "comment_value": false,
+                "reliability": 0.4,
+                "stock_name": "TSLA",
+                "stock_value": 0,
+                "date": "25/05/2022"
+            },
+            {
+                "comment_id": "sftjsyh",
+                "user_id": "vrahsssoss9",
+                "comment_value": false,
+                "reliability": 0.4,
+                "stock_name": "AAPL",
+                "stock_value": 0,
+                "date": "29/05/2022"
+            },
+            {
+                "comment_id": "vasrga",
+                "user_id": "vrahsssoss9",
+                "comment_value": true,
+                "reliability": 0.1,
+                "stock_name": "AMD",
+                "stock_value": 0,
+                "date": "23/05/2022"
+            }
+        ]
+    },
+    "stock_info": {
+        "AAPL": [
+            [
+                {
+                    "user_id": "giacomino79",
+                    "comment_value": true,
+                    "stock_name": "AAPL",
+                    "date": "23/05/2022"
+                },
+                {
+                    "user_id": "vrahsssoss9",
+                    "comment_value": true,
+                    "stock_name": "AAPL",
+                    "date": "23/05/2022"
+                }
+            ],
+            [
+                {
+                    "user_id": "vrahsssoss9",
+                    "comment_value": true,
+                    "stock_name": "AAPL",
+                    "date": "24/05/2022"
+                },
+                {
+                    "user_id": "giacomino79",
+                    "comment_value": false,
+                    "stock_name": "AAPL",
+                    "date": "24/05/2022"
+                }
+            ]
+        ],
+        "TSLA": [
+            [
+                {
+                    "user_id": "giacomino79",
+                    "comment_value": true,
+                    "stock_name": "TSLA",
+                    "date": "23/05/2022"
+                },
+                {
+                    "user_id": "vrahsssoss9",
+                    "comment_value": false,
+                    "stock_name": "TSLA",
+                    "date": "23/05/2022"
+                }
+            ],
+            [
+                {
+                    "user_id": "giacomino79",
+                    "comment_value": true,
+                    "stock_name": "TSLA",
+                    "date": "24/05/2022"
+                }
+            ],
+            [
+                {
+                    "user_id": "vrahsssoss9",
+                    "comment_value": false,
+                    "stock_name": "TSLA",
+                    "date": "23/05/2022"
+                }
+            ]
+        ]
+    }
+}

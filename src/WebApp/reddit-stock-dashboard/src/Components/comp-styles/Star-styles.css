@@ -1,0 +1,12 @@
+.star {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.5em;
+  }
+  .on {
+    color: rgb(193, 210, 16);
+  }
+  .off {
+    color: rgb(77, 75, 75);
+  }

@@ -20,38 +20,20 @@
     overflow-y: hidden;
 }
 
-.userBox {
-    margin-right: 5%;
-    margin-left: 5%;
-    height: 80vh;
-}
-
-.userStats {
-    float: left;
-    text-align: left;
+.userGraph {
+    float: right;
+    width: 60%;
     height: 75vh;
     margin-top: 2ch;
 }
 
-.weeklyGraph {
-    height: 50%;
-    margin-top: 0%;
-}
-
-.totalGraph {
-    height: 50%;
-}
-
-.entry {
+.Log {
+    height: 65vh;
     margin-bottom: 2ch;
-}
-
-.scrollableLogUsers {
+  }
+  
+  .scrollableLog {
     margin-top: 2vh;
-    height: 37vh;
+    height: 61vh;
     overflow: auto;
-}
-
-.score {
-    margin-top: 4vh;
-}
+  }

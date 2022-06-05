@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import Profiles from './Profiles';
 import CSS from 'csstype'
+import {ClipLoader} from 'react-spinners'
 
 type Props = {
-    DB: any,
     handleClickPanelChange: any
 }
 
 function Leaderboard(props: Props) {
 
     const [isWeekly, setWeekly] = useState(true)
-    const [users, setUsers] = useState([{}]) // DATA FROM THE BACKEND
+    const [usersByWeekly, setUsersByWeekly] = useState([{}])
+    const [usersByTotal, setUsersByTotal] = useState([{}])
+    const [loading, setLoading] = useState(false)
+
 
     useEffect(() => {
+        setLoading(true);
         fetch("/all_users").then(
             res => res.json()
         ).then(
             users => {
-                setUsers(users["users"])
-                console.log(users["users"])
+                setUsersByWeekly(JSON.parse(users.weekly))
+                setUsersByTotal(JSON.parse(users.total))
+                console.log(users)
+                setLoading(false)
             }
         )
     }, [])
@@ -41,33 +47,13 @@ function Leaderboard(props: Props) {
             <button style={!isWeekly ? buttonStylePressed : buttonStyleNotPressed} onClick={handleClick} data-id='0'>All-Time</button>
         </div>
 
-        <Profiles isWeekly={isWeekly} DB={sort(users, isWeekly)} handleClickPanelChange={props.handleClickPanelChange}></Profiles>
-
+        {loading ? <ClipLoader css={"margin-top: 5%;"} color={'#000000'} loading={loading} size={50} ></ClipLoader> : <Profiles isWeekly={isWeekly} users={isWeekly ? usersByWeekly : usersByTotal} handleClickPanelChange={props.handleClickPanelChange}></Profiles>}
         </div>
     )
 
 }
 
 export default Leaderboard;
-
-function sort(data: any, isWeekly: boolean) {
-    return data.sort((a: any, b: any) => {
-        if (isWeekly) {
-            if ( a.w_score === b.w_score){
-                return b.w_score - a.w_score;
-            } else{
-                return b.w_score - a.w_score;
-            }
-        }
-        else {
-            if ( a.at_score === b.at_score){
-                return b.at_score - a.at_score;
-            } else{
-                return b.at_score - a.at_score;
-            }
-        }
-    })
-}
 
 const buttonStylePressed: CSS.Properties = {
     backgroundColor: "#2C3131", color: "#F3F3F2"
