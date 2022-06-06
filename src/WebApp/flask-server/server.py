@@ -42,7 +42,7 @@ def get_user_info(username):
         "user": json.dumps(vars(user)),
         "weekly_history": json.dumps(database.get_user_history_score_weekly(username)),
         "total_history": json.dumps(database.get_user_history_score_global(username, 30)),
-        "relevant_comments": json.dumps([vars(c) for c in (test_db_list.get_last_user_relevant_comments(username) if LOCAL else database.get_last_user_relevant_comments(username, 10, 30))])
+        "relevant_comments": json.dumps([vars(c) for c in (test_db_list.get_last_user_relevant_comments(username) if LOCAL else database.get_last_user_relevant_comments(username, 100, 7))])
     }
     return jsonify(res)
 

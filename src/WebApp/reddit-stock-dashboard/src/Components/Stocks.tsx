@@ -108,7 +108,7 @@ export default Stocks
 const getStockInfoView = (info: Comment[][], handleClickUser: any) => {
     return (
         <div className='Log'>
-                        <h3>Comments in the past 7 days:</h3>
+                        <h3>Comments in the past days:</h3>
                         <div className='scrollableLog'>
                         {
                             info.map((value: any[], index_out: number) => (

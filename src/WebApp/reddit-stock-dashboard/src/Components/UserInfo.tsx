@@ -36,7 +36,7 @@ function UserInfo(props: Props) {
         title: {
           text: 'Score'
         },
-        min: 0,
+        min: Math.min(...performance) < 0 ? Math.min(...performance)+0.25*Math.min(...performance ): 0,
         max: Math.max(...performance)+0.25*Math.max(...performance),
         tickAmount: 6
       },
@@ -100,7 +100,7 @@ function UserInfo(props: Props) {
               props.userInfo.stocks.map((value: any, index: number) => (
                 <div className='commentEntry' key={index}>
                 <span>{new Date(value.date*1000).toLocaleDateString()}:&emsp;</span>
-                {value.comment_value ? <span style={{"color": "green"}}>POSITIVE</span> : <span style={{"color": "red"}}>NEGATIVE</span>}
+                {value.comment_value ? <span style={{"color": "green"}}>BULLISH</span> : <span style={{"color": "red"}}>BEARISH</span>}
                 <span> for </span>
                 <span style={{cursor: "pointer", color: "blue", textDecoration: "underline"}} className='name text-dark' onClick={() => handleClickStock(value.stock_name)}>{value.stock_name}</span>
                 </div>
