@@ -11,7 +11,10 @@ def get_stock_history(symbol):
     if any(data):
         data = data.reset_index()
         for i, d in data.iterrows():
-            res.append({"x": int(d['Date'].timestamp()*1000), "y": round(d['Adj Close'], 2)})
+            try:
+                res.append({"x": int(d['Date'].timestamp()*1000), "y": round(d['Adj Close'], 2)})
+            except:
+                continue
         return res
     else: return []
 
