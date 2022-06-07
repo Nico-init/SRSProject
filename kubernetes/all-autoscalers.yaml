@@ -7,9 +7,9 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: react-deploy
-  minReplicas: 1
-  maxReplicas: 1
-  targetCPUUtilizationPercentage: 40
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 30
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -33,6 +33,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: flask-deploy
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 3
-  targetCPUUtilizationPercentage: 50
+  targetCPUUtilizationPercentage: 30
