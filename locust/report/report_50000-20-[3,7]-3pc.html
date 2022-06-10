@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test Report for locust.py</title>
+    <title>Test Report for locust-fast-http.py</title>
     <style>
         body {
             background: #173529;
@@ -119,9 +119,9 @@ table.stats tr.total td {
 
         <div class="info">
             
-            <p>During: <span class="l10n datetime">2022-05-31 05:51:02</span> - <span class="l10n datetime">2022-05-31 05:53:35</span></p>
-            <p>Target Host: <span>http://20.227.16.124</span></p>
-            <p>Script: <span>locust.py</span></p>
+            <p>During: <span class="l10n datetime">2022-06-06 21:13:25</span> - <span class="l10n datetime">2022-06-06 21:21:46</span></p>
+            <p>Target Host: <span>https://20.227.16.124</span></p>
+            <p>Script: <span>locust-fast-http.py</span></p>
         </div>
 
         <div class="requests">
@@ -145,41 +145,184 @@ table.stats tr.total td {
                     
                         <tr>
                             <td>GET</td>
-                            <td>/</td>
-                            <td>29323</td>
-                            <td>0</td>
-                            <td>265</td>
-                            <td>250</td>
-                            <td>2783</td>
-                            <td>644</td>
-                            <td>192.5</td>
-                            <td>0.0</td>
+                            <td>/all_users</td>
+                            <td>161559</td>
+                            <td>5661</td>
+                            <td>2293</td>
+                            <td>231</td>
+                            <td>218843</td>
+                            <td>5157</td>
+                            <td>322.2</td>
+                            <td>11.3</td>
                         </tr>
                     
                         <tr>
                             <td>GET</td>
-                            <td>/all_users</td>
-                            <td>29218</td>
-                            <td>0</td>
-                            <td>267</td>
-                            <td>253</td>
-                            <td>2535</td>
-                            <td>439</td>
-                            <td>191.9</td>
-                            <td>0.0</td>
+                            <td>/stock/APPS</td>
+                            <td>13362</td>
+                            <td>453</td>
+                            <td>2189</td>
+                            <td>232</td>
+                            <td>202264</td>
+                            <td>1170</td>
+                            <td>26.6</td>
+                            <td>0.9</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/stock/JP</td>
+                            <td>13537</td>
+                            <td>441</td>
+                            <td>2120</td>
+                            <td>232</td>
+                            <td>169133</td>
+                            <td>1007</td>
+                            <td>27.0</td>
+                            <td>0.9</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/stock/NET</td>
+                            <td>13373</td>
+                            <td>418</td>
+                            <td>2233</td>
+                            <td>232</td>
+                            <td>204328</td>
+                            <td>1373</td>
+                            <td>26.7</td>
+                            <td>0.8</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/stock/TSLA</td>
+                            <td>13561</td>
+                            <td>470</td>
+                            <td>2320</td>
+                            <td>232</td>
+                            <td>153681</td>
+                            <td>9307</td>
+                            <td>27.0</td>
+                            <td>0.9</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/DANGERBLOOM</td>
+                            <td>13476</td>
+                            <td>417</td>
+                            <td>2064</td>
+                            <td>232</td>
+                            <td>189970</td>
+                            <td>1996</td>
+                            <td>26.9</td>
+                            <td>0.8</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/GloriousSushi</td>
+                            <td>13408</td>
+                            <td>465</td>
+                            <td>2265</td>
+                            <td>232</td>
+                            <td>173401</td>
+                            <td>2242</td>
+                            <td>26.7</td>
+                            <td>0.9</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/Happytimedean</td>
+                            <td>13382</td>
+                            <td>438</td>
+                            <td>2187</td>
+                            <td>232</td>
+                            <td>168886</td>
+                            <td>2251</td>
+                            <td>26.7</td>
+                            <td>0.9</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/MCRAW36</td>
+                            <td>13460</td>
+                            <td>401</td>
+                            <td>1940</td>
+                            <td>232</td>
+                            <td>154333</td>
+                            <td>2213</td>
+                            <td>26.8</td>
+                            <td>0.8</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/Shandowarden</td>
+                            <td>13405</td>
+                            <td>445</td>
+                            <td>2066</td>
+                            <td>232</td>
+                            <td>170139</td>
+                            <td>2562</td>
+                            <td>26.7</td>
+                            <td>0.9</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/Sir_Trashbin</td>
+                            <td>13470</td>
+                            <td>487</td>
+                            <td>2239</td>
+                            <td>232</td>
+                            <td>172034</td>
+                            <td>1862</td>
+                            <td>26.9</td>
+                            <td>1.0</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/equityorasset</td>
+                            <td>13569</td>
+                            <td>469</td>
+                            <td>2284</td>
+                            <td>232</td>
+                            <td>163487</td>
+                            <td>2428</td>
+                            <td>27.1</td>
+                            <td>0.9</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/zeren1ty</td>
+                            <td>13423</td>
+                            <td>444</td>
+                            <td>2247</td>
+                            <td>232</td>
+                            <td>184139</td>
+                            <td>2020</td>
+                            <td>26.8</td>
+                            <td>0.9</td>
                         </tr>
                     
                         <tr class="total">
                             <td></td>
                             <td>Aggregated</td>
-                            <td>58541</td>
-                            <td>0</td>
-                            <td>266</td>
-                            <td>250</td>
-                            <td>2783</td>
-                            <td>541</td>
-                            <td>384.4</td>
-                            <td>0.0</td>
+                            <td>322985</td>
+                            <td>11009</td>
+                            <td>2236</td>
+                            <td>231</td>
+                            <td>218843</td>
+                            <td>3850</td>
+                            <td>644.0</td>
+                            <td>22.0</td>
                         </tr>
                     
                 </tbody>
@@ -207,47 +350,1194 @@ table.stats tr.total td {
                     
                         <tr>
                             <td>GET</td>
-                            <td>/</td>
-                            <td>260</td>
-                            <td>260</td>
-                            <td>260</td>
-                            <td>260</td>
-                            <td>270</td>
-                            <td>270</td>
-                            <td>530</td>
-                            <td>2800</td>
+                            <td>/all_users</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>990</td>
+                            <td>73000</td>
+                            <td>219000</td>
                         </tr>
                     
                         <tr>
                             <td>GET</td>
-                            <td>/all_users</td>
-                            <td>260</td>
-                            <td>260</td>
-                            <td>260</td>
-                            <td>260</td>
-                            <td>270</td>
-                            <td>270</td>
-                            <td>540</td>
-                            <td>2500</td>
+                            <td>/stock/APPS</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>350</td>
+                            <td>1000</td>
+                            <td>70000</td>
+                            <td>202000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/stock/JP</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>350</td>
+                            <td>1000</td>
+                            <td>69000</td>
+                            <td>169000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/stock/NET</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>490</td>
+                            <td>73000</td>
+                            <td>204000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/stock/TSLA</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>970</td>
+                            <td>75000</td>
+                            <td>154000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/DANGERBLOOM</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>480</td>
+                            <td>70000</td>
+                            <td>190000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/GloriousSushi</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>1000</td>
+                            <td>71000</td>
+                            <td>173000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/Happytimedean</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>980</td>
+                            <td>72000</td>
+                            <td>169000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/MCRAW36</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>470</td>
+                            <td>69000</td>
+                            <td>154000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/Shandowarden</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>960</td>
+                            <td>71000</td>
+                            <td>170000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/Sir_Trashbin</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>350</td>
+                            <td>1000</td>
+                            <td>71000</td>
+                            <td>172000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/equityorasset</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>1000</td>
+                            <td>72000</td>
+                            <td>163000</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>GET</td>
+                            <td>/user/zeren1ty</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>990</td>
+                            <td>72000</td>
+                            <td>184000</td>
                         </tr>
                     
                         <tr class="total">
                             <td></td>
                             <td>Aggregated</td>
-                            <td>260</td>
-                            <td>260</td>
-                            <td>260</td>
-                            <td>260</td>
-                            <td>270</td>
-                            <td>270</td>
-                            <td>530</td>
-                            <td>2800</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>240</td>
+                            <td>250</td>
+                            <td>340</td>
+                            <td>990</td>
+                            <td>72000</td>
+                            <td>219000</td>
                         </tr>
                     
                 </tbody>
             </table>
         </div>
 
+        
+            <div class="failures">
+                <h2>Failures Statistics</h2>
+                <table class="stats">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Name</th>
+                            <th>Error</th>
+                            <th>Occurrences</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>4</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>19</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>80</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Shandowarden', 1, original=The handshake operation timed out)</td>
+                                <td>152</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>2</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>6</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>50</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Shandowarden', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>140</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>2</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Happytimedean', 1, original=timed out)</td>
+                                <td>8</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>21</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>2</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/zeren1ty', 1, original=The handshake operation timed out)</td>
+                                <td>171</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>13</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/JP', 1, original=The handshake operation timed out)</td>
+                                <td>191</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/APPS', 1, original=The handshake operation timed out)</td>
+                                <td>174</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/NET', 1, original=The read operation timed out)</td>
+                                <td>72</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>13</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>RetriesExceeded('https://20.227.16.124/all_users', 1, original=The handshake operation timed out)</td>
+                                <td>2068</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>15</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>17</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>3</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>3</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>4</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Sir_Trashbin', 1, original=The read operation timed out)</td>
+                                <td>60</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>8</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Happytimedean', 1, original=The handshake operation timed out)</td>
+                                <td>160</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Happytimedean', 1, original=The read operation timed out)</td>
+                                <td>62</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>14</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/zeren1ty', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>137</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>15</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>19</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>3</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>20</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>46</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/TSLA', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>123</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>6</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>10</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>6</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>13</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>21</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>5</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>8</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>3</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/APPS', 1, original=timed out)</td>
+                                <td>8</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/equityorasset', 1, original=The handshake operation timed out)</td>
+                                <td>193</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>18</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/MCRAW36', 1, original=timed out)</td>
+                                <td>11</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>24</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>12</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>25</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>3</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>RetriesExceeded('https://20.227.16.124/all_users', 1, original=The read operation timed out)</td>
+                                <td>998</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/zeren1ty', 1, original=The read operation timed out)</td>
+                                <td>63</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Shandowarden', 1, original=timed out)</td>
+                                <td>6</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/equityorasset', 1, original=The read operation timed out)</td>
+                                <td>62</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Sir_Trashbin', 1, original=timed out)</td>
+                                <td>6</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/NET', 1, original=timed out)</td>
+                                <td>8</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>10</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>25</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/DANGERBLOOM', 1, original=The read operation timed out)</td>
+                                <td>40</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/GloriousSushi', 1, original=The read operation timed out)</td>
+                                <td>65</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/MCRAW36', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>121</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/MCRAW36', 1, original=The read operation timed out)</td>
+                                <td>58</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>20</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>4</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Happytimedean', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>128</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/NET', 1, original=The handshake operation timed out)</td>
+                                <td>173</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>26</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>3</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/GloriousSushi', 1, original=The handshake operation timed out)</td>
+                                <td>171</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/MCRAW36', 1, original=The handshake operation timed out)</td>
+                                <td>144</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/APPS', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>132</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Shandowarden', 1, original=The read operation timed out)</td>
+                                <td>62</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>11</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>22</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>5</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/NET', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>107</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Sir_Trashbin', 1, original=The handshake operation timed out)</td>
+                                <td>178</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>5</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>11</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>5</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/JP', 1, original=The read operation timed out)</td>
+                                <td>32</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>2</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>24</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>5</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>141</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>63</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/APPS', 1, original=The read operation timed out)</td>
+                                <td>51</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>3</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/TSLA', 1, original=The handshake operation timed out)</td>
+                                <td>178</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/DANGERBLOOM', 1, original=The handshake operation timed out)</td>
+                                <td>174</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/zeren1ty', 1, original=timed out)</td>
+                                <td>13</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>RetriesExceeded('https://20.227.16.124/all_users', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>1619</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>4</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/GloriousSushi', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>136</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>15</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/equityorasset', 1, original=timed out)</td>
+                                <td>6</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>24</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/DANGERBLOOM', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>115</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/JP', 1, original=timed out)</td>
+                                <td>11</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>4</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>299</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>RetriesExceeded('https://20.227.16.124/all_users', 1, original=timed out)</td>
+                                <td>90</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>9</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>24</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>19</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>3</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/Sir_Trashbin', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>159</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>6</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/TSLA', 1, original=timed out)</td>
+                                <td>9</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/DANGERBLOOM</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/DANGERBLOOM', 1, original=timed out)</td>
+                                <td>14</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>9</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1125)')</td>
+                                <td>9</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Sir_Trashbin</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>18</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>ConnectionResetError(104, 'Connection reset by peer')</td>
+                                <td>16</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/JP', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>131</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/all_users</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>207</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/zeren1ty</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>15</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/equityorasset', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)</td>
+                                <td>140</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/NET</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>5</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/MCRAW36</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>16</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>27</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/equityorasset</td>
+                                <td>ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')</td>
+                                <td>16</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/JP</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/GloriousSushi</td>
+                                <td>RetriesExceeded('https://20.227.16.124/user/GloriousSushi', 1, original=timed out)</td>
+                                <td>6</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Shandowarden</td>
+                                <td>ConnectionRefusedError(111, 'Connection refused')</td>
+                                <td>11</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/TSLA</td>
+                                <td>RetriesExceeded('https://20.227.16.124/stock/TSLA', 1, original=The read operation timed out)</td>
+                                <td>97</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/user/Happytimedean</td>
+                                <td>SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')</td>
+                                <td>4</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>GET</td>
+                                <td>/stock/APPS</td>
+                                <td>ConnectionResetError(10054, "Connessione in corso interrotta forzatamente dall'host remoto", None, 10054, None)</td>
+                                <td>32</td>
+                            </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
         
 
         
@@ -260,7 +1550,7 @@ table.stats tr.total td {
 
         <div id="tasks">
             <h2>Final ratio</h2>
-            <div class="tasks" data-tasks="{&quot;per_class&quot;: {&quot;User1&quot;: {&quot;ratio&quot;: 1.0, &quot;tasks&quot;: {&quot;react_home&quot;: {&quot;ratio&quot;: 0.5}, &quot;all_users&quot;: {&quot;ratio&quot;: 0.5}}}}, &quot;total&quot;: {&quot;User1&quot;: {&quot;ratio&quot;: 1.0, &quot;tasks&quot;: {&quot;react_home&quot;: {&quot;ratio&quot;: 0.5}, &quot;all_users&quot;: {&quot;ratio&quot;: 0.5}}}}}"></div>
+            <div class="tasks" data-tasks="{&quot;per_class&quot;: {&quot;User1&quot;: {&quot;ratio&quot;: 1.0, &quot;tasks&quot;: {&quot;all_users&quot;: {&quot;ratio&quot;: 0.5}, &quot;user&quot;: {&quot;ratio&quot;: 0.3333333333333333}, &quot;stock&quot;: {&quot;ratio&quot;: 0.16666666666666666}}}}, &quot;total&quot;: {&quot;User1&quot;: {&quot;ratio&quot;: 1.0, &quot;tasks&quot;: {&quot;all_users&quot;: {&quot;ratio&quot;: 0.5}, &quot;user&quot;: {&quot;ratio&quot;: 0.3333333333333333}, &quot;stock&quot;: {&quot;ratio&quot;: 0.16666666666666666}}}}}"></div>
         </div>
     
     </div>
@@ -532,12 +1822,12 @@ function fillTasksFromRequest() {
     <script>
         
 var stats_history = {
-    "time": ["05:51:05", "05:51:10", "05:51:15", "05:51:20", "05:51:25", "05:51:30", "05:51:35", "05:51:40", "05:51:45", "05:51:50", "05:51:55", "05:52:00", "05:52:05", "05:52:10", "05:52:15", "05:52:20", "05:52:25", "05:52:30", "05:52:35", "05:52:40", "05:52:45", "05:52:50", "05:52:56", "05:53:01", "05:53:06", "05:53:11", "05:53:16", "05:53:21", "05:53:26", "05:53:31"].map(server_time => new Date(new Date().setUTCHours(...(server_time.split(":")))).toLocaleTimeString()),
-    "user_count": [{"value": 40}, {"value": 90}, {"value": 140}, {"value": 190}, {"value": 240}, {"value": 290}, {"value": 340}, {"value": 390}, {"value": 440}, {"value": 490}, {"value": 540}, {"value": 590}, {"value": 640}, {"value": 690}, {"value": 740}, {"value": 790}, {"value": 840}, {"value": 890}, {"value": 940}, {"value": 990}, {"value": 1000}, {"value": 1000}, {"value": 1000}, {"value": 1000}, {"value": 1000}, {"value": 1000}, {"value": 1000}, {"value": 1000}, {"value": 1000}, {"value": 1000}],
-    "current_rps": [{"users": 40, "value": 0}, {"users": 90, "value": 15.5}, {"users": 140, "value": 34.0}, {"users": 190, "value": 62.6}, {"users": 240, "value": 89.8}, {"users": 290, "value": 118.3}, {"users": 340, "value": 146.8}, {"users": 390, "value": 174.8}, {"users": 440, "value": 202.6}, {"users": 490, "value": 231.3}, {"users": 540, "value": 262.5}, {"users": 590, "value": 289.7}, {"users": 640, "value": 315.6}, {"users": 690, "value": 347.9}, {"users": 740, "value": 375.5}, {"users": 790, "value": 402.2}, {"users": 840, "value": 431.9}, {"users": 890, "value": 458.4}, {"users": 940, "value": 485.6}, {"users": 990, "value": 515.9}, {"users": 1000, "value": 546.6}, {"users": 1000, "value": 560.0}, {"users": 1000, "value": 569.0}, {"users": 1000, "value": 569.3}, {"users": 1000, "value": 566.5}, {"users": 1000, "value": 566.9}, {"users": 1000, "value": 568.6}, {"users": 1000, "value": 567.0}, {"users": 1000, "value": 566.9}, {"users": 1000, "value": 567.8}],
-    "current_fail_per_sec": [{"users": 40, "value": 0}, {"users": 90, "value": 0}, {"users": 140, "value": 0}, {"users": 190, "value": 0}, {"users": 240, "value": 0}, {"users": 290, "value": 0}, {"users": 340, "value": 0}, {"users": 390, "value": 0}, {"users": 440, "value": 0}, {"users": 490, "value": 0}, {"users": 540, "value": 0}, {"users": 590, "value": 0}, {"users": 640, "value": 0}, {"users": 690, "value": 0}, {"users": 740, "value": 0}, {"users": 790, "value": 0}, {"users": 840, "value": 0}, {"users": 890, "value": 0}, {"users": 940, "value": 0}, {"users": 990, "value": 0}, {"users": 1000, "value": 0}, {"users": 1000, "value": 0}, {"users": 1000, "value": 0}, {"users": 1000, "value": 0}, {"users": 1000, "value": 0}, {"users": 1000, "value": 0}, {"users": 1000, "value": 0}, {"users": 1000, "value": 0}, {"users": 1000, "value": 0}, {"users": 1000, "value": 0}],
-    "response_time_percentile_50": [{"users": 40, "value": 520.0}, {"users": 90, "value": 260.0}, {"users": 140, "value": 260.0}, {"users": 190, "value": 260.0}, {"users": 240, "value": 260.0}, {"users": 290, "value": 260.0}, {"users": 340, "value": 260.0}, {"users": 390, "value": 260.0}, {"users": 440, "value": 260.0}, {"users": 490, "value": 260.0}, {"users": 540, "value": 260.0}, {"users": 590, "value": 260.0}, {"users": 640, "value": 260.0}, {"users": 690, "value": 260.0}, {"users": 740, "value": 260.0}, {"users": 790, "value": 260.0}, {"users": 840, "value": 260.0}, {"users": 890, "value": 260.0}, {"users": 940, "value": 260.0}, {"users": 990, "value": 260.0}, {"users": 1000, "value": 260.0}, {"users": 1000, "value": 260.0}, {"users": 1000, "value": 260.0}, {"users": 1000, "value": 260.0}, {"users": 1000, "value": 260.0}, {"users": 1000, "value": 260.0}, {"users": 1000, "value": 260.0}, {"users": 1000, "value": 260.0}, {"users": 1000, "value": 260.0}, {"users": 1000, "value": 260.0}],
-    "response_time_percentile_95": [{"users": 40, "value": 2500.0}, {"users": 90, "value": 540.0}, {"users": 140, "value": 540.0}, {"users": 190, "value": 540.0}, {"users": 240, "value": 540.0}, {"users": 290, "value": 530.0}, {"users": 340, "value": 530.0}, {"users": 390, "value": 520.0}, {"users": 440, "value": 270.0}, {"users": 490, "value": 280.0}, {"users": 540, "value": 310.0}, {"users": 590, "value": 300.0}, {"users": 640, "value": 270.0}, {"users": 690, "value": 270.0}, {"users": 740, "value": 270.0}, {"users": 790, "value": 280.0}, {"users": 840, "value": 280.0}, {"users": 890, "value": 270.0}, {"users": 940, "value": 290.0}, {"users": 990, "value": 280.0}, {"users": 1000, "value": 270.0}, {"users": 1000, "value": 270.0}, {"users": 1000, "value": 270.0}, {"users": 1000, "value": 270.0}, {"users": 1000, "value": 270.0}, {"users": 1000, "value": 270.0}, {"users": 1000, "value": 270.0}, {"users": 1000, "value": 270.0}, {"users": 1000, "value": 270.0}, {"users": 1000, "value": 270.0}],
+    "time": ["21:13:28", "21:13:33", "21:13:38", "21:13:43", "21:13:48", "21:13:53", "21:13:58", "21:14:03", "21:14:08", "21:14:13", "21:14:18", "21:14:23", "21:14:28", "21:14:33", "21:14:38", "21:14:43", "21:14:48", "21:14:53", "21:14:58", "21:15:03", "21:15:08", "21:15:13", "21:15:18", "21:15:23", "21:15:28", "21:15:33", "21:15:38", "21:15:43", "21:15:48", "21:15:53", "21:15:58", "21:16:03", "21:16:08", "21:16:13", "21:16:18", "21:16:23", "21:16:28", "21:16:33", "21:16:38", "21:16:43", "21:16:48", "21:16:53", "21:16:58", "21:17:03", "21:17:08", "21:17:13", "21:17:18", "21:17:23", "21:17:28", "21:17:33", "21:17:38", "21:17:43", "21:17:48", "21:17:53", "21:17:58", "21:18:03", "21:18:08", "21:18:13", "21:18:18", "21:18:23", "21:18:28", "21:18:33", "21:18:38", "21:18:43", "21:18:48", "21:18:53", "21:18:58", "21:19:03", "21:19:08", "21:19:13", "21:19:18", "21:19:23", "21:19:28", "21:19:33", "21:19:38", "21:19:43", "21:19:48", "21:19:53", "21:19:58", "21:20:03", "21:20:08", "21:20:13", "21:20:18", "21:20:23", "21:20:28", "21:20:33", "21:20:38", "21:20:43", "21:20:48", "21:20:53", "21:20:58", "21:21:03", "21:21:08", "21:21:13", "21:21:18", "21:21:23", "21:21:28", "21:21:33", "21:21:38", "21:21:43", "21:21:48", "21:21:53", "21:21:58", "21:22:03"].map(server_time => new Date(new Date().setUTCHours(...(server_time.split(":")))).toLocaleTimeString()),
+    "user_count": [{"value": 80}, {"value": 180}, {"value": 280}, {"value": 380}, {"value": 480}, {"value": 580}, {"value": 680}, {"value": 780}, {"value": 880}, {"value": 980}, {"value": 1080}, {"value": 1180}, {"value": 1280}, {"value": 1380}, {"value": 1480}, {"value": 1580}, {"value": 1680}, {"value": 1780}, {"value": 1880}, {"value": 1980}, {"value": 2080}, {"value": 2180}, {"value": 2280}, {"value": 2380}, {"value": 2480}, {"value": 2580}, {"value": 2680}, {"value": 2780}, {"value": 2880}, {"value": 2980}, {"value": 3080}, {"value": 3180}, {"value": 3280}, {"value": 3380}, {"value": 3480}, {"value": 3580}, {"value": 3680}, {"value": 3780}, {"value": 3880}, {"value": 3980}, {"value": 4080}, {"value": 4180}, {"value": 4280}, {"value": 4380}, {"value": 4480}, {"value": 4580}, {"value": 4680}, {"value": 4780}, {"value": 4880}, {"value": 4980}, {"value": 5080}, {"value": 5180}, {"value": 5280}, {"value": 5380}, {"value": 5480}, {"value": 5580}, {"value": 5680}, {"value": 5780}, {"value": 5880}, {"value": 5980}, {"value": 6080}, {"value": 6180}, {"value": 6280}, {"value": 6380}, {"value": 6480}, {"value": 6580}, {"value": 6680}, {"value": 6780}, {"value": 6880}, {"value": 6980}, {"value": 7080}, {"value": 7180}, {"value": 7280}, {"value": 7380}, {"value": 7480}, {"value": 7580}, {"value": 7680}, {"value": 7780}, {"value": 7879}, {"value": 7980}, {"value": 8080}, {"value": 8180}, {"value": 8280}, {"value": 8377}, {"value": 8480}, {"value": 8576}, {"value": 8680}, {"value": 8779}, {"value": 8874}, {"value": 8978}, {"value": 9079}, {"value": 9178}, {"value": 9280}, {"value": 9373}, {"value": 9476}, {"value": 9577}, {"value": 9677}, {"value": 9776}, {"value": 9873}, {"value": 9976}, {"value": 0}, {"value": 0}, {"value": 0}, {"value": 0}],
+    "current_rps": [{"users": 80, "value": 0}, {"users": 180, "value": 17.0}, {"users": 280, "value": 29.6}, {"users": 380, "value": 44.8}, {"users": 480, "value": 68.2}, {"users": 580, "value": 85.6}, {"users": 680, "value": 105.1}, {"users": 780, "value": 123.1}, {"users": 880, "value": 141.8}, {"users": 980, "value": 164.0}, {"users": 1080, "value": 184.2}, {"users": 1180, "value": 201.2}, {"users": 1280, "value": 219.3}, {"users": 1380, "value": 239.0}, {"users": 1480, "value": 257.9}, {"users": 1580, "value": 277.4}, {"users": 1680, "value": 296.3}, {"users": 1780, "value": 309.5}, {"users": 1880, "value": 329.5}, {"users": 1980, "value": 353.8}, {"users": 2080, "value": 373.9}, {"users": 2180, "value": 395.3}, {"users": 2280, "value": 409.5}, {"users": 2380, "value": 426.6}, {"users": 2480, "value": 443.0}, {"users": 2580, "value": 463.2}, {"users": 2680, "value": 486.7}, {"users": 2780, "value": 500.2}, {"users": 2880, "value": 520.6}, {"users": 2980, "value": 542.7}, {"users": 3080, "value": 564.0}, {"users": 3180, "value": 583.7}, {"users": 3280, "value": 600.4}, {"users": 3380, "value": 619.7}, {"users": 3480, "value": 640.8}, {"users": 3580, "value": 656.2}, {"users": 3680, "value": 671.8}, {"users": 3780, "value": 690.6}, {"users": 3880, "value": 709.4}, {"users": 3980, "value": 730.0}, {"users": 4080, "value": 744.7}, {"users": 4180, "value": 771.6}, {"users": 4280, "value": 788.5}, {"users": 4380, "value": 788.0}, {"users": 4480, "value": 797.1}, {"users": 4580, "value": 790.4}, {"users": 4680, "value": 786.4}, {"users": 4780, "value": 791.9}, {"users": 4880, "value": 783.0}, {"users": 4980, "value": 790.3}, {"users": 5080, "value": 790.2}, {"users": 5180, "value": 779.9}, {"users": 5280, "value": 785.9}, {"users": 5380, "value": 788.2}, {"users": 5480, "value": 784.3}, {"users": 5580, "value": 785.0}, {"users": 5680, "value": 789.0}, {"users": 5780, "value": 788.9}, {"users": 5880, "value": 789.5}, {"users": 5980, "value": 789.9}, {"users": 6080, "value": 789.3}, {"users": 6180, "value": 793.7}, {"users": 6280, "value": 798.8}, {"users": 6380, "value": 796.0}, {"users": 6480, "value": 802.0}, {"users": 6580, "value": 803.6}, {"users": 6680, "value": 804.9}, {"users": 6780, "value": 789.4}, {"users": 6880, "value": 799.9}, {"users": 6980, "value": 802.6}, {"users": 7080, "value": 806.3}, {"users": 7180, "value": 801.9}, {"users": 7280, "value": 805.9}, {"users": 7380, "value": 811.0}, {"users": 7480, "value": 817.5}, {"users": 7580, "value": 814.9}, {"users": 7680, "value": 814.7}, {"users": 7780, "value": 820.8}, {"users": 7879, "value": 821.0}, {"users": 7980, "value": 831.6}, {"users": 8080, "value": 832.6}, {"users": 8180, "value": 820.4}, {"users": 8280, "value": 826.0}, {"users": 8377, "value": 829.6}, {"users": 8480, "value": 837.8}, {"users": 8576, "value": 839.9}, {"users": 8680, "value": 842.4}, {"users": 8779, "value": 826.7}, {"users": 8874, "value": 822.1}, {"users": 8978, "value": 839.9}, {"users": 9079, "value": 835.9}, {"users": 9178, "value": 831.3}, {"users": 9280, "value": 855.3}, {"users": 9373, "value": 858.1}, {"users": 9476, "value": 832.3}, {"users": 9577, "value": 848.7}, {"users": 9677, "value": 864.7}, {"users": 9776, "value": 851.4}, {"users": 9873, "value": 863.9}, {"users": 9976, "value": 873.9}, {"users": 0, "value": 871.2}, {"users": 0, "value": 871.2}, {"users": 0, "value": 871.2}, {"users": 0, "value": 871.2}],
+    "current_fail_per_sec": [{"users": 80, "value": 0}, {"users": 180, "value": 0}, {"users": 280, "value": 0}, {"users": 380, "value": 0}, {"users": 480, "value": 0}, {"users": 580, "value": 0}, {"users": 680, "value": 0}, {"users": 780, "value": 0}, {"users": 880, "value": 0}, {"users": 980, "value": 0}, {"users": 1080, "value": 0}, {"users": 1180, "value": 0}, {"users": 1280, "value": 0}, {"users": 1380, "value": 0}, {"users": 1480, "value": 0}, {"users": 1580, "value": 0}, {"users": 1680, "value": 0}, {"users": 1780, "value": 0}, {"users": 1880, "value": 0}, {"users": 1980, "value": 0}, {"users": 2080, "value": 0}, {"users": 2180, "value": 0}, {"users": 2280, "value": 0}, {"users": 2380, "value": 0}, {"users": 2480, "value": 0}, {"users": 2580, "value": 0}, {"users": 2680, "value": 0}, {"users": 2780, "value": 0}, {"users": 2880, "value": 0}, {"users": 2980, "value": 0}, {"users": 3080, "value": 0}, {"users": 3180, "value": 0}, {"users": 3280, "value": 0}, {"users": 3380, "value": 0}, {"users": 3480, "value": 0}, {"users": 3580, "value": 0}, {"users": 3680, "value": 0}, {"users": 3780, "value": 0}, {"users": 3880, "value": 0}, {"users": 3980, "value": 0}, {"users": 4080, "value": 0}, {"users": 4180, "value": 0}, {"users": 4280, "value": 0}, {"users": 4380, "value": 0}, {"users": 4480, "value": 0}, {"users": 4580, "value": 0}, {"users": 4680, "value": 0}, {"users": 4780, "value": 0}, {"users": 4880, "value": 0.1}, {"users": 4980, "value": 2.2}, {"users": 5080, "value": 4.5}, {"users": 5180, "value": 4.4}, {"users": 5280, "value": 5.0}, {"users": 5380, "value": 5.4}, {"users": 5480, "value": 5.2}, {"users": 5580, "value": 5.1}, {"users": 5680, "value": 6.7}, {"users": 5780, "value": 9.2}, {"users": 5880, "value": 10.4}, {"users": 5980, "value": 11.6}, {"users": 6080, "value": 12.5}, {"users": 6180, "value": 13.8}, {"users": 6280, "value": 15.7}, {"users": 6380, "value": 18.2}, {"users": 6480, "value": 20.5}, {"users": 6580, "value": 21.8}, {"users": 6680, "value": 23.0}, {"users": 6780, "value": 24.5}, {"users": 6880, "value": 26.5}, {"users": 6980, "value": 27.9}, {"users": 7080, "value": 27.9}, {"users": 7180, "value": 30.0}, {"users": 7280, "value": 33.7}, {"users": 7380, "value": 31.8}, {"users": 7480, "value": 35.6}, {"users": 7580, "value": 40.4}, {"users": 7680, "value": 40.9}, {"users": 7780, "value": 43.9}, {"users": 7879, "value": 45.3}, {"users": 7980, "value": 49.8}, {"users": 8080, "value": 50.1}, {"users": 8180, "value": 46.5}, {"users": 8280, "value": 50.6}, {"users": 8377, "value": 54.4}, {"users": 8480, "value": 60.7}, {"users": 8576, "value": 63.4}, {"users": 8680, "value": 63.0}, {"users": 8779, "value": 65.5}, {"users": 8874, "value": 64.1}, {"users": 8978, "value": 66.9}, {"users": 9079, "value": 70.6}, {"users": 9178, "value": 70.2}, {"users": 9280, "value": 78.0}, {"users": 9373, "value": 78.3}, {"users": 9476, "value": 71.0}, {"users": 9577, "value": 77.8}, {"users": 9677, "value": 86.4}, {"users": 9776, "value": 89.1}, {"users": 9873, "value": 88.4}, {"users": 9976, "value": 92.7}, {"users": 0, "value": 94.7}, {"users": 0, "value": 94.7}, {"users": 0, "value": 94.7}, {"users": 0, "value": 94.7}],
+    "response_time_percentile_50": [{"users": 80, "value": 1100}, {"users": 180, "value": 1000}, {"users": 280, "value": 1000}, {"users": 380, "value": 240}, {"users": 480, "value": 240}, {"users": 580, "value": 240}, {"users": 680, "value": 240}, {"users": 780, "value": 240}, {"users": 880, "value": 240}, {"users": 980, "value": 240}, {"users": 1080, "value": 240}, {"users": 1180, "value": 240}, {"users": 1280, "value": 240}, {"users": 1380, "value": 240}, {"users": 1480, "value": 240}, {"users": 1580, "value": 240}, {"users": 1680, "value": 240}, {"users": 1780, "value": 240}, {"users": 1880, "value": 240}, {"users": 1980, "value": 240}, {"users": 2080, "value": 240}, {"users": 2180, "value": 240}, {"users": 2280, "value": 240}, {"users": 2380, "value": 240}, {"users": 2480, "value": 240}, {"users": 2580, "value": 240}, {"users": 2680, "value": 240}, {"users": 2780, "value": 240}, {"users": 2880, "value": 240}, {"users": 2980, "value": 240}, {"users": 3080, "value": 240}, {"users": 3180, "value": 240}, {"users": 3280, "value": 240}, {"users": 3380, "value": 240}, {"users": 3480, "value": 240}, {"users": 3580, "value": 240}, {"users": 3680, "value": 240}, {"users": 3780, "value": 240}, {"users": 3880, "value": 240}, {"users": 3980, "value": 240}, {"users": 4080, "value": 240}, {"users": 4180, "value": 240}, {"users": 4280, "value": 240}, {"users": 4380, "value": 240}, {"users": 4480, "value": 240}, {"users": 4580, "value": 240}, {"users": 4680, "value": 240}, {"users": 4780, "value": 240}, {"users": 4880, "value": 240}, {"users": 4980, "value": 240}, {"users": 5080, "value": 240}, {"users": 5180, "value": 240}, {"users": 5280, "value": 240}, {"users": 5380, "value": 240}, {"users": 5480, "value": 240}, {"users": 5580, "value": 240}, {"users": 5680, "value": 240}, {"users": 5780, "value": 240}, {"users": 5880, "value": 240}, {"users": 5980, "value": 240}, {"users": 6080, "value": 240}, {"users": 6180, "value": 240}, {"users": 6280, "value": 240}, {"users": 6380, "value": 240}, {"users": 6480, "value": 240}, {"users": 6580, "value": 240}, {"users": 6680, "value": 240}, {"users": 6780, "value": 240}, {"users": 6880, "value": 240}, {"users": 6980, "value": 240}, {"users": 7080, "value": 240}, {"users": 7180, "value": 240}, {"users": 7280, "value": 240}, {"users": 7380, "value": 240}, {"users": 7480, "value": 240}, {"users": 7580, "value": 240}, {"users": 7680, "value": 240}, {"users": 7780, "value": 240}, {"users": 7879, "value": 240}, {"users": 7980, "value": 240}, {"users": 8080, "value": 240}, {"users": 8180, "value": 240}, {"users": 8280, "value": 240}, {"users": 8377, "value": 240}, {"users": 8480, "value": 240}, {"users": 8576, "value": 240}, {"users": 8680, "value": 240}, {"users": 8779, "value": 240}, {"users": 8874, "value": 240}, {"users": 8978, "value": 240}, {"users": 9079, "value": 240}, {"users": 9178, "value": 240}, {"users": 9280, "value": 240}, {"users": 9373, "value": 240}, {"users": 9476, "value": 240}, {"users": 9577, "value": 240}, {"users": 9677, "value": 240}, {"users": 9776, "value": 240}, {"users": 9873, "value": 240}, {"users": 9976, "value": 240}, {"users": 0, "value": 240}, {"users": 0, "value": 240}, {"users": 0, "value": 240}, {"users": 0, "value": 240}],
+    "response_time_percentile_95": [{"users": 80, "value": 2000}, {"users": 180, "value": 2200}, {"users": 280, "value": 1200}, {"users": 380, "value": 1000}, {"users": 480, "value": 1000}, {"users": 580, "value": 1000}, {"users": 680, "value": 1000}, {"users": 780, "value": 1000}, {"users": 880, "value": 1000}, {"users": 980, "value": 1000}, {"users": 1080, "value": 1000}, {"users": 1180, "value": 1000}, {"users": 1280, "value": 1000}, {"users": 1380, "value": 1000}, {"users": 1480, "value": 1000}, {"users": 1580, "value": 1000}, {"users": 1680, "value": 1000}, {"users": 1780, "value": 990}, {"users": 1880, "value": 990}, {"users": 1980, "value": 990}, {"users": 2080, "value": 980}, {"users": 2180, "value": 950}, {"users": 2280, "value": 460}, {"users": 2380, "value": 450}, {"users": 2480, "value": 440}, {"users": 2580, "value": 440}, {"users": 2680, "value": 430}, {"users": 2780, "value": 420}, {"users": 2880, "value": 430}, {"users": 2980, "value": 430}, {"users": 3080, "value": 420}, {"users": 3180, "value": 410}, {"users": 3280, "value": 410}, {"users": 3380, "value": 410}, {"users": 3480, "value": 400}, {"users": 3580, "value": 410}, {"users": 3680, "value": 400}, {"users": 3780, "value": 390}, {"users": 3880, "value": 410}, {"users": 3980, "value": 410}, {"users": 4080, "value": 400}, {"users": 4180, "value": 410}, {"users": 4280, "value": 400}, {"users": 4380, "value": 400}, {"users": 4480, "value": 400}, {"users": 4580, "value": 380}, {"users": 4680, "value": 370}, {"users": 4780, "value": 380}, {"users": 4880, "value": 380}, {"users": 4980, "value": 380}, {"users": 5080, "value": 390}, {"users": 5180, "value": 380}, {"users": 5280, "value": 410}, {"users": 5380, "value": 420}, {"users": 5480, "value": 400}, {"users": 5580, "value": 410}, {"users": 5680, "value": 410}, {"users": 5780, "value": 400}, {"users": 5880, "value": 390}, {"users": 5980, "value": 400}, {"users": 6080, "value": 400}, {"users": 6180, "value": 410}, {"users": 6280, "value": 410}, {"users": 6380, "value": 400}, {"users": 6480, "value": 400}, {"users": 6580, "value": 420}, {"users": 6680, "value": 420}, {"users": 6780, "value": 420}, {"users": 6880, "value": 430}, {"users": 6980, "value": 430}, {"users": 7080, "value": 420}, {"users": 7180, "value": 450}, {"users": 7280, "value": 450}, {"users": 7380, "value": 430}, {"users": 7480, "value": 470}, {"users": 7580, "value": 18000}, {"users": 7680, "value": 19000}, {"users": 7780, "value": 21000}, {"users": 7879, "value": 21000}, {"users": 7980, "value": 21000}, {"users": 8080, "value": 21000}, {"users": 8180, "value": 21000}, {"users": 8280, "value": 21000}, {"users": 8377, "value": 21000}, {"users": 8480, "value": 21000}, {"users": 8576, "value": 24000}, {"users": 8680, "value": 43000}, {"users": 8779, "value": 60000}, {"users": 8874, "value": 60000}, {"users": 8978, "value": 42000}, {"users": 9079, "value": 43000}, {"users": 9178, "value": 48000}, {"users": 9280, "value": 64000}, {"users": 9373, "value": 64000}, {"users": 9476, "value": 42000}, {"users": 9577, "value": 60000}, {"users": 9677, "value": 64000}, {"users": 9776, "value": 64000}, {"users": 9873, "value": 65000}, {"users": 9976, "value": 65000}, {"users": 0, "value": 65000}, {"users": 0, "value": 65000}, {"users": 0, "value": 66000}, {"users": 0, "value": 66000}],
     "markers": [],
 };
         var rpsChart = new LocustLineChart($(".charts-container"), "Total Requests per Second", ["RPS", "Failures/s"], "reqs/s", ['#00ca5a', '#ff6d6d']);

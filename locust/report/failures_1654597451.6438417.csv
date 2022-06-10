@@ -1,0 +1,75 @@
+Method,Name,Error,Occurrences
+GET,/all_users,"ConnectionRefusedError(111, 'Connection refused')",2
+GET,/user/Shandowarden,"RetriesExceeded('https://20.227.16.124/user/Shandowarden', 1, original=The handshake operation timed out)",5
+GET,/all_users,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')",2
+GET,/user/Shandowarden,"RetriesExceeded('https://20.227.16.124/user/Shandowarden', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",1
+GET,/user/MCRAW36,"ConnectionResetError(10054, ""Connessione in corso interrotta forzatamente dall'host remoto"", None, 10054, None)",2
+GET,/user/zeren1ty,"RetriesExceeded('https://20.227.16.124/user/zeren1ty', 1, original=The handshake operation timed out)",3
+GET,/stock/JP,"ConnectionResetError(104, 'Connection reset by peer')",1
+GET,/stock/JP,"RetriesExceeded('https://20.227.16.124/stock/JP', 1, original=The handshake operation timed out)",7
+GET,/stock/APPS,"RetriesExceeded('https://20.227.16.124/stock/APPS', 1, original=The handshake operation timed out)",2
+GET,/stock/NET,"RetriesExceeded('https://20.227.16.124/stock/NET', 1, original=The read operation timed out)",11
+GET,/all_users,"RetriesExceeded('https://20.227.16.124/all_users', 1, original=The handshake operation timed out)",45
+GET,/user/MCRAW36,"ConnectionResetError(104, 'Connection reset by peer')",1
+GET,/user/DANGERBLOOM,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')",1
+GET,/user/Sir_Trashbin,"RetriesExceeded('https://20.227.16.124/user/Sir_Trashbin', 1, original=The read operation timed out)",2
+GET,/user/equityorasset,"ConnectionResetError(104, 'Connection reset by peer')",5
+GET,/user/Happytimedean,"RetriesExceeded('https://20.227.16.124/user/Happytimedean', 1, original=The handshake operation timed out)",5
+GET,/user/Happytimedean,"RetriesExceeded('https://20.227.16.124/user/Happytimedean', 1, original=The read operation timed out)",6
+GET,/user/DANGERBLOOM,"ConnectionResetError(104, 'Connection reset by peer')",1
+GET,/user/zeren1ty,"RetriesExceeded('https://20.227.16.124/user/zeren1ty', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",3
+GET,/stock/TSLA,"ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')",2
+GET,/all_users,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')",6
+GET,/stock/TSLA,"RetriesExceeded('https://20.227.16.124/stock/TSLA', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",6
+GET,/user/equityorasset,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')",2
+GET,/user/zeren1ty,"ConnectionResetError(104, 'Connection reset by peer')",1
+GET,/user/equityorasset,"RetriesExceeded('https://20.227.16.124/user/equityorasset', 1, original=The handshake operation timed out)",2
+GET,/user/DANGERBLOOM,"ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')",1
+GET,/user/Shandowarden,"ConnectionResetError(10054, ""Connessione in corso interrotta forzatamente dall'host remoto"", None, 10054, None)",2
+GET,/stock/TSLA,"ConnectionRefusedError(111, 'Connection refused')",1
+GET,/user/Sir_Trashbin,"ConnectionResetError(10054, ""Connessione in corso interrotta forzatamente dall'host remoto"", None, 10054, None)",1
+GET,/all_users,"RetriesExceeded('https://20.227.16.124/all_users', 1, original=The read operation timed out)",130
+GET,/user/zeren1ty,"RetriesExceeded('https://20.227.16.124/user/zeren1ty', 1, original=The read operation timed out)",5
+GET,/user/equityorasset,"RetriesExceeded('https://20.227.16.124/user/equityorasset', 1, original=The read operation timed out)",7
+GET,/stock/NET,"ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')",1
+GET,/user/DANGERBLOOM,"RetriesExceeded('https://20.227.16.124/user/DANGERBLOOM', 1, original=The read operation timed out)",4
+GET,/user/GloriousSushi,"RetriesExceeded('https://20.227.16.124/user/GloriousSushi', 1, original=The read operation timed out)",9
+GET,/user/MCRAW36,"RetriesExceeded('https://20.227.16.124/user/MCRAW36', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",7
+GET,/user/MCRAW36,"RetriesExceeded('https://20.227.16.124/user/MCRAW36', 1, original=The read operation timed out)",4
+GET,/stock/NET,"ConnectionResetError(10054, ""Connessione in corso interrotta forzatamente dall'host remoto"", None, 10054, None)",1
+GET,/stock/APPS,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')",1
+GET,/user/Happytimedean,"RetriesExceeded('https://20.227.16.124/user/Happytimedean', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",1
+GET,/stock/NET,"RetriesExceeded('https://20.227.16.124/stock/NET', 1, original=The handshake operation timed out)",3
+GET,/stock/APPS,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')",1
+GET,/user/GloriousSushi,"RetriesExceeded('https://20.227.16.124/user/GloriousSushi', 1, original=The handshake operation timed out)",4
+GET,/user/MCRAW36,"RetriesExceeded('https://20.227.16.124/user/MCRAW36', 1, original=The handshake operation timed out)",1
+GET,/stock/APPS,"RetriesExceeded('https://20.227.16.124/stock/APPS', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",3
+GET,/user/Shandowarden,"RetriesExceeded('https://20.227.16.124/user/Shandowarden', 1, original=The read operation timed out)",7
+GET,/user/Shandowarden,"ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')",2
+GET,/stock/NET,"RetriesExceeded('https://20.227.16.124/stock/NET', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",2
+GET,/user/Sir_Trashbin,"RetriesExceeded('https://20.227.16.124/user/Sir_Trashbin', 1, original=The handshake operation timed out)",2
+GET,/user/zeren1ty,"ConnectionRefusedError(111, 'Connection refused')",1
+GET,/stock/JP,"RetriesExceeded('https://20.227.16.124/stock/JP', 1, original=The read operation timed out)",3
+GET,/all_users,"ConnectionResetError(104, 'Connection reset by peer')",13
+GET,/stock/TSLA,"RetriesExceeded('https://20.227.16.124/stock/TSLA', 1, original=The handshake operation timed out)",5
+GET,/user/DANGERBLOOM,"RetriesExceeded('https://20.227.16.124/user/DANGERBLOOM', 1, original=The handshake operation timed out)",2
+GET,/all_users,"RetriesExceeded('https://20.227.16.124/all_users', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",44
+GET,/user/GloriousSushi,"RetriesExceeded('https://20.227.16.124/user/GloriousSushi', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",6
+GET,/user/GloriousSushi,"ConnectionResetError(104, 'Connection reset by peer')",1
+GET,/user/Happytimedean,"ConnectionResetError(10054, ""Connessione in corso interrotta forzatamente dall'host remoto"", None, 10054, None)",1
+GET,/user/DANGERBLOOM,"RetriesExceeded('https://20.227.16.124/user/DANGERBLOOM', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",5
+GET,/all_users,"ConnectionResetError(10054, ""Connessione in corso interrotta forzatamente dall'host remoto"", None, 10054, None)",5
+GET,/user/GloriousSushi,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')",1
+GET,/user/Sir_Trashbin,"ConnectionResetError(104, 'Connection reset by peer')",1
+GET,/user/MCRAW36,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')",1
+GET,/user/Sir_Trashbin,"RetriesExceeded('https://20.227.16.124/user/Sir_Trashbin', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",1
+GET,/user/Sir_Trashbin,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')",3
+GET,/user/Sir_Trashbin,"ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')",1
+GET,/stock/JP,"RetriesExceeded('https://20.227.16.124/stock/JP', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",3
+GET,/all_users,"ConnectionRefusedError(10061, '[WinError 10061] Impossibile stabilire la connessione. Rifiuto persistente del computer di destinazione.')",5
+GET,/user/zeren1ty,"ConnectionResetError(10054, ""Connessione in corso interrotta forzatamente dall'host remoto"", None, 10054, None)",1
+GET,/user/equityorasset,"RetriesExceeded('https://20.227.16.124/user/equityorasset', 1, original=[Errno 10060] [WinError 10060] Impossibile stabilire la connessione. Risposta non corretta della parte connessa dopo l'intervallo di tempo oppure mancata risposta dall'host collegato.)",4
+GET,/user/Shandowarden,"ConnectionRefusedError(111, 'Connection refused')",1
+GET,/stock/TSLA,"RetriesExceeded('https://20.227.16.124/stock/TSLA', 1, original=The read operation timed out)",17
+GET,/user/Happytimedean,"SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1131)')",1
+GET,/stock/APPS,"ConnectionResetError(10054, ""Connessione in corso interrotta forzatamente dall'host remoto"", None, 10054, None)",1
